@@ -24,6 +24,7 @@ import { styled } from "@mui/material/styles";
 import AdvisorConnection from "./advisorCardComponents/advisorConnections";
 import Tags from "./advisorCardComponents/tags";
 import AvatarLoader from "../AvatarLoader";
+import { Waline } from "./advisorCardComponents/advisorComments";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -168,37 +169,22 @@ const AdvisorCard = ({ advisor }) => {
       {/* Comments Section */}
       <Grid item xs={12}>
         <Typography
-          variant="h6"
-          sx={{ mt: 2, fontWeight: "bold", textAlign: "center" }}
+          variant="h5"
+          sx={{
+            mt: 2,
+            fontWeight: "bold",
+            textAlign: "center",
+            marginBottom: 2,
+          }}
         >
           Comments
         </Typography>
-        <List>
-          {advisor.comments &&
-            advisor.comments.map((comment, index) => (
-              <React.Fragment key={index}>
-                <ListItem alignItems="flex-start">
-                  <ListItemText
-                    primary={comment.author}
-                    secondary={
-                      <React.Fragment>
-                        <Typography
-                          sx={{ display: "inline" }}
-                          component="span"
-                          variant="body2"
-                          color="text.primary"
-                        >
-                          {comment.date}
-                        </Typography>
-                        {` — ${comment.content}`}
-                      </React.Fragment>
-                    }
-                  />
-                </ListItem>
-                {index < advisor.comments.length - 1 && <Divider />}
-              </React.Fragment>
-            ))}
-        </List>
+      </Grid>
+      <Grid item xs={12} sx={{ width: "100%" }}>
+        <Waline
+          serverURL="https://waline-connected-advisor-pud8gagjj-huskydoge.vercel.app"
+          path={advisor.id}
+        />
       </Grid>
     </Grid>
   );

@@ -1,4 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {};
 
-export default nextConfig;
+export default {
+  async rewrites() {
+    return [
+      {
+        source: "/api-text/:path*",
+        destination:
+          "https://waline-connected-advisor-pud8gagjj-huskydoge.vercel.app/:path*",
+      },
+    ];
+  },
+};

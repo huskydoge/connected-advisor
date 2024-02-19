@@ -1,0 +1,26 @@
+{
+    "sourceFile": "src/components/mainPage/advisorCardComponents/advisorComments.tsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1708346770227,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1708346789126,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n import React, { useEffect } from \"react\";\n import { Waline } from \"@waline/client\";\n \n-export default function PostPage({ post }) {\n+export default function CardComment({ post }) {\n   useEffect(() => {\n     Waline({\n       el: \"#waline\",\n       serverURL: \"你的Waline服务器地址\",\n"
+                },
+                {
+                    "date": 1708346962648,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,12 +1,16 @@\n import React, { useEffect } from \"react\";\n import { Waline } from \"@waline/client\";\n \n-export default function CardComment({ post }) {\n+export default function CardComment({ advisor_id }) {\n   useEffect(() => {\n     Waline({\n       el: \"#waline\",\n-      serverURL: \"你的Waline服务器地址\",\n+      serverURL: \"你的Waline服务器地址\", // 替换成你的 Waline 服务端 URL\n+     path: advisor_id,\n+      visitor: true, // 开启访问量统计\n+      avatar: 'monsterid', // 设置头像显示方式\n+      lang: 'zh-CN', // 设置语言\n       // 其他配置...\n     });\n   }, []);\n \n"
+                }
+            ],
+            "date": 1708346770227,
+            "name": "Commit-0",
+            "content": "import React, { useEffect } from 'react';\nimport { Waline } from '@waline/client';\n\nexport default function PostPage({ post }) {\n  useEffect(() => {\n    Waline({\n      el: '#waline',\n      serverURL: '你的Waline服务器地址',\n      // 其他配置...\n    });\n  }, []);\n\n  return (\n    <div>\n      <h1>{post.title}</h1>\n      {/* 文章内容 */}\n      <div id=\"waline\"></div>\n    </div>\n  );\n}\n"
+        }
+    ]
+}
