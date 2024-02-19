@@ -1,0 +1,26 @@
+{
+    "sourceFile": "src/components/mainPage/mainContent.tsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1708268107298,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1708268119213,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n import React from \"react\";\n import Grid from \"@mui/material/Grid\";\n import Paper from \"@mui/material/Paper\";\n-import GraphRender from \"./GraphRender\"; // 确保 GraphRender 组件正确导入\n+import GraphRender from \"./\"; // 确保 GraphRender 组件正确导入\n import AdvisorCard from \"./AdvisorCard\"; // 确保 AdvisorCard 组件正确导入\n \n function MainContent() {\n   return (\n"
+                },
+                {
+                    "date": 1708268126672,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n import React from \"react\";\n import Grid from \"@mui/material/Grid\";\n import Paper from \"@mui/material/Paper\";\n import GraphRender\n-import AdvisorCard from \"./AdvisorCard\"; // 确保 AdvisorCard 组件正确导入\n+import AdvisorCard\n \n function MainContent() {\n   return (\n     <Grid container spacing={2}>\n"
+                }
+            ],
+            "date": 1708268107298,
+            "name": "Commit-0",
+            "content": "import React from 'react';\nimport Grid from '@mui/material/Grid';\nimport Paper from '@mui/material/Paper';\nimport GraphRender from './GraphRender'; // 确保 GraphRender 组件正确导入\nimport AdvisorCard from './AdvisorCard'; // 确保 AdvisorCard 组件正确导入\n\nfunction MainContent() {\n  return (\n    <Grid container spacing={2}>\n      <Grid item xs={9}>\n        {/* 左栏，用于展示图 */}\n        <Paper elevation={3} sx={{ height: '100%', overflow: 'auto' }}>\n          <GraphRender />\n        </Paper>\n      </Grid>\n      <Grid item xs={3}>\n        {/* 右栏，用于展示节点信息 */}\n        <Paper elevation={3} sx={{ padding: 2 }}>\n          <AdvisorCard />\n        </Paper>\n      </Grid>\n    </Grid>\n  );\n}\n\nexport default MainContent;\n"
+        }
+    ]
+}

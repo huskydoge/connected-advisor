@@ -1,0 +1,30 @@
+{
+    "sourceFile": "src/components/topTab.tsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 3,
+            "patches": [
+                {
+                    "date": 1708265584940,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1708265760800,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n-import React from 'react';\n-import AppBar from '@mui/material/AppBar';\n-import Tabs from '@mui/material/Tabs';\n-import Tab from '@mui/material/Tab';\n+import React from \"react\";\n+import AppBar from \"@mui/material/AppBar\";\n+import Tabs from \"@mui/material/Tabs\";\n+import Tab from \"@mui/material/Tab\";\n \n function TopMenu() {\n   const [value, setValue] = React.useState(0);\n \n@@ -26,6 +26,4 @@\n   );\n }\n \n export default TopMenu;\n-\n-}\n"
+                },
+                {
+                    "date": 1708265765917,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,8 @@\n import InputBase from \"@mui/material/InputBase\";\n import SearchIcon from \"@mui/icons-material/Search\";\n import Button from \"@mui/material/Button\";\n import AccountCircle from \"@mui/icons-material/AccountCircle\";\n-import AppBar from \"@mui/material/AppBar\";\n import Tabs from \"@mui/material/Tabs\";\n import Tab from \"@mui/material/Tab\";\n \n function TopMenu() {\n"
+                },
+                {
+                    "date": 1708265781079,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,18 +18,43 @@\n   };\n \n   return (\n     <AppBar position=\"static\">\n-      <Tabs\n-        value={value}\n-        onChange={handleChange} // 这里是onChange，而不是onchange\n-        aria-label=\"simple tabs example\"\n-      >\n-        <Tab label=\"Item One\" />\n-        <Tab label=\"Item Two\" />\n-        <Tab label=\"Item Three\" />\n-        {/* ...其他菜单项 */}\n-      </Tabs>\n+      <Toolbar>\n+        {/* Logo或者品牌名 */}\n+        <Typography variant=\"h6\" noWrap>\n+          CONNECTED PAPERS\n+        </Typography>\n+\n+        {/* 搜索栏 */}\n+        <div>\n+          <SearchIcon />\n+          <InputBase\n+            placeholder=\"Search…\"\n+            inputProps={{ 'aria-label': 'search' }}\n+          />\n+        </div>\n+\n+        {/* 空间填充，使得后面的元素靠右 */}\n+        <div style={{ flexGrow: 1 }}></div>\n+\n+        {/* 导航按钮 */}\n+        <Button color=\"inherit\">Share</Button>\n+        <Button color=\"inherit\">Follow</Button>\n+        <Button color=\"inherit\">About</Button>\n+        <Button color=\"inherit\">Pricing</Button>\n+        <Button color=\"inherit\">Sponsors</Button>\n+\n+        {/* 用户图标 */}\n+        <IconButton\n+          edge=\"end\"\n+          aria-label=\"account of current user\"\n+          aria-haspopup=\"true\"\n+          color=\"inherit\"\n+        >\n+          <AccountCircle />\n+        </IconButton>\n+      </Toolbar>\n     </AppBar>\n   );\n }\n \n"
+                }
+            ],
+            "date": 1708265584940,
+            "name": "Commit-0",
+            "content": "import React from 'react';\nimport AppBar from '@mui/material/AppBar';\nimport Tabs from '@mui/material/Tabs';\nimport Tab from '@mui/material/Tab';\n\nfunction TopMenu() {\n  const [value, setValue] = React.useState(0);\n\n  const handleChange = (event: React.SyntheticEvent, newValue: number) => {\n    setValue(newValue);\n  };\n\n  return (\n    <AppBar position=\"static\">\n      <Tabs\n        value={value}\n        onChange={handleChange} // 这里是onChange，而不是onchange\n        aria-label=\"simple tabs example\"\n      >\n        <Tab label=\"Item One\" />\n        <Tab label=\"Item Two\" />\n        <Tab label=\"Item Three\" />\n        {/* ...其他菜单项 */}\n      </Tabs>\n    </AppBar>\n  );\n}\n\nexport default TopMenu;\n\n}\n"
+        }
+    ]
+}

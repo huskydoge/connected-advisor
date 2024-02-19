@@ -1,0 +1,38 @@
+{
+    "sourceFile": "src/pages/index.tsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 5,
+            "patches": [
+                {
+                    "date": 1708263362497,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1708263377012,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n import Image from \"next/image\";\n-import styles from \"./page.module.css\";\n+import styles from \"../styles/page.module.css\";\n \n export default function Home() {\n   return (\n     <main className={styles.main}>\n"
+                },
+                {
+                    "date": 1708265597617,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,7 @@\n import Image from \"next/image\";\n import styles from \"../styles/page.module.css\";\n+import TopMenu from \"@/components/topTab\";\n \n export default function Home() {\n   return (\n     <main className={styles.main}>\n"
+                },
+                {
+                    "date": 1708265619164,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,9 @@\n import TopMenu from \"@/components/topTab\";\n \n export default function Home() {\n   return (\n+    <TopMenu></TopMenu>\n     <main className={styles.main}>\n       <div className={styles.description}>\n         <p>\n           Get started by editing&nbsp;\n"
+                },
+                {
+                    "date": 1708265628705,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -94,7 +94,6 @@\n             </p>\n           </a>\n         </div>\n       </main>\n-    </TopMenu>\n   );\n }\n"
+                },
+                {
+                    "date": 1708265635162,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n import TopMenu from \"@/components/topTab\";\n \n export default function Home() {\n   return (\n-    <TopMenu/ >\n+    <TopMenu />\n       <main className={styles.main}>\n         <div className={styles.description}>\n           <p>\n             Get started by editing&nbsp;\n"
+                }
+            ],
+            "date": 1708263362497,
+            "name": "Commit-0",
+            "content": "import Image from \"next/image\";\nimport styles from \"./page.module.css\";\n\nexport default function Home() {\n  return (\n    <main className={styles.main}>\n      <div className={styles.description}>\n        <p>\n          Get started by editing&nbsp;\n          <code className={styles.code}>src/app/page.tsx</code>\n        </p>\n        <div>\n          <a\n            href=\"https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app\"\n            target=\"_blank\"\n            rel=\"noopener noreferrer\"\n          >\n            By{\" \"}\n            <Image\n              src=\"/vercel.svg\"\n              alt=\"Vercel Logo\"\n              className={styles.vercelLogo}\n              width={100}\n              height={24}\n              priority\n            />\n          </a>\n        </div>\n      </div>\n\n      <div className={styles.center}>\n        <Image\n          className={styles.logo}\n          src=\"/next.svg\"\n          alt=\"Next.js Logo\"\n          width={180}\n          height={37}\n          priority\n        />\n      </div>\n\n      <div className={styles.grid}>\n        <a\n          href=\"https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app\"\n          className={styles.card}\n          target=\"_blank\"\n          rel=\"noopener noreferrer\"\n        >\n          <h2>\n            Docs <span>-&gt;</span>\n          </h2>\n          <p>Find in-depth information about Next.js features and API.</p>\n        </a>\n\n        <a\n          href=\"https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app\"\n          className={styles.card}\n          target=\"_blank\"\n          rel=\"noopener noreferrer\"\n        >\n          <h2>\n            Learn <span>-&gt;</span>\n          </h2>\n          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>\n        </a>\n\n        <a\n          href=\"https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app\"\n          className={styles.card}\n          target=\"_blank\"\n          rel=\"noopener noreferrer\"\n        >\n          <h2>\n            Templates <span>-&gt;</span>\n          </h2>\n          <p>Explore starter templates for Next.js.</p>\n        </a>\n\n        <a\n          href=\"https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app\"\n          className={styles.card}\n          target=\"_blank\"\n          rel=\"noopener noreferrer\"\n        >\n          <h2>\n            Deploy <span>-&gt;</span>\n          </h2>\n          <p>\n            Instantly deploy your Next.js site to a shareable URL with Vercel.\n          </p>\n        </a>\n      </div>\n    </main>\n  );\n}\n"
+        }
+    ]
+}

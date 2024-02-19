@@ -1,0 +1,26 @@
+{
+    "sourceFile": "src/pages/_app.tsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1708263296791,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1708263323053,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n import \"../styles/globals.css\";\n import type { AppProps } from \"next/app\";\n-import Layout from \"../app/layout\"; // 更新这个路径以匹配 layout.tsx 的新位置\n+import Layout from \"./layout\"; // 更新这个路径以匹配 layout.tsx 的新位置\n \n function MyApp({ Component, pageProps }: AppProps) {\n   return (\n     <Layout>\n"
+                },
+                {
+                    "date": 1708263698340,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n import \"../styles/globals.css\";\n import type { AppProps } from \"next/app\";\n-import Layout from \"./layout\"; // 更新这个路径以匹配 layout.tsx 的新位置\n \n+\n function MyApp({ Component, pageProps }: AppProps) {\n   return (\n     <Layout>\n       <Component {...pageProps} />\n"
+                }
+            ],
+            "date": 1708263296791,
+            "name": "Commit-0",
+            "content": "import '../styles/globals.css';\nimport type { AppProps } from 'next/app';\nimport Layout from '../app/layout'; // 更新这个路径以匹配 layout.tsx 的新位置\n\nfunction MyApp({ Component, pageProps }: AppProps) {\n  return (\n    <Layout>\n      <Component {...pageProps} />\n    </Layout>\n  );\n}\n\nexport default MyApp;\n"
+        }
+    ]
+}

@@ -1,0 +1,26 @@
+{
+    "sourceFile": "src/data/advisors.json",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1708310750795,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1708310792421,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,23 @@\n               \"year\": 2023,\n               \"month\": 12\n             }\n           }\n-        }\n+        },\n+        {\n+            class: \"Master\",\n+            role: \"supervisor\",\n+            duration: {\n+              start: {\n+                year: 2016,\n+                month: 8,\n+              },\n+              end: {\n+                year: 2018,\n+                month: 4,\n+              },\n+            },\n+\n       ],\n       \"collaborations\": [\n         {\n           \"papername\": \"Defining and Extracting Relationships\",\n"
+                },
+                {
+                    "date": 1708310803031,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,21 +27,8 @@\n               \"month\": 12\n             }\n           }\n         },\n-        {\n-          class: \"Master\",\n-          role: \"supervisor\",\n-          duration: {\n-            start: {\n-              year: 2016,\n-              month: 8,\n-            },\n-            end: {\n-              year: 2018,\n-              month: 4,\n-            },\n-          },\n       ],\n       \"collaborations\": [\n         {\n           \"papername\": \"Defining and Extracting Relationships\",\n"
+                }
+            ],
+            "date": 1708310750795,
+            "name": "Commit-0",
+            "content": "{\n    \"advisor_id\": 1,\n    \"name\": \"Jane Doe\",\n    \"tags\": [\"Innovative\", \"Data Science\"], \n    \"avatar\": \"https://example.com/avatar1.jpg\",\n    \"github\": \"https://github.com/janedoe\",\n    \"twitter\": \"https://twitter.com/janedoe\",\n    \"email\": \"jane@example.com\",\n    \"website\": \"https://janedoe.com\",\n    \"position\": \"PhD Student\",\n    \"affliation\": \"LTI, CMU\",\n    \"description\": \"Jane Doe is a dedicated PhD student under the supervision of John Doe, focusing on advancing the field of machine learning with innovative research and applications.\",\n    \"connections\": [\n      {\n        \"advisor_id\": 0,\n        \"relation\": [\n          {\n            \"class\": \"PhD\",\n            \"role\": \"student\",\n            \"duration\": {\n              \"start\": {\n                \"year\": 2018,\n                \"month\": 8\n              },\n              \"end\": {\n                \"year\": 2023,\n                \"month\": 12\n              }\n            }\n          }\n        ],\n        \"collaborations\": [\n          {\n            \"papername\": \"Defining and Extracting Relationships\",\n            \"year\": 2023,\n            \"url\": \"https://github.com\"\n          }\n        ],\n        \"latestCollaboration\": 2023,\n        \"relationFactor\": 30 // 假设这里PhD为学生所带来的relation factor是30，根据您提供的计算方式\n      }\n    ]\n  }\n  "
+        }
+    ]
+}

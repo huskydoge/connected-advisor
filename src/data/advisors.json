@@ -1,0 +1,187 @@
+[
+  {
+    "advisor_id": 0,
+    "name": "John Doe",
+    "tags": ["Pushing", "Excellent", "Machine Learning"],
+    "avatar": "https://example.com/avatar.jpg",
+    "github": "https://github.com/johndoe",
+    "twitter": "https://twitter.com/johndoe",
+    "email": "john@example.com",
+    "website": "https://johndoe.com",
+    "position": "Professor",
+    "affliation": "LTI, CMU",
+    "description": "John Doe is an experienced software engineer with a passion for developing innovative programs that expedite the efficiency and effectiveness of organizational success.",
+    "connections": [
+      {
+        "advisor_id": 1,
+        "relation": [
+          {
+            "class": "PhD",
+            "role": "supervisor",
+            "duration": {
+              "start": {
+                "year": 2018,
+                "month": 8
+              },
+              "end": {
+                "year": 2023,
+                "month": 12
+              }
+            }
+          },
+          {
+            "class": "Master",
+            "role": "supervisor",
+            "duration": {
+              "start": {
+                "year": 2016,
+                "month": 8
+              },
+              "end": {
+                "year": 2018,
+                "month": 4
+              }
+            }
+          }
+        ],
+        "collaborations": [
+          {
+            "papername": "Defining and Extracting Relationships",
+            "year": 2023,
+            "url": "https://github.com"
+          }
+        ],
+        "latestCollaboration": 2023,
+        "relationFactor": 45
+      },
+      {
+        "advisor_id": 2,
+        "relation": [
+          {
+            "class": "PhD",
+            "role": "supervisor",
+            "duration": {
+              "start": {
+                "year": 2010,
+                "month": 8
+              },
+              "end": {
+                "year": 2015,
+                "month": 6
+              }
+            }
+          }
+        ],
+        "collaborations": [
+          {
+            "papername": "Innovative AI Techniques",
+            "year": 2014,
+            "url": "https://aiexample.com/paper/innovative-ai-techniques"
+          }
+        ],
+        "latestCollaboration": 2014,
+        "relationFactor": 30
+      }
+    ]
+  },
+  {
+    "advisor_id": 1,
+    "name": "Jane Doe",
+    "tags": ["Innovative", "Data Science"],
+    "avatar": "https://example.com/avatar1.jpg",
+    "github": "https://github.com/janedoe",
+    "twitter": "https://twitter.com/janedoe",
+    "email": "jane@example.com",
+    "website": "https://janedoe.com",
+    "position": "PhD Student",
+    "affliation": "LTI, CMU",
+    "description": "Jane Doe is a dedicated PhD student under the supervision of John Doe, focusing on advancing the field of machine learning with innovative research and applications.",
+    "connections": [
+      {
+        "advisor_id": 0,
+        "relation": [
+          {
+            "class": "PhD",
+            "role": "student",
+            "duration": {
+              "start": {
+                "year": 2018,
+                "month": 8
+              },
+              "end": {
+                "year": 2023,
+                "month": 12
+              }
+            }
+          },
+          {
+            "class": "Master",
+            "role": "student",
+            "duration": {
+              "start": {
+                "year": 2016,
+                "month": 8
+              },
+              "end": {
+                "year": 2018,
+                "month": 4
+              }
+            }
+          }
+        ],
+        "collaborations": [
+          {
+            "papername": "Defining and Extracting Relationships",
+            "year": 2023,
+            "url": "https://github.com"
+          }
+        ],
+        "latestCollaboration": 2023,
+        "relationFactor": 45
+      }
+    ]
+  },
+  {
+    "advisor_id": 2,
+    "name": "Alex Smith",
+    "tags": ["Artificial Intelligence", "Deep Learning", "Innovation"],
+    "avatar": "https://example.com/avatar2.jpg",
+    "github": "https://github.com/alexsmith",
+    "twitter": "https://twitter.com/alexsmith",
+    "email": "alex@example.com",
+    "website": "https://alexsmith.com",
+    "position": "Research Manager",
+    "affliation": "Microsoft Asia",
+    "description": "Alex Smith is a Research Manager at Microsoft Asia, focusing on cutting-edge research in artificial intelligence and deep learning. Alex has a proven track record of leading innovative projects that push the boundaries of technology.",
+    "connections": [
+      {
+        "advisor_id": 0,
+        "relation": [
+          {
+            "class": "PhD",
+            "role": "student",
+            "duration": {
+              "start": {
+                "year": 2010,
+                "month": 8
+              },
+              "end": {
+                "year": 2015,
+                "month": 6
+              }
+            }
+          }
+        ],
+        "collaborations": [
+          {
+            "papername": "Innovative AI Techniques",
+            "year": 2014,
+            "url": "https://aiexample.com/paper/innovative-ai-techniques"
+          }
+        ],
+        "latestCollaboration": 2014,
+        "relationFactor": 30
+      }
+    ]
+  }
+]
