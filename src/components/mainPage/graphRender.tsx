@@ -164,16 +164,49 @@ const advisorsReader = () => {
   return { nodes, links, minYear, maxYear };
 };
 
-const GraphRender = ({ onNodeHover }) => {
+const GraphRender = ({ onNodeHover, onNodeClick }) => {
   const chartRef = useRef(null);
   const [option, setOption] = useState({}); // 用于存储图表配置
   const [zoomFactor, setZoomFactor] = useState(1); // 存储当前的缩放因子
+  const [selectedNode, setSelectedNode] = useState(null); // 新增状态来跟踪选中的节点
+  const [selectedNodeId, setSelectedNodeId] = useState(null); // 用于存储选中节点的ID
+  const [myChart, setMyChart] = useState(null); // 用于存储 echarts 实例
 
   useEffect(() => {
-    if (chartRef.current) {
-      const myChart = echarts.init(chartRef.current, null, { renderer: "svg" });
+    if (chartRef.current && !myChart) {
+      const initializedChart = echarts.init(chartRef.current, null, {
+        renderer: "svg",
+      });
+      setMyChart(initializedChart); // 保存 echarts 实例
+    }
 
+    if (myChart) {
       const { nodes, links, minYear, maxYear } = advisorsReader();
+
+      // 更新节点样式，为选中节点添加边框
+      const updateNodesStyle = (nodes, selectedNodeId) => {
+        return nodes.map((node) => {
+          if (node.id === selectedNodeId) {
+            return {
+              ...node,
+              itemStyle: {
+                ...node.itemStyle,
+                borderColor: "blue",
+                borderWidth: 3,
+                borderType: "solid",
+              },
+            };
+          }
+          return {
+            ...node,
+            itemStyle: {
+              ...node.itemStyle,
+              borderColor: "none",
+              borderWidth: 0,
+            },
+          };
+        });
+      };
 
       nodes.forEach((node) => {
         node.label = {
@@ -236,7 +269,8 @@ const GraphRender = ({ onNodeHover }) => {
             name: "科研合作",
             type: "graph",
             layout: "force",
-            data: updatedNodes,
+            layoutAnimation: false,
+            data: updateNodesStyle(updatedNodes, selectedNodeId),
             links: links,
             categories: [{ name: "Main Node" }, { name: "Other" }],
             roam: true,
@@ -254,11 +288,17 @@ const GraphRender = ({ onNodeHover }) => {
               curveness: 0.3,
             },
             emphasis: {
-              focus: "adjacency",
-              lineStyle: {
-                width: 10,
+              focus: "self", // 鼠标悬浮时只强调当前节点
+              itemStyle: {
+                color: "#darkerColor", // 强调时的颜色，需替换为实际更深的颜色值
+                borderColor: "rgba(255, 255, 255, 0.8)", // 强调时的边框颜色，使用半透明的白色
+                borderWidth: 3, // 强调时的边框宽度
+                borderType: "solid", // 边框类型
+                shadowBlur: 10, // 阴影的模糊大小
+                shadowColor: "rgba(0, 0, 0, 0.3)", // 阴影颜色
               },
             },
+            // 设置选中状态（如果需要）的样式
           },
         ],
       };
@@ -266,31 +306,50 @@ const GraphRender = ({ onNodeHover }) => {
       setOption(initialOption); // 设置图表配置
       myChart.setOption(initialOption); // 初始化图表
 
+      // 监听节点的鼠标悬停事件
+      myChart.on("mouseover", "series.graph", function (params) {
+        if (params.dataType === "node") {
+          // 只有当节点未被选中时，才应用悬浮样式
+          if (!selectedNode || params.data.id !== selectedNode.id) {
+            // 应用悬浮样式
+            onNodeHover(params.data);
+          }
+        }
+      });
+
+      // 监听鼠标离开图表事件
+      myChart.on("mouseout", "series.graph", function (params) {
+        if (params.dataType === "node") {
+          // 如果鼠标离开的节点不是被选中的节点，恢复原样式
+          if (!selectedNode || params.data.id !== selectedNode.id) {
+            // 恢复节点原样式
+            onNodeHover(null); // 鼠标离开时清除选中的节点
+          }
+        }
+      });
+
       // 处理节点点击事件
+
       myChart.on("click", function (params) {
         if (params.dataType === "node") {
-          // 如果点击的是节点，更新选中节点的状态并重新设置图表选项以显示选中效果
-          const clickedNodes = updatedNodes.map((node) => {
-            if (node.id == params.data.id) {
-              console.log(params.data.id);
-              return {
-                ...node,
-                itemStyle: { borderColor: "blue", borderWidth: 30 },
-              };
-            }
-            return node;
-          });
-          myChart.setOption({
-            series: [{ data: clickedNodes }],
-          });
-          onNodeHover(params.data); // 更新父组件状态，以传递选中的节点数据
-        } else {
-          // 如果点击的是非节点部分，取消选中状态
-          myChart.setOption({
-            series: [{ data: updatedNodes }], // 重置节点样式
-          });
-          onNodeHover(null); // 清除选中的节点数据
+          setSelectedNodeId(params.data.id); // 更新选中节点的ID
+          onNodeClick(params.data);
         }
+        if (params.dataType === "edge") {
+          // 如果是边（edge）的点击事件，不执行任何操作
+          console.log("Edge click detected, action will be ignored.");
+          setSelectedNodeId(null); // 更新选中节点的ID
+          onNodeClick(null);
+          return; // 直接返回，不执行后续代码
+        }
+        // 重新应用图表配置以更新节点样式
+        myChart.setOption({
+          series: [
+            {
+              data: updateNodesStyle(nodes, selectedNodeId),
+            },
+          ],
+        });
       });
 
       myChart.on("graphRoam", function (event) {
@@ -309,18 +368,6 @@ const GraphRender = ({ onNodeHover }) => {
         }
       });
 
-      // 监听节点的鼠标悬停事件
-      myChart.on("mouseover", "series.graph", function (params) {
-        if (params.dataType === "node") {
-          onNodeHover(params.data); // 调用回调函数，并传递节点数据
-        }
-      });
-
-      // 监听鼠标离开图表事件
-      myChart.on("mouseout", "series.graph", function (params) {
-        onNodeHover(null); // 鼠标离开时清除选中的节点
-      });
-
       // 清理工作
       return () => {
         myChart.off("graphRoam");
@@ -328,7 +375,7 @@ const GraphRender = ({ onNodeHover }) => {
         myChart.off("mouseout");
       };
     }
-  }, [zoomFactor, onNodeHover]);
+  }, [zoomFactor, onNodeHover, selectedNodeId, myChart]);
 
   return <div ref={chartRef} style={{ width: "100%", height: "100%" }} />;
 };

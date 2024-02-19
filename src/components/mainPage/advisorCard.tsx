@@ -1,7 +1,5 @@
 import React from "react";
 import {
-  Typography,
-  Avatar,
   Link,
   Grid,
   Stack,
@@ -11,6 +9,32 @@ import {
   Divider,
 } from "@mui/material";
 import { GitHub, Twitter, Email, Language } from "@mui/icons-material";
+import {
+  Card,
+  CardContent,
+  Typography,
+  Avatar,
+  CardHeader,
+  IconButton,
+  Collapse,
+  Button,
+} from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { styled } from "@mui/material/styles";
+import AdvisorConnection from "./advisorCardComponents/advisorConnections";
+import Tags from "./advisorCardComponents/tags";
+import AvatarLoader from "../AvatarLoader";
+
+const ExpandMore = styled((props) => {
+  const { expand, ...other } = props;
+  return <IconButton {...other} />;
+})(({ theme, expand }) => ({
+  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
+  marginLeft: "auto",
+  transition: theme.transitions.create("transform", {
+    duration: theme.transitions.duration.shortest,
+  }),
+}));
 
 const AdvisorCard = ({ advisor }) => {
   return (
@@ -18,12 +42,12 @@ const AdvisorCard = ({ advisor }) => {
       container
       spacing={2}
       alignItems="center"
-      sx={{ p: 2 }}
+      sx={{ p: 2, marginTop: 4 }}
       direction="column"
     >
       {/* 将头像放置于顶部 */}
       <Grid item xs={12} sx={{ display: "flex", justifyContent: "center" }}>
-        <Avatar
+        <AvatarLoader
           alt={advisor.name}
           src={advisor.avatar}
           sx={{
@@ -99,60 +123,47 @@ const AdvisorCard = ({ advisor }) => {
           sx={{
             mt: 2,
             fontSize: { xs: "0.875rem", sm: "1rem", md: "1.125rem" },
-            textAlign: "justify", // 对齐段落文本
+
+            paddingLeft: 5,
           }}
           variant="body1"
           paragraph
         >
           {advisor.description}
         </Typography>
-        {/* TODO1 A Section of Connections, render as lists */}
-        {/*         
-        TODO2 A Comments
-        Section, 评论系统 Connections, render as lists */}
+      </Grid>
+
+      {/* Tags */}
+      <Grid
+        item
+        xs={12}
+        sx={{
+          display: "flex", // 开启Flexbox布局
+          justifyContent: "center", // 水平居中
+          alignItems: "center", // 垂直居中
+          padding: 2, // 保留原有的内边距设置
+          width: "100%", // 宽度设置为100%
+          marginBottom: 4,
+        }}
+      >
+        <Tags tags={advisor.tags} onClickTag={(tag) => console.log(tag)} />
       </Grid>
 
       {/* Connections Section */}
-      {/* <Grid item xs={12}>
+      <Grid item xs={12} sx={{ padding: 2, width: "100%" }}>
         <Typography
-          variant="h6"
-          sx={{ mt: 2, fontWeight: "bold", textAlign: "center" }}
+          variant="h5"
+          sx={{ fontWeight: "bold", textAlign: "center", marginBottom: 2 }}
         >
           Connections
         </Typography>
-        <List>
-          {advisor.connections &&
-            advisor.connections.map((connection, index) => (
-              <React.Fragment key={index}>
-                <ListItem>
-                  <ListItemText
-                    primary={connection.name}
-                    secondary={
-                      <>
-                        <Typography component="span" variant="body2">
-                          Class: {connection.relation.class}
-                        </Typography>
-                        <br />
-                        <Typography component="span" variant="body2">
-                          Role: {connection.relation.role}
-                        </Typography>
-                        <br />
-                        <Typography component="span" variant="body2">
-                          Duration: {connection.relation.duration.start.year}-
-                          {connection.relation.duration.start.month} to
-                          {connection.relation.duration.end.year}-
-                          {connection.relation.duration.end.month}
-                        </Typography>
-                      </>
-                    }
-                  />
-                </ListItem>
-
-                {index < advisor.connections.length - 1 && <Divider />}
-              </React.Fragment>
-            ))}
-        </List>
-      </Grid> */}
+        {advisor.connections.map((connection) => (
+          <AdvisorConnection
+            key={connection.advisor_id}
+            connection={connection}
+          />
+        ))}
+      </Grid>
 
       {/* Comments Section */}
       <Grid item xs={12}>

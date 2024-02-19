@@ -78,6 +78,8 @@ function MainContent() {
   // const { advisor_id } = router.query; // default is 0
   const advisor_id = 0;
   const [selectedNode, setSelectedNode] = useState(null); // 用于存储选中的节点信息
+  const [clickedNode, setClickedNode] = useState(null);
+
   useEffect(() => {
     // 根据advisor_id查找advisor信息
     const advisorInfo = advisorsData.find(
@@ -105,15 +107,33 @@ function MainContent() {
           }}
         >
           <GraphRender
-            onNodeHover={(node) => {
+            onNodeClick={(node) => {
               if (node) {
                 setSelectedNode(node);
+                setClickedNode(node);
               } else {
                 // 当没有节点被悬停时，恢复到默认的主节点信息
                 const defaultNode = advisorsData.find(
                   (advisor) => advisor.advisor_id === advisor_id
                 );
                 setSelectedNode(defaultNode);
+                setClickedNode(null);
+              }
+            }}
+            onNodeHover={(node) => {
+              if (node) {
+                setSelectedNode(node);
+              } else {
+                // 当没有节点被悬停时，恢复到默认的主节点信息
+
+                const defaultNode = advisorsData.find(
+                  (advisor) => advisor.advisor_id === advisor_id
+                );
+                if (clickedNode) {
+                  setSelectedNode(clickedNode);
+                } else {
+                  setSelectedNode(defaultNode);
+                }
               }
             }}
           />

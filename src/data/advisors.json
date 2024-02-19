@@ -1,16 +1,16 @@
 [
   {
     "advisor_id": 0,
-    "name": "John Doe",
-    "tags": ["Pushing", "Excellent", "Machine Learning"],
-    "avatar": "https://example.com/avatar.jpg",
+    "name": "Zhouzhou Mao",
+    "tags": ["Relaxing", "Excellent", "Machine Learning"],
+    "avatar": "https://avatars.githubusercontent.com/u/133197322?v=4",
     "github": "https://github.com/johndoe",
     "twitter": "https://twitter.com/johndoe",
     "email": "john@example.com",
     "website": "https://johndoe.com",
     "position": "Professor",
     "affliation": "LTI, CMU",
-    "description": "John Doe is an experienced software engineer with a passion for developing innovative programs that expedite the efficiency and effectiveness of organizational success.",
+    "description": "Yizhou Liu is an experienced software engineer with a passion for developing innovative programs that expedite the efficiency and effectiveness of organizational success.",
     "connections": [
       {
         "advisor_id": 1,
@@ -86,9 +86,9 @@
   },
   {
     "advisor_id": 1,
-    "name": "Jane Doe",
+    "name": "Husky Doge",
     "tags": ["Innovative", "Data Science"],
-    "avatar": "https://example.com/avatar1.jpg",
+    "avatar": "https://huskydoge.github.io/images/android-chrome-512x512.png",
     "github": "https://github.com/janedoe",
     "twitter": "https://twitter.com/janedoe",
     "email": "jane@example.com",
@@ -143,9 +143,9 @@
   },
   {
     "advisor_id": 2,
-    "name": "Alex Smith",
+    "name": "Jub Steven",
     "tags": ["Artificial Intelligence", "Deep Learning", "Innovation"],
-    "avatar": "https://example.com/avatar2.jpg",
+    "avatar": "https://avatars.githubusercontent.com/u/95260261?v=4",
     "github": "https://github.com/alexsmith",
     "twitter": "https://twitter.com/alexsmith",
     "email": "alex@example.com",
