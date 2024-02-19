@@ -1,5 +1,15 @@
 import React from "react";
-import { Typography, Avatar, Link, Grid, Stack } from "@mui/material";
+import {
+  Typography,
+  Avatar,
+  Link,
+  Grid,
+  Stack,
+  List,
+  ListItem,
+  ListItemText,
+  Divider,
+} from "@mui/material";
 import { GitHub, Twitter, Email, Language } from "@mui/icons-material";
 
 const AdvisorCard = ({ advisor }) => {
@@ -96,6 +106,88 @@ const AdvisorCard = ({ advisor }) => {
         >
           {advisor.description}
         </Typography>
+        {/* TODO1 A Section of Connections, render as lists */}
+        {/*         
+        TODO2 A Comments
+        Section, 评论系统 Connections, render as lists */}
+      </Grid>
+
+      {/* Connections Section */}
+      {/* <Grid item xs={12}>
+        <Typography
+          variant="h6"
+          sx={{ mt: 2, fontWeight: "bold", textAlign: "center" }}
+        >
+          Connections
+        </Typography>
+        <List>
+          {advisor.connections &&
+            advisor.connections.map((connection, index) => (
+              <React.Fragment key={index}>
+                <ListItem>
+                  <ListItemText
+                    primary={connection.name}
+                    secondary={
+                      <>
+                        <Typography component="span" variant="body2">
+                          Class: {connection.relation.class}
+                        </Typography>
+                        <br />
+                        <Typography component="span" variant="body2">
+                          Role: {connection.relation.role}
+                        </Typography>
+                        <br />
+                        <Typography component="span" variant="body2">
+                          Duration: {connection.relation.duration.start.year}-
+                          {connection.relation.duration.start.month} to
+                          {connection.relation.duration.end.year}-
+                          {connection.relation.duration.end.month}
+                        </Typography>
+                      </>
+                    }
+                  />
+                </ListItem>
+
+                {index < advisor.connections.length - 1 && <Divider />}
+              </React.Fragment>
+            ))}
+        </List>
+      </Grid> */}
+
+      {/* Comments Section */}
+      <Grid item xs={12}>
+        <Typography
+          variant="h6"
+          sx={{ mt: 2, fontWeight: "bold", textAlign: "center" }}
+        >
+          Comments
+        </Typography>
+        <List>
+          {advisor.comments &&
+            advisor.comments.map((comment, index) => (
+              <React.Fragment key={index}>
+                <ListItem alignItems="flex-start">
+                  <ListItemText
+                    primary={comment.author}
+                    secondary={
+                      <React.Fragment>
+                        <Typography
+                          sx={{ display: "inline" }}
+                          component="span"
+                          variant="body2"
+                          color="text.primary"
+                        >
+                          {comment.date}
+                        </Typography>
+                        {` — ${comment.content}`}
+                      </React.Fragment>
+                    }
+                  />
+                </ListItem>
+                {index < advisor.comments.length - 1 && <Divider />}
+              </React.Fragment>
+            ))}
+        </List>
       </Grid>
     </Grid>
   );
