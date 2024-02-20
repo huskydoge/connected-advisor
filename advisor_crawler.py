@@ -4,9 +4,11 @@ import openai
 import os
 import pandas as pd
 from logger import logger
+import random
+
 
 PROMPT = "You will serve as a programming agent that helps data collection for a crawler project.\
-          The following text is extracted from an HTML homepage of a professor, \
+          The following text is directly extracted from an HTML homepage of a professor, \
           so there might be inconsistencies between the text that requires you to infer. \
           Please extract the following fields \
           - Name \
@@ -20,8 +22,8 @@ PROMPT = "You will serve as a programming agent that helps data collection for a
           - Personal Introduction (Around 100-200 words)\
           - Recruitment Information. \
           Please return the result in the exactly the following format for automated processing\
-          field0: ... (for name)\n field1: ... (for affiliation) ...\
-          If you cannot find the information, just return 'N/A' for that particular field\
+          field0: ... (for name)\n field1: ... (for affiliation)\n ...\
+          If you cannot find the information, just return 'N/A' for that particular field and no other explanation\
           The text is as follows: "
 
 # Function to crawl a professor's homepage and retrieve text
@@ -55,6 +57,7 @@ def text_cleaning(text):
 def process_text_with_gpt(text, client):
     text = text_cleaning(text)
 
+
     response = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
@@ -62,8 +65,6 @@ def process_text_with_gpt(text, client):
         ]
     )
 
-    print(response)
-    assert False
     # Assume the response contains the structured data in the desired format
     return response
 
@@ -85,6 +86,9 @@ def main_worker(args):
     for raw_csv in csv_files:
         df = pd.read_csv(os.path.join(dir, raw_csv))
         urls = df['homepage'].values.tolist()
+        # shuffle the list
+        random.shuffle(urls)
+        
         for url in urls:
             texts = crawl_homepage(url)
             combined_text = " ".join(texts)
@@ -102,6 +106,7 @@ if __name__ == "__main__":
     parser.add_argument("--key", type=str, required=True, help="openai api key")
     args = parser.parse_args()
     
+    # This is used for proxy settings
     os.environ["CURL_CA_BUNDLE"] = ""
     os.environ["http_proxy"] = "http://127.0.0.1:1080"
     os.environ["https_proxy"] = "http://127.0.0.1:1080"
