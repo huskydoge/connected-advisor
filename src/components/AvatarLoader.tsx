@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { CircularProgress, Box, Avatar } from "@mui/material";
 
-const AvatarLoader = ({ src, alt, ...props }) => {
+interface AvatarLoaderProps extends AvatarProps {
+  src: string;
+  alt: string;
+}
+
+const AvatarLoader = ({ src, alt, ...props }: AvatarLoaderProps) => {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
