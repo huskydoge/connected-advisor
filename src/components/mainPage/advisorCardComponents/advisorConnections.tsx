@@ -108,7 +108,7 @@ const AdvisorConnection = ({ connection }) => {
                   }}
                 >
                   <span>
-                    {rel.class}, as {advisor.name}'s {rel.role},
+                    {rel.class}, the {rel.role} of {advisor.name},
                   </span>
                   <span>
                     {rel.duration.start.year}.

@@ -23,7 +23,7 @@ export const Waline = (props: WalineOptions) => {
     });
 
     return () => walineInstanceRef.current?.destroy();
-  }, []);
+  }, [containerRef, props]);
 
   useEffect(() => {
     walineInstanceRef.current?.update(props);

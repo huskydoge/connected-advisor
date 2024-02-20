@@ -43,7 +43,7 @@ const AdvisorCard = ({ advisor }) => {
       container
       spacing={2}
       alignItems="center"
-      sx={{ p: 2, marginTop: 4 }}
+      sx={{ p: 2, marginTop: 4, maxHeight: "100", overflowY: "auto" }}
       direction="column"
     >
       {/* 将头像放置于顶部 */}
