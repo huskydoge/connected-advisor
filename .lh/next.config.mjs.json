@@ -1,0 +1,26 @@
+{
+    "sourceFile": "next.config.mjs",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1708352948035,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1708353051258,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,27 +1,4 @@\n /** @type {import('next').NextConfig} */\n const nextConfig = {};\n \n export default nextConfig;\n-module.exports = {\n-  async headers() {\n-    return [\n-      {\n-        // matching all API routes\n-        source: \"/api/:path*\",\n-        headers: [\n-          { key: \"Access-Control-Allow-Credentials\", value: \"true\" },\n-          { key: \"Access-Control-Allow-Origin\", value: \"*\" },\n-          {\n-            key: \"Access-Control-Allow-Methods\",\n-            value: \"GET,OPTIONS,PATCH,DELETE,POST,PUT\",\n-          },\n-          {\n-            key: \"Access-Control-Allow-Headers\",\n-            value:\n-              \"X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version\",\n-          },\n-        ],\n-      },\n-    ];\n-  },\n-};\n"
+                },
+                {
+                    "date": 1708353425236,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,16 @@\n /** @type {import('next').NextConfig} */\n const nextConfig = {};\n \n export default nextConfig;\n+\n+export default {\n+    async rewrites() {\n+      return [\n+        {\n+          source: '/api-text/:path*',\n+          destination: 'https://waline-connected-advisor-pud8gagjj-huskydoge.vercel.app/:path*',\n+        },\n+      ];\n+    },\n+  };\n+  \n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1708352948035,
+            "name": "Commit-0",
+            "content": "/** @type {import('next').NextConfig} */\nconst nextConfig = {};\n\nexport default nextConfig;\n"
+        }
+    ]
+}

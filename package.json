@@ -2,6 +2,7 @@
   "name": "connected-advisor",
   "version": "0.1.0",
   "private": true,
+  "proxy": "https://waline-connected-advisor-pud8gagjj-huskydoge.vercel.app",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -26,6 +27,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@waline/client": "^3.1.0",
     "eslint": "^8",
     "eslint-config-next": "14.1.0",
     "typescript": "^5"
