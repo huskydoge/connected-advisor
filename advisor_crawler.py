@@ -5,7 +5,8 @@ import os
 import pandas as pd
 from logger import logger
 import random
-from transformers import pipeline
+from http import HTTPStatus
+import dashscope
 
 
 PROMPT = "You will serve as a programming agent that helps data collection for a crawler project.\
@@ -55,20 +56,32 @@ def text_cleaning(text):
     return cleaned_text
 
 # Function to process text through GPT-3.5 API for structured data extraction
-def process_text_with_gpt(text, opt, client=None):
+def process_text_with_gpt(text, args, client=None):
     text = text_cleaning(text)
+    print(len(text))
     
-    assert opt in ["llama", "gpt3"], "Invalid option"
-    if opt == "llama":
+    assert args.opt in ["llama", "gpt3"], "Invalid option"
+    if args.opt == "llama":
+        dashscope.api_key = args.key
+        
         # Parse the text with Llama
-        # Initialize the Llama pipeline
-        llama_pipeline = pipeline("text2text-generation", model="allenai/llama", use_auth_token="<auth token>")
+        messages = [{'role': 'system', 'content': PROMPT},
+                {'role': 'user', 'content': f'{text}'}]
         
-        # Generate the response using Llama
-        response = llama_pipeline(f"{PROMPT} {text}")
+        response = dashscope.Generation.call(
+            model='qwen-72b-chat',
+            messages=messages,
+        )
         
-        # Assuming the first generation contains the structured data in the desired format
-        response = response[0]['generated_text']
+        if response.status_code == HTTPStatus.OK:
+            print(response)
+        else:
+            print('Request id: %s, Status code: %s, error code: %s, error message: %s' % (
+                response.request_id, response.status_code,
+                response.code, response.message
+            ))
+        
+        assert False
     else:
         response = client.chat.completions.create(
             model="gpt-3.5-turbo",
@@ -87,7 +100,7 @@ def fetch_csv_path(dir):
 
 def main_worker(args):
     dir = args.dir
-    opt = "gpt3" if args.key else "llama" 
+    opt = args.opt
     csv_files = fetch_csv_path(dir)
         
     # Craft a prompt for GPT-3.5 to structure the text
@@ -96,7 +109,6 @@ def main_worker(args):
         logger.info("OpenAI client created")
     else:
         client = None
-    
     
     for raw_csv in csv_files:
         df = pd.read_csv(os.path.join(dir, raw_csv))
@@ -107,7 +119,7 @@ def main_worker(args):
         for url in urls:
             texts = crawl_homepage(url)
             combined_text = " ".join(texts)
-            structured_data = process_text_with_gpt(combined_text, opt, client)
+            structured_data = process_text_with_gpt(combined_text, args, client)
             print(structured_data)
             print("\n\n")
         
@@ -118,7 +130,8 @@ if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument("--dir", type=str, required=True, help="directory to the csv files")
-    parser.add_argument("--key", type=str, required=False, help="openai api key")
+    parser.add_argument("--key", type=str, required=True, help="api key")
+    parser.add_argument("--opt", type=str, required=False, default='llama', help="llama or gpt3")
     args = parser.parse_args()
     
     # This is used for proxy settings
