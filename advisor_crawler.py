@@ -5,6 +5,7 @@ import os
 import pandas as pd
 from logger import logger
 import random
+from transformers import pipeline
 
 
 PROMPT = "You will serve as a programming agent that helps data collection for a crawler project.\
@@ -54,16 +55,27 @@ def text_cleaning(text):
     return cleaned_text
 
 # Function to process text through GPT-3.5 API for structured data extraction
-def process_text_with_gpt(text, client):
+def process_text_with_gpt(text, opt, client=None):
     text = text_cleaning(text)
-
-
-    response = client.chat.completions.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "user", "content": "{PROMPT} {text}"}
-        ]
-    )
+    
+    assert opt in ["llama", "gpt3"], "Invalid option"
+    if opt == "llama":
+        # Parse the text with Llama
+        # Initialize the Llama pipeline
+        llama_pipeline = pipeline("text2text-generation", model="allenai/llama", use_auth_token="<auth token>")
+        
+        # Generate the response using Llama
+        response = llama_pipeline(f"{PROMPT} {text}")
+        
+        # Assuming the first generation contains the structured data in the desired format
+        response = response[0]['generated_text']
+    else:
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "user", "content": "{PROMPT} {text}"}
+            ]
+        )
 
     # Assume the response contains the structured data in the desired format
     return response
@@ -75,12 +87,15 @@ def fetch_csv_path(dir):
 
 def main_worker(args):
     dir = args.dir
-    openai_key = args.key
+    opt = "gpt3" if args.key else "llama" 
     csv_files = fetch_csv_path(dir)
         
     # Craft a prompt for GPT-3.5 to structure the text
-    client = openai.Client(api_key=openai_key)
-    logger.info("OpenAI client created")
+    if opt == "gpt3":
+        client = openai.Client(api_key=args.key)
+        logger.info("OpenAI client created")
+    else:
+        client = None
     
     
     for raw_csv in csv_files:
@@ -92,7 +107,7 @@ def main_worker(args):
         for url in urls:
             texts = crawl_homepage(url)
             combined_text = " ".join(texts)
-            structured_data = process_text_with_gpt(combined_text, client)
+            structured_data = process_text_with_gpt(combined_text, opt, client)
             print(structured_data)
             print("\n\n")
         
@@ -103,7 +118,7 @@ if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument("--dir", type=str, required=True, help="directory to the csv files")
-    parser.add_argument("--key", type=str, required=True, help="openai api key")
+    parser.add_argument("--key", type=str, required=False, help="openai api key")
     args = parser.parse_args()
     
     # This is used for proxy settings
