@@ -15,6 +15,7 @@ import {
   Typography,
   Avatar,
   CardHeader,
+  IconButtonProps,
   IconButton,
   Collapse,
   Button,
@@ -26,7 +27,7 @@ import AvatarLoader from "@/components/AvatarLoader";
 import advisors from "../../../data/advisors.json";
 
 // Mock function to get advisor info by ID
-const getAdvisorById = (id) => {
+const getAdvisorById = (id: number) => {
   // 查找与给定id匹配的advisor
   const advisor = advisors.find((advisor) => advisor.advisor_id === id);
   if (advisor) {
@@ -41,10 +42,42 @@ const getAdvisorById = (id) => {
   return null;
 };
 
-const ExpandMore = styled((props) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
+interface ExpandMoreProps extends IconButtonProps {
+  expand: boolean; // 明确指出expand属性是一个布尔值
+}
+
+interface Duration {
+  start: {
+    year: number;
+    month: number;
+  };
+  end: {
+    year: number;
+    month: number;
+  };
+}
+
+interface Collaboration {
+  papername: string;
+  url: string;
+  year: number;
+}
+
+interface Relation {
+  duration: Duration;
+  class: string;
+  role: string;
+}
+
+interface Connection {
+  advisor_id: number;
+  relation: Relation[];
+  collaborations: Collaboration[];
+}
+
+const ExpandMore = styled(({ expand, ...other }: ExpandMoreProps) => (
+  <IconButton {...other} />
+))(({ theme, expand }) => ({
   transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
   marginLeft: "auto",
   transition: theme.transitions.create("transform", {
@@ -52,7 +85,7 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-const AdvisorConnection = ({ connection }) => {
+const AdvisorConnection = ({ connection }: { connection: Connection }) => {
   const [expanded, setExpanded] = React.useState(false);
   const advisor = getAdvisorById(connection.advisor_id);
 
@@ -63,7 +96,9 @@ const AdvisorConnection = ({ connection }) => {
   return (
     <Card sx={{ marginBottom: 2, width: "100%" }}>
       <CardHeader
-        avatar={<AvatarLoader src={advisor.avatar} />}
+        avatar={
+          advisor && <AvatarLoader src={advisor.avatar} alt={advisor.name} />
+        }
         action={
           <ExpandMore
             expand={expanded}
@@ -74,8 +109,8 @@ const AdvisorConnection = ({ connection }) => {
             <ExpandMoreIcon />
           </ExpandMore>
         }
-        title={advisor.name}
-        subheader={advisor.position}
+        title={advisor?.name}
+        subheader={advisor?.position}
       />
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
@@ -108,13 +143,18 @@ const AdvisorConnection = ({ connection }) => {
                   }}
                 >
                   <span>
-                    {rel.class}, the {rel.role} of {advisor.name},
+                    {advisor && (rel as Relation).class}, the{" "}
+                    {(rel as Relation).role} of {advisor?.name},
                   </span>
                   <span>
-                    {rel.duration.start.year}.
-                    {rel.duration.start.month.toString().padStart(2, "0")} -
-                    {rel.duration.end.year}.
-                    {rel.duration.end.month.toString().padStart(2, "0")}
+                    {(rel as Relation).duration.start.year}.
+                    {(rel as Relation).duration.start.month
+                      .toString()
+                      .padStart(2, "0")}{" "}
+                    -{(rel as Relation).duration.end.year}.
+                    {(rel as Relation).duration.end.month
+                      .toString()
+                      .padStart(2, "0")}
                   </span>
                 </Typography>
               </ListItem>

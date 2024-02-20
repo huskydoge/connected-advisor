@@ -1,8 +1,12 @@
 import React from "react";
 import { Chip, Stack } from "@mui/material";
 
-// 随机颜色生成器
-const getRandomColor = () => {
+interface TagsProps {
+  tags: string[];
+  onClickTag: (tag: string) => void;
+}
+
+const getRandomColor = (): string => {
   const colors = [
     "#FF6384",
     "#36A2EB",
@@ -15,14 +19,15 @@ const getRandomColor = () => {
   return colors[Math.floor(Math.random() * colors.length)];
 };
 
-const Tags = ({ tags, onClickTag }) => {
+const Tags: React.FC<TagsProps> = ({ tags, onClickTag }) => {
   return (
     <Stack direction="row" spacing={1} sx={{ flexWrap: "wrap" }}>
-      {tags.map((tag, index) => {
+      {tags.map((tag) => {
+        // 移除了index参数，改用tag作为key
         const borderColor = getRandomColor();
         return (
           <Chip
-            key={index}
+            key={tag} // 使用tag作为key，假设所有tag都是唯一的
             label={tag}
             onClick={() => onClickTag(tag)}
             variant="outlined"
@@ -31,12 +36,11 @@ const Tags = ({ tags, onClickTag }) => {
               color: borderColor,
               fontWeight: "bold",
               cursor: "pointer",
-              borderRadius: "4px", // 调整圆角大小
+              borderRadius: "4px",
               "&:hover": {
-                backgroundColor: borderColor, // 鼠标悬浮时背景色变为边框颜色
-                color: "#000", // 鼠标悬浮时文本颜色变为白色
+                backgroundColor: borderColor,
+                color: "#000",
               },
-              // 长方形形状，可通过调整padding和fontSize来进一步定制
               padding: "0 2px",
               paddingTop: 0.2,
               height: "32px",

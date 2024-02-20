@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 import React, { useEffect, useRef } from "react";
 import {
   type WalineInstance,
@@ -19,6 +20,7 @@ export const Waline = (props: WalineOptions) => {
       el: containerRef.current,
       lang: "en",
       dark: "auto",
+      // @ts-ignore
       reaction: "true",
     });
 

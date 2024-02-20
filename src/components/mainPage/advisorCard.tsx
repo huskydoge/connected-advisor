@@ -16,6 +16,7 @@ import {
   Avatar,
   CardHeader,
   IconButton,
+  IconButtonProps,
   Collapse,
   Button,
 } from "@mui/material";
@@ -26,10 +27,13 @@ import Tags from "./advisorCardComponents/tags";
 import AvatarLoader from "../AvatarLoader";
 import { Waline } from "./advisorCardComponents/advisorComments";
 
-const ExpandMore = styled((props) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
+interface ExpandMoreProps extends IconButtonProps {
+  expand: boolean; // 明确指出expand属性是一个布尔值
+}
+
+const ExpandMore = styled(({ expand, ...other }: ExpandMoreProps) => (
+  <IconButton {...other} />
+))(({ theme, expand }) => ({
   transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
   marginLeft: "auto",
   transition: theme.transitions.create("transform", {
@@ -37,7 +41,23 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-const AdvisorCard = ({ advisor }) => {
+interface Advisor {
+  name: string;
+  id: string;
+  position: string;
+  affiliation: string;
+  avatar: string;
+  github?: string;
+  twitter?: string;
+  email: string;
+  website?: string;
+  description?: string;
+  tags?: string[];
+  connections?: any[]; // 根据你的具体需求来调整类型
+  // 这里添加任何其他你需要的属性
+}
+
+const AdvisorCard = ({ advisor }: { advisor: Advisor }) => {
   return (
     <Grid
       container
@@ -78,7 +98,7 @@ const AdvisorCard = ({ advisor }) => {
             textAlign: "center",
           }}
         >
-          {advisor.position} @ {advisor.affliation}
+          {advisor.position} @ {advisor.affiliation}
         </Typography>
         <Stack
           direction="row"
@@ -147,7 +167,10 @@ const AdvisorCard = ({ advisor }) => {
           marginBottom: 4,
         }}
       >
-        <Tags tags={advisor.tags} onClickTag={(tag) => console.log(tag)} />
+        <Tags
+          tags={advisor.tags ?? []}
+          onClickTag={(tag: string) => console.log(tag)}
+        />
       </Grid>
 
       {/* Connections Section */}
@@ -158,7 +181,7 @@ const AdvisorCard = ({ advisor }) => {
         >
           Connections
         </Typography>
-        {advisor.connections.map((connection) => (
+        {advisor.connections?.map((connection) => (
           <AdvisorConnection
             key={connection.advisor_id}
             connection={connection}

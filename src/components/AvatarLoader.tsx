@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { CircularProgress, Box, Avatar } from "@mui/material";
+import { CircularProgress, Box, Avatar, AvatarProps } from "@mui/material";
 
 interface AvatarLoaderProps extends AvatarProps {
   src: string;

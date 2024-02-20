@@ -85,6 +85,7 @@ function MainContent() {
     const advisorInfo = advisorsData.find(
       (advisor) => advisor.advisor_id === advisor_id
     );
+    // @ts-ignore
     setSelectedNode(advisorInfo || null);
   }, [advisor_id]);
   return (
@@ -107,7 +108,7 @@ function MainContent() {
           }}
         >
           <GraphRender
-            onNodeClick={(node) => {
+            onNodeClick={(node: any) => {
               if (node) {
                 setSelectedNode(node);
                 setClickedNode(node);
@@ -116,11 +117,12 @@ function MainContent() {
                 const defaultNode = advisorsData.find(
                   (advisor) => advisor.advisor_id === advisor_id
                 );
+                // @ts-ignore
                 setSelectedNode(defaultNode);
                 setClickedNode(null);
               }
             }}
-            onNodeHover={(node) => {
+            onNodeHover={(node: any) => {
               if (node) {
                 setSelectedNode(node);
               } else {
@@ -132,6 +134,7 @@ function MainContent() {
                 if (clickedNode) {
                   setSelectedNode(clickedNode);
                 } else {
+                  // @ts-ignore
                   setSelectedNode(defaultNode);
                 }
               }

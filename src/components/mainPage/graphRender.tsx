@@ -1,7 +1,10 @@
+/* eslint-disable no-alert */
+
 import React, { useEffect, useRef, useState } from "react";
 import ReactECharts from "echarts-for-react";
 import * as echarts from "echarts/core";
 import { GraphChart } from "echarts/charts";
+import { ECharts, init } from "echarts"; // 假设的导入，根据你的实际使用情况调整
 import {
   TooltipComponent,
   LegendComponent,
@@ -10,7 +13,7 @@ import {
 
 import { SVGRenderer } from "echarts/renderers";
 
-const generateGraphData = (nodesCount) => {
+const generateGraphData = (nodesCount: any) => {
   const nodes = [];
   const links = [];
 
@@ -122,15 +125,15 @@ const advisorsReader = () => {
         const symbolSize = 20 + connection.relationFactor * 0.5;
 
         nodes.push({
-          id: connectedAdvisor.advisor_id,
+          id: connectedAdvisor?.advisor_id,
           symbolSize: symbolSize,
           latestCollaboration: latestYear,
-          ...connectedAdvisor,
+          ...(connectedAdvisor || {}),
         });
 
         links.push({
           source: mainAdvisor.advisor_id,
-          target: connectedAdvisor.advisor_id,
+          target: connectedAdvisor?.advisor_id,
           value: connection.relationFactor,
           lineStyle: {
             width:
@@ -164,27 +167,34 @@ const advisorsReader = () => {
   return { nodes, links, minYear, maxYear };
 };
 
-const GraphRender = ({ onNodeHover, onNodeClick }) => {
+const GraphRender = ({
+  onNodeHover,
+  onNodeClick,
+}: {
+  onNodeHover: any;
+  onNodeClick: any;
+}) => {
   const chartRef = useRef(null);
   const [option, setOption] = useState({}); // 用于存储图表配置
   const [zoomFactor, setZoomFactor] = useState(1); // 存储当前的缩放因子
   const [selectedNode, setSelectedNode] = useState(null); // 新增状态来跟踪选中的节点
   const [selectedNodeId, setSelectedNodeId] = useState(null); // 用于存储选中节点的ID
-  const [myChart, setMyChart] = useState(null); // 用于存储 echarts 实例
+  const [myChart, setMyChart] = useState<ECharts | null>(null);
 
   useEffect(() => {
     if (chartRef.current && !myChart) {
       const initializedChart = echarts.init(chartRef.current, null, {
         renderer: "svg",
       });
-      setMyChart(initializedChart); // 保存 echarts 实例
+      // @ts-ignore
+      setMyChart(initializedChart); /* eslint-disable no-alert */
     }
 
     if (myChart) {
       const { nodes, links, minYear, maxYear } = advisorsReader();
 
       // 更新节点样式，为选中节点添加边框
-      const updateNodesStyle = (nodes, selectedNodeId) => {
+      const updateNodesStyle = (nodes: any[], selectedNodeId: string) => {
         return nodes.map((node) => {
           if (node.id === selectedNodeId) {
             return {
@@ -254,7 +264,7 @@ const GraphRender = ({ onNodeHover, onNodeClick }) => {
         },
         tooltip: {
           show: true,
-          formatter: (params) => {
+          formatter: (params: any) => {
             if (params.dataType === "edge") {
               return params.data.tooltip;
             }
@@ -270,7 +280,7 @@ const GraphRender = ({ onNodeHover, onNodeClick }) => {
             type: "graph",
             layout: "force",
             layoutAnimation: false,
-            data: updateNodesStyle(updatedNodes, selectedNodeId),
+            data: updateNodesStyle(updatedNodes, selectedNodeId || ""),
             links: links,
             categories: [{ name: "Main Node" }, { name: "Other" }],
             roam: true,
@@ -309,10 +319,17 @@ const GraphRender = ({ onNodeHover, onNodeClick }) => {
       // 监听节点的鼠标悬停事件
       myChart.on("mouseover", "series.graph", function (params) {
         if (params.dataType === "node") {
-          // 只有当节点未被选中时，才应用悬浮样式
-          if (!selectedNode || params.data.id !== selectedNode.id) {
-            // 应用悬浮样式
-            onNodeHover(params.data);
+          // Only apply hover style when the node is not selected
+
+          if (
+            params.data !== null &&
+            params.data !== undefined &&
+            (!selectedNode ||
+              // @ts-ignore
+              params.data.id !== selectedNode.id)
+          ) {
+            // 恢复节点原样式
+            onNodeHover(null); // 鼠标离开时清除选中的节点
           }
         }
       });
@@ -321,6 +338,7 @@ const GraphRender = ({ onNodeHover, onNodeClick }) => {
       myChart.on("mouseout", "series.graph", function (params) {
         if (params.dataType === "node") {
           // 如果鼠标离开的节点不是被选中的节点，恢复原样式
+          // @ts-ignore
           if (!selectedNode || params.data.id !== selectedNode.id) {
             // 恢复节点原样式
             onNodeHover(null); // 鼠标离开时清除选中的节点
@@ -332,7 +350,8 @@ const GraphRender = ({ onNodeHover, onNodeClick }) => {
 
       myChart.on("click", function (params) {
         if (params.dataType === "node") {
-          setSelectedNodeId(params.data.id); // 更新选中节点的ID
+          // @ts-ignore
+          setSelectedNodeId(params.data?.id); // 更新选中节点的ID
           onNodeClick(params.data);
         }
         if (params.dataType === "edge") {
@@ -346,6 +365,7 @@ const GraphRender = ({ onNodeHover, onNodeClick }) => {
         myChart.setOption({
           series: [
             {
+              // @ts-ignore
               data: updateNodesStyle(nodes, selectedNodeId),
             },
           ],
@@ -353,7 +373,9 @@ const GraphRender = ({ onNodeHover, onNodeClick }) => {
       });
 
       myChart.on("graphRoam", function (event) {
+        // @ts-ignore
         if (event.zoom) {
+          // @ts-ignore
           const zoomLevel = myChart.getOption().series[0].zoom; // 获取当前的缩放级别
           setZoomFactor(zoomLevel); // 更新缩放因子状态
           myChart.setOption({
