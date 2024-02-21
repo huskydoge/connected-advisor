@@ -27,6 +27,7 @@ import AdvisorConnection from "./advisorCardComponents/advisorConnections";
 import Tags from "./advisorCardComponents/tags";
 import AvatarLoader from "../AvatarLoader";
 import { Waline } from "./advisorCardComponents/advisorComments";
+import Router from "next/router";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean; // 明确指出expand属性是一个布尔值
@@ -44,7 +45,7 @@ const ExpandMore = styled(({ expand, ...other }: ExpandMoreProps) => (
 
 interface Advisor {
   name: string;
-  id: string;
+  advisor_id: string;
   position: string;
   affiliation: string;
   avatar: string;
@@ -63,7 +64,7 @@ const AdvisorCard = ({ advisor }: { advisor: Advisor }) => {
 
   // 点击事件处理函数
   const handleClick = () => {
-    router.push(`/main/${advisor.id}`); // 使用模板字符串插入变量
+    router.push(`/main/${advisor.advisor_id}`); // 使用模板字符串插入变量
   };
   return (
     <Grid
@@ -228,7 +229,7 @@ const AdvisorCard = ({ advisor }: { advisor: Advisor }) => {
       <Grid item xs={12} sx={{ width: "100%" }}>
         <Waline
           serverURL="https://waline-connected-advisor-pud8gagjj-huskydoge.vercel.app"
-          path={advisor.id}
+          path={advisor.advisor_id}
         />
       </Grid>
     </Grid>

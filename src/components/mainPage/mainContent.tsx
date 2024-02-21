@@ -2,16 +2,19 @@ import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import { useRouter } from "next/router";
 
 import advisorsData from "../../data/advisors.json"; // 假设你的数据文件路径
+import FilterCard from "./filterCard"; // Ensure FilterCard is imported correctly
 
 // 使用dynamic导入GraphRender组件，禁用SSR
-const GraphRender = dynamic(() => import("./graphRender"), {
+const GraphRender = dynamic(() => import("./dataRender/graphRender"), {
   ssr: false, // 确保只在客户端渲染
 });
 
 import AdvisorCard from "./advisorCard"; // Ensure AdvisorCard is imported correctly
+import RenderTabs from "./dataRender/renderTabs";
+import ListView from "./dataRender/listiew/listView";
+import { useRouter } from "next/router";
 
 const advisor = {
   advisor_id: 0,
@@ -75,9 +78,54 @@ const advisor = {
 
 function MainContent({ id }: { id: number }) {
   const advisor_id = Number(id);
-
+  const router = useRouter();
   const [selectedNode, setSelectedNode] = useState(null); // 用于存储选中的节点信息
   const [clickedNode, setClickedNode] = useState(null);
+  const [showFilter, setShowFilter] = useState(false);
+
+  const [selectedTab, setSelectedTab] = useState(""); // 用于存储选中的Tab信息
+
+  const handleFilterClick = () => {
+    if (showFilter) {
+      setShowFilter(false);
+      setSelectedTab("");
+      return;
+    }
+    setShowFilter(true); // 显示FilterCard
+    setSelectedTab("filter"); // Set filter as selected
+  };
+
+  const handleGraphMode = () => {
+    // 显示GraphRender
+  };
+
+  const handleListView = () => {
+    // 显示ListView
+    if (router.query.view === "list") {
+      setSelectedTab("");
+      router.push(`${advisor.advisor_id}?view=graph`, undefined, {
+        shallow: true,
+      });
+      return;
+    }
+
+    router.push(`${advisor.advisor_id}?view=list`, undefined, {
+      shallow: true,
+    });
+    setSelectedTab("listview"); // Set listview as selected
+  };
+
+  const closeListView = () => {
+    setSelectedTab("");
+    router.push(`${advisor.advisor_id}?view=graph`, undefined, {
+      shallow: true,
+    });
+  };
+
+  const closeFilterCard = () => {
+    setShowFilter(false); // 关闭FilterCard
+    setSelectedTab(""); // Reset selected tab
+  };
 
   useEffect(() => {
     // 根据advisor_id查找advisor信息
@@ -97,6 +145,13 @@ function MainContent({ id }: { id: number }) {
         style={{ padding: 0, display: "flex", flexDirection: "column" }}
       >
         {/* Left column for graph display */}
+
+        <RenderTabs
+          onFilter={handleFilterClick}
+          onGraphMode={handleGraphMode}
+          onListView={handleListView}
+          selected={selectedTab}
+        />
         <Paper
           style={{
             flexGrow: 1,
@@ -105,40 +160,44 @@ function MainContent({ id }: { id: number }) {
             maxHeight: "100vh",
           }}
         >
-          <GraphRender
-            advisor_id={advisor_id}
-            onNodeClick={(node: any) => {
-              if (node) {
-                setSelectedNode(node);
-                setClickedNode(node);
-              } else {
-                // 当没有节点被悬停时，恢复到默认的主节点信息
-                const defaultNode = advisorsData.find(
-                  (advisor) => advisor.advisor_id === advisor_id
-                );
-                // @ts-ignore
-                setSelectedNode(defaultNode);
-                setClickedNode(null);
-              }
-            }}
-            onNodeHover={(node: any) => {
-              if (node) {
-                setSelectedNode(node);
-              } else {
-                // 当没有节点被悬停时，恢复到默认的主节点信息
-
-                const defaultNode = advisorsData.find(
-                  (advisor) => advisor.advisor_id === advisor_id
-                );
-                if (clickedNode) {
-                  setSelectedNode(clickedNode);
+          {router.query.view === "list" ? (
+            <ListView onClose={closeListView} />
+          ) : (
+            <GraphRender
+              advisor_id={advisor_id}
+              onNodeClick={(node: any) => {
+                if (node) {
+                  setSelectedNode(node);
+                  setClickedNode(node);
                 } else {
+                  // 当没有节点被悬停时，恢复到默认的主节点信息
+                  const defaultNode = advisorsData.find(
+                    (advisor) => advisor.advisor_id === advisor_id
+                  );
                   // @ts-ignore
                   setSelectedNode(defaultNode);
+                  setClickedNode(null);
                 }
-              }
-            }}
-          />
+              }}
+              onNodeHover={(node: any) => {
+                if (node) {
+                  setSelectedNode(node);
+                } else {
+                  // 当没有节点被悬停时，恢复到默认的主节点信息
+
+                  const defaultNode = advisorsData.find(
+                    (advisor) => advisor.advisor_id === advisor_id
+                  );
+                  if (clickedNode) {
+                    setSelectedNode(clickedNode);
+                  } else {
+                    // @ts-ignore
+                    setSelectedNode(defaultNode);
+                  }
+                }
+              }}
+            />
+          )}
         </Paper>
       </Grid>
       <Grid
@@ -156,7 +215,11 @@ function MainContent({ id }: { id: number }) {
             height: "100vh",
           }}
         >
-          {selectedNode && <AdvisorCard advisor={selectedNode} />}
+          {showFilter ? (
+            <FilterCard onClose={closeFilterCard} />
+          ) : (
+            selectedNode && <AdvisorCard advisor={selectedNode} />
+          )}
         </Paper>
       </Grid>
     </Grid>

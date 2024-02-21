@@ -1,0 +1,54 @@
+{
+    "sourceFile": "src/components/mainPage/filterCard.tsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 9,
+            "patches": [
+                {
+                    "date": 1708502398109,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1708502677643,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n const FilterCard = () => {\n   return (\n     <Card>\n       <CardContent>\n-        <Typography variant=\"h5\">Filter Configuration</Typography>\n+        <Typography variant=\"h6\">Filter Configuration</Typography>\n         {/* Filter配置内容 */}\n       </CardContent>\n     </Card>\n   );\n"
+                },
+                {
+                    "date": 1708502685700,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,14 +3,14 @@\n import { Card, CardContent, Typography } from \"@mui/material\";\n \n const FilterCard = () => {\n   return (\n-    <Card>\n+    <Box>\n       <CardContent>\n         <Typography variant=\"h6\">Filter Configuration</Typography>\n         {/* Filter配置内容 */}\n       </CardContent>\n-    </Card>\n+    </Box>\n   );\n };\n \n export default FilterCard;\n"
+                },
+                {
+                    "date": 1708502690989,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n // components/FilterCard.jsx\n import React from \"react\";\n-import { Card, CardContent, Typography } from \"@mui/material\";\n+import { Box, CardContent, Typography } from \"@mui/material\";\n \n const FilterCard = () => {\n   return (\n     <Box>\n"
+                },
+                {
+                    "date": 1708503087066,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,16 +1,23 @@\n-// components/FilterCard.jsx\n+// FilterCard.jsx\n import React from \"react\";\n-import { Box, CardContent, Typography } from \"@mui/material\";\n+import { Card, CardContent, Typography, IconButton } from \"@mui/material\";\n+import CloseIcon from \"@mui/icons-material/Close\";\n \n-const FilterCard = () => {\n+const FilterCard = ({ onClose }) => {\n   return (\n-    <Box>\n+    <Card sx={{ position: \"relative\" }}>\n+      <IconButton\n+        onClick={onClose}\n+        sx={{ position: \"absolute\", right: 8, top: 8 }}\n+      >\n+        <CloseIcon />\n+      </IconButton>\n       <CardContent>\n         <Typography variant=\"h6\">Filter Configuration</Typography>\n         {/* Filter配置内容 */}\n       </CardContent>\n-    </Box>\n+    </Card>\n   );\n };\n \n export default FilterCard;\n"
+                },
+                {
+                    "date": 1708503095397,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,23 @@\n+// FilterCard.jsx\n+import React from \"react\";\n+import { Card, CardContent, Typography, IconButton } from \"@mui/material\";\n+import CloseIcon from \"@mui/icons-material/Close\";\n+\n+const FilterCard = ({ onClose: any }) => {\n+  return (\n+    <Card sx={{ position: \"relative\" }}>\n+      <IconButton\n+        onClick={onClose}\n+        sx={{ position: \"absolute\", right: 8, top: 8 }}\n+      >\n+        <CloseIcon />\n+      </IconButton>\n+      <CardContent>\n+        <Typography variant=\"h6\">Filter Configuration</Typography>\n+        {/* Filter配置内容 */}\n+      </CardContent>\n+    </Card>\n+  );\n+};\n+\n+export default FilterCard;\n"
+                },
+                {
+                    "date": 1708503103860,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,23 @@\n+// FilterCard.jsx\n+import React from \"react\";\n+import { Card, CardContent, Typography, IconButton } from \"@mui/material\";\n+import CloseIcon from \"@mui/icons-material/Close\";\n+\n+const FilterCard = ({ onClose }) => {\n+  return (\n+    <Card sx={{ position: \"relative\" }}>\n+      <IconButton\n+        onClick={onClose}\n+        sx={{ position: \"absolute\", right: 8, top: 8 }}\n+      >\n+        <CloseIcon />\n+      </IconButton>\n+      <CardContent>\n+        <Typography variant=\"h6\">Filter Configuration</Typography>\n+        {/* Filter配置内容 */}\n+      </CardContent>\n+    </Card>\n+  );\n+};\n+\n+export default FilterCard;\n"
+                },
+                {
+                    "date": 1708503110622,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,8 +2,9 @@\n import React from \"react\";\n import { Card, CardContent, Typography, IconButton } from \"@mui/material\";\n import CloseIcon from \"@mui/icons-material/Close\";\n \n+//@ts-ignore\n const FilterCard = ({ onClose }) => {\n   return (\n     <Card sx={{ position: \"relative\" }}>\n       <IconButton\n@@ -20,50 +21,4 @@\n   );\n };\n \n export default FilterCard;\n-// FilterCard.jsx\n-import React from \"react\";\n-import { Card, CardContent, Typography, IconButton } from \"@mui/material\";\n-import CloseIcon from \"@mui/icons-material/Close\";\n-\n-const FilterCard = ({ onClose: any }) => {\n-  return (\n-    <Card sx={{ position: \"relative\" }}>\n-      <IconButton\n-        onClick={onClose}\n-        sx={{ position: \"absolute\", right: 8, top: 8 }}\n-      >\n-        <CloseIcon />\n-      </IconButton>\n-      <CardContent>\n-        <Typography variant=\"h6\">Filter Configuration</Typography>\n-        {/* Filter配置内容 */}\n-      </CardContent>\n-    </Card>\n-  );\n-};\n-\n-export default FilterCard;\n-// FilterCard.jsx\n-import React from \"react\";\n-import { Card, CardContent, Typography, IconButton } from \"@mui/material\";\n-import CloseIcon from \"@mui/icons-material/Close\";\n-\n-const FilterCard = ({ onClose }) => {\n-  return (\n-    <Card sx={{ position: \"relative\" }}>\n-      <IconButton\n-        onClick={onClose}\n-        sx={{ position: \"absolute\", right: 8, top: 8 }}\n-      >\n-        <CloseIcon />\n-      </IconButton>\n-      <CardContent>\n-        <Typography variant=\"h6\">Filter Configuration</Typography>\n-        {/* Filter配置内容 */}\n-      </CardContent>\n-    </Card>\n-  );\n-};\n-\n-export default FilterCard;\n"
+                },
+                {
+                    "date": 1708503126704,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,13 +1,13 @@\n // FilterCard.jsx\n import React from \"react\";\n-import { Card, CardContent, Typography, IconButton } from \"@mui/material\";\n+import { Box, CardContent, Typography, IconButton } from \"@mui/material\";\n import CloseIcon from \"@mui/icons-material/Close\";\n \n //@ts-ignore\n const FilterCard = ({ onClose }) => {\n   return (\n-    <Card sx={{ position: \"relative\" }}>\n+    <Box sx={{ position: \"relative\" }}>\n       <IconButton\n         onClick={onClose}\n         sx={{ position: \"absolute\", right: 8, top: 8 }}\n       >\n@@ -16,9 +16,9 @@\n       <CardContent>\n         <Typography variant=\"h6\">Filter Configuration</Typography>\n         {/* Filter配置内容 */}\n       </CardContent>\n-    </Card>\n+    </Box>\n   );\n };\n \n export default FilterCard;\n"
+                },
+                {
+                    "date": 1708503256984,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,24 @@\n+// FilterCard.jsx\n+import React from \"react\";\n+import { Box, CardContent, Typography, IconButton } from \"@mui/material\";\n+import CloseIcon from \"@mui/icons-material/Close\";\n+\n+//@ts-ignore\n+const FilterCard = ({ onClose }) => {\n+  return (\n+    <Box sx={{ position: \"relative\" }}>\n+      <IconButton\n+        onClick={onClose}\n+        sx={{ position: \"absolute\", right: 8, top: 8 }}\n+      >\n+        <CloseIcon />\n+      </IconButton>\n+      <CardContent>\n+        <Typography variant=\"h6\">Filter Configuration</Typography>\n+        {/* Filter配置内容 */}\n+      </CardContent>\n+    </Box>\n+  );\n+};\n+\n+export default FilterCard;\n"
+                }
+            ],
+            "date": 1708502398109,
+            "name": "Commit-0",
+            "content": "// components/FilterCard.jsx\nimport React from \"react\";\nimport { Card, CardContent, Typography } from \"@mui/material\";\n\nconst FilterCard = () => {\n  return (\n    <Card>\n      <CardContent>\n        <Typography variant=\"h5\">Filter Configuration</Typography>\n        {/* Filter配置内容 */}\n      </CardContent>\n    </Card>\n  );\n};\n\nexport default FilterCard;\n"
+        }
+    ]
+}

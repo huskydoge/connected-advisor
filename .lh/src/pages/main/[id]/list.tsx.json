@@ -1,0 +1,26 @@
+{
+    "sourceFile": "src/pages/main/[id]/list.tsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1708507831533,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1708507928808,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n   const { id } = router.query;\n \n   return (\n     <div>\n-      <MainContent id={Number(id)} view=\"list\" />\n+      <MainContent id={Number(id)} view=\"listview\" />\n     </div>\n   );\n };\n \n"
+                },
+                {
+                    "date": 1708508156209,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,16 @@\n+import { useRouter } from \"next/router\";\n+import TopMenu from \"@/components/topTab\";\n+import MainContent from \"@/components/mainPage/mainContent\";\n+\n+const Post = () => {\n+  const router = useRouter();\n+  const { id } = router.query;\n+\n+  return (\n+    <div>\n+      <MainContent id={Number(id)} view=\"list\" />\n+    </div>\n+  );\n+};\n+\n+export default Post;\n"
+                }
+            ],
+            "date": 1708507831533,
+            "name": "Commit-0",
+            "content": "import { useRouter } from \"next/router\";\nimport TopMenu from \"@/components/topTab\";\nimport MainContent from \"@/components/mainPage/mainContent\";\n\nconst Post = () => {\n  const router = useRouter();\n  const { id } = router.query;\n\n  return (\n    <div>\n      <MainContent id={Number(id)} view=\"list\" />\n    </div>\n  );\n};\n\nexport default Post;\n"
+        }
+    ]
+}

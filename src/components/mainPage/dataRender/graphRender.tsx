@@ -1,14 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
-import ReactECharts from "echarts-for-react";
+
 import * as echarts from "echarts/core";
 import { GraphChart } from "echarts/charts";
 import { useRouter } from "next/router";
 
-import {
-  TooltipComponent,
-  LegendComponent,
-  VisualMapComponent,
-} from "echarts/components";
+import { TooltipComponent, VisualMapComponent } from "echarts/components";
 
 import { SVGRenderer } from "echarts/renderers";
 
@@ -42,13 +38,7 @@ const generateGraphData = (nodesCount: number) => {
 };
 
 // 注册必要的组件
-echarts.use([
-  TooltipComponent,
-  LegendComponent,
-  GraphChart,
-  SVGRenderer,
-  VisualMapComponent,
-]);
+echarts.use([TooltipComponent, GraphChart, SVGRenderer, VisualMapComponent]);
 interface Advisor {
   advisor_id: number;
   name: string;
@@ -74,7 +64,7 @@ interface Advisor {
 
 let currentMain = 0; // 记录主要advisor的ID
 
-const advisors: Advisor[] = require("../../data/advisors.json");
+const advisors: Advisor[] = require("../../../data/advisors.json");
 
 const advisorsReader = (advisor_id: number) => {
   const nodes: any[] = [];
