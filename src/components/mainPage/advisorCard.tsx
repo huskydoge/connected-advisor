@@ -9,6 +9,7 @@ import {
   Divider,
 } from "@mui/material";
 import { GitHub, Twitter, Email, Language } from "@mui/icons-material";
+import { useRouter } from "next/router";
 import {
   Card,
   CardContent,
@@ -58,6 +59,12 @@ interface Advisor {
 }
 
 const AdvisorCard = ({ advisor }: { advisor: Advisor }) => {
+  const router = useRouter(); // 使用useRouter钩子
+
+  // 点击事件处理函数
+  const handleClick = () => {
+    router.push(advisor.id); // 使用router.push进行路由跳转
+  };
   return (
     <Grid
       container
@@ -112,6 +119,16 @@ const AdvisorCard = ({ advisor }: { advisor: Advisor }) => {
           justifyContent="center" // 居中对齐图标
           sx={{ flexWrap: "wrap", justifyContent: "center" }}
         >
+          <IconButton
+            component="a"
+            target="_blank"
+            onClick={handleClick}
+            rel="noopener noreferrer"
+            sx={{ display: "flex", alignItems: "center" }}
+          >
+            Graph
+          </IconButton>
+
           <Link
             href={advisor.github}
             target="_blank"

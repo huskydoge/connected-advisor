@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import ReactECharts from "echarts-for-react";
 import * as echarts from "echarts/core";
 import { GraphChart } from "echarts/charts";
+import { useRouter } from "next/router";
+
 import {
   TooltipComponent,
   LegendComponent,
@@ -176,6 +178,7 @@ const GraphRender = ({ onNodeHover, onNodeClick, advisor_id }) => {
   const [selectedNode, setSelectedNode] = useState(null); // 新增状态来跟踪选中的节点
   const [selectedNodeId, setSelectedNodeId] = useState(null); // 用于存储选中节点的ID
   const [myChart, setMyChart] = useState(null); // 用于存储 echarts 实例
+  const router = useRouter();
 
   useEffect(() => {
     if (chartRef.current && !myChart) {
@@ -365,6 +368,7 @@ const GraphRender = ({ onNodeHover, onNodeClick, advisor_id }) => {
           ],
         });
       });
+
       // @ts-ignore
       myChart.on("graphRoam", function (event) {
         if (event.zoom) {
