@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-
+import RelationComponent from "./relation";
 interface Advisor {
   advisor_id: number;
   name: string;
@@ -32,102 +32,82 @@ interface Advisor {
 const advisors: Advisor[] = require("../../../../data/advisors.json");
 
 import {
-  TableContainer,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
+  Tooltip,
   Paper,
   IconButton,
   Typography,
   Toolbar,
-  Link,
+  Box,
 } from "@mui/material";
 
+import TableView from "./table";
 import CloseIcon from "@mui/icons-material/Close";
 
-//@ts-ignore
-const ListView = ({ onClose }) => {
+// find the connected advisors based on main advisor id
+const findConnectedAdvisors = (mainAdvisorId: number) => {
+  // find in main advisor's connections list
+  const mainAdvisor = advisors.find(
+    (advisor) => advisor?.advisor_id === mainAdvisorId
+  );
+  const connectedAdvisors = mainAdvisor?.connections.map((connection) => {
+    return advisors.find(
+      (advisor) => advisor?.advisor_id === connection.advisor_id
+    );
+  });
+  return connectedAdvisors;
+};
+
+// @ts-ignore
+const ListView = ({ onClose, mainAdvisor }) => {
+  const advisors = findConnectedAdvisors(mainAdvisor.advisor_id);
+  const [showTableView, setShowTableView] = useState(true); // 控制显示哪个视图
+  const [selectedAdvisor, setSelectedAdvisor] = useState<Advisor | null>(null); // 存储选中的advisor id
+
+  const handleClickConnection = (advisor_id: number) => {
+    // @ts-ignore
+    const advisor = advisors.find(
+      (advisor) => advisor?.advisor_id === advisor_id
+    );
+    setSelectedAdvisor(advisor || null); // 设置选中的advisor id
+    setShowTableView(false); // 切换到RelationComponent视图
+  };
+
+  const returnToListView = () => {
+    setShowTableView(true); // 切换到TableView视图
+  };
+
   return (
     <Paper
       sx={{ width: "100%", paddingLeft: 2, paddingRight: 2, paddingTop: 2 }}
     >
-      {" "}
-      {/* 确保这一层也是充满父元素的 */}
-      <Toolbar
-        sx={{
+      <div
+        style={{
           display: "flex",
           justifyContent: "space-between",
-          alignItems: "center",
-          p: 2,
-          width: "100%",
+          marginBottom: 20,
         }}
       >
-        <Typography variant="h6">Main Advisor</Typography>
-        <IconButton onClick={onClose} color="inherit">
-          <CloseIcon />
-        </IconButton>
-      </Toolbar>
-      <TableContainer component={Paper} sx={{ width: "100%" }}>
-        <Table stickyHeader>
-          <TableHead>
-            <TableRow>
-              <TableCell align="center">Advisor Name</TableCell>
-              <TableCell align="center">Position</TableCell>
-              <TableCell align="center">Affliation</TableCell>
-              <TableCell align="center">HomePage</TableCell>
-              <TableCell align="center">Email</TableCell>
-              <TableCell align="center">Twitter</TableCell>
-              <TableCell align="center">GitHub</TableCell>
-              <TableCell align="center">Collaborations</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {advisors.map((advisor) => (
-              <TableRow sx={{ border: "none" }} key={advisor.advisor_id} hover>
-                <TableCell align="center">{advisor.name}</TableCell>
-                <TableCell align="center">{advisor.position}</TableCell>
-                <TableCell align="center">{advisor.affiliation}</TableCell>
-                <TableCell align="center">
-                  <Link
-                    href={advisor.homepage}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {advisor.homepage}
-                  </Link>
-                </TableCell>
-                <TableCell align="center">
-                  <Link href={`mailto:${advisor.email}`}>{advisor.email}</Link>
-                </TableCell>
-                <TableCell align="center">
-                  <Link
-                    href={advisor.twitter}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {advisor.twitter}
-                  </Link>
-                </TableCell>
-                <TableCell align="center">
-                  <Link
-                    href={advisor.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {advisor.github}
-                  </Link>
-                </TableCell>
-                <TableCell align="center">
-                  {/* Implementation for collaborations and connection cell */}
-                  {/* You can add a button or link here to navigate to the connection table */}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+        <Typography variant="h6">Connected to {mainAdvisor.name}</Typography>
+        {/* 使用Box组件作为flex占位符 */}
+        <Box sx={{ flexGrow: 1 }} />
+        <Tooltip title="Close List View">
+          <IconButton onClick={onClose} color="inherit">
+            <CloseIcon />
+          </IconButton>
+        </Tooltip>
+      </div>
+      {showTableView ? (
+        <TableView
+          advisors={advisors}
+          onClickConnection={handleClickConnection}
+        />
+      ) : (
+        <RelationComponent
+          main={mainAdvisor}
+          second={selectedAdvisor}
+          onBack={returnToListView}
+        />
+      )}
     </Paper>
   );
 };

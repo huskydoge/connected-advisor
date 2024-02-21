@@ -127,7 +127,7 @@ const AdvisorCard = ({ advisor }: { advisor: Advisor }) => {
             rel="noopener noreferrer"
             sx={{ display: "flex", alignItems: "center" }}
           >
-            Graph
+            Origin
           </IconButton>
 
           <Link

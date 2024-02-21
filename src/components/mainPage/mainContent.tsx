@@ -16,74 +16,19 @@ import RenderTabs from "./dataRender/renderTabs";
 import ListView from "./dataRender/listiew/listView";
 import { useRouter } from "next/router";
 
-const advisor = {
-  advisor_id: 0,
-  name: "John Doe",
-  tags: ["Pushing", "Excellent", "Machine Learning"], // tags不能乱取
-  avatar: "https://example.com/avatar.jpg",
-  github: "https://github.com/johndoe",
-  twitter: "https://twitter.com/johndoe",
-  email: "john@example.com",
-  website: "https://johndoe.com",
-  position: "Professor",
-  affliation: "LTI, CMU",
-  description:
-    "John Doe is an experienced software engineer with a passion for developing innovative programs that expedite the efficiency and effectiveness of organizational success.",
-  connections: [
-    {
-      advisor_id: 1,
-      relation: [
-        {
-          class: "PhD",
-          role: "supervisor",
-          duration: {
-            start: {
-              year: 2018,
-              month: 8,
-            },
-            end: {
-              year: 2023,
-              month: 12,
-            },
-          },
-        },
-        {
-          class: "Master",
-          role: "supervisor",
-          duration: {
-            start: {
-              year: 2016,
-              month: 8,
-            },
-            end: {
-              year: 2018,
-              month: 4,
-            },
-          },
-        },
-      ],
-      collaborations: [
-        // rank with year
-        {
-          papername: "Defining and Extracting Relationships",
-          year: 2023,
-          url: "https://github.com",
-        },
-      ],
-      latestCollaboration: 2023,
-      relationFactor: 45, // MS + 15 | PhD + 25 | PostDoc + 20 | UnderGrad + 10 | 1 Paper + 5, maximum = 100
-    },
-  ],
-};
-
 function MainContent({ id }: { id: number }) {
   const advisor_id = Number(id);
   const router = useRouter();
   const [selectedNode, setSelectedNode] = useState(null); // 用于存储选中的节点信息
   const [clickedNode, setClickedNode] = useState(null);
   const [showFilter, setShowFilter] = useState(false);
-
   const [selectedTab, setSelectedTab] = useState(""); // 用于存储选中的Tab信息
+
+  const advisorInfo = advisorsData.find(
+    (advisor) => advisor.advisor_id === advisor_id
+  );
+
+  const advisor = advisorInfo;
 
   const handleFilterClick = () => {
     if (showFilter) {
@@ -103,13 +48,13 @@ function MainContent({ id }: { id: number }) {
     // 显示ListView
     if (router.query.view === "list") {
       setSelectedTab("");
-      router.push(`${advisor.advisor_id}?view=graph`, undefined, {
+      router.push(`${advisor?.advisor_id}?view=graph`, undefined, {
         shallow: true,
       });
       return;
     }
 
-    router.push(`${advisor.advisor_id}?view=list`, undefined, {
+    router.push(`${advisor?.advisor_id}?view=list`, undefined, {
       shallow: true,
     });
     setSelectedTab("listview"); // Set listview as selected
@@ -117,7 +62,7 @@ function MainContent({ id }: { id: number }) {
 
   const closeListView = () => {
     setSelectedTab("");
-    router.push(`${advisor.advisor_id}?view=graph`, undefined, {
+    router.push(`${advisor?.advisor_id}?view=graph`, undefined, {
       shallow: true,
     });
   };
@@ -128,11 +73,8 @@ function MainContent({ id }: { id: number }) {
   };
 
   useEffect(() => {
-    // 根据advisor_id查找advisor信息
-    const advisorInfo = advisorsData.find(
-      (advisor) => advisor.advisor_id === advisor_id
-    );
     // @ts-ignore
+
     setSelectedNode(advisorInfo || null);
   }, [advisor_id]);
   return (
@@ -161,7 +103,7 @@ function MainContent({ id }: { id: number }) {
           }}
         >
           {router.query.view === "list" ? (
-            <ListView onClose={closeListView} />
+            <ListView onClose={closeListView} mainAdvisor={advisorInfo} />
           ) : (
             <GraphRender
               advisor_id={advisor_id}
