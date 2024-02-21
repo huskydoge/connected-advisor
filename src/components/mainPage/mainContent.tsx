@@ -156,7 +156,7 @@ function MainContent({ id }: { id: number }) {
             <ListView onClose={closeListView} mainAdvisor={advisorInfo} />
           ) : (
             <GraphRender
-              advisor_id={advisor_id}
+              advisor_id={String(advisor_id)}
               onNodeClick={(node: any) => {
                 if (node) {
                   setSelectedNode(node);

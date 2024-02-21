@@ -258,6 +258,12 @@ const GraphRender = ({
   advisor_id,
   graphDegree,
   graphType,
+}: {
+  onNodeHover: Function;
+  onNodeClick: Function;
+  advisor_id: string;
+  graphDegree: number;
+  graphType: string;
 }) => {
   const chartRef = useRef(null);
   const [option, setOption] = useState({}); // 用于存储图表配置
@@ -278,7 +284,7 @@ const GraphRender = ({
 
     if (myChart) {
       const { nodes, links, minYear, maxYear } = advisorsReader(
-        advisor_id,
+        parseInt(advisor_id),
         graphDegree
       );
 
