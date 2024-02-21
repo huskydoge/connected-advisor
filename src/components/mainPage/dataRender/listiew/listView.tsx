@@ -4,7 +4,7 @@ interface Advisor {
   advisor_id: number;
   name: string;
   affiliation: string;
-  homepage: string;
+  website: string;
   twitter: string;
   github: string;
   email: string;

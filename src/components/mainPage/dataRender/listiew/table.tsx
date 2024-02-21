@@ -21,7 +21,7 @@ const TableView = ({ onClickConnection, advisors }) => {
             <TableCell align="center">Advisor Name</TableCell>
             <TableCell align="center">Position</TableCell>
             <TableCell align="center">Affliation</TableCell>
-            <TableCell align="center">HomePage</TableCell>
+            <TableCell align="center">Website</TableCell>
             <TableCell align="center">Email</TableCell>
             <TableCell align="center">Twitter</TableCell>
             <TableCell align="center">GitHub</TableCell>
@@ -36,11 +36,11 @@ const TableView = ({ onClickConnection, advisors }) => {
               <TableCell align="center">{advisor?.affiliation}</TableCell>
               <TableCell align="center">
                 <Link
-                  href={advisor?.homepage}
+                  href={advisor?.website}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {advisor?.homepage}
+                  {advisor?.website}
                 </Link>
               </TableCell>
               <TableCell align="center">
