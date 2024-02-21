@@ -1,13 +1,9 @@
-import Image from "next/image";
-import styles from "../styles/page.module.css";
-import TopMenu from "@/components/topTab";
-import MainContent from "@/components/mainPage/mainContent";
+import React from "react";
+import Head from "next/head";
+import styles from "../styles/Home.module.css"; // 确保路径正确，并根据需要调整样式
+import Link from "next/link";
+import TopMenu from "@/components/topTab"; // 确保路径正确
 
 export default function Home() {
-  return (
-    <div>
-      <TopMenu />
-      <MainContent />
-    </div>
-  );
+  return <div> ss</div>;
 }

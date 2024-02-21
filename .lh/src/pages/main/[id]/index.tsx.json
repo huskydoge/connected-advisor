@@ -1,0 +1,66 @@
+{
+    "sourceFile": "src/pages/main/[id]/index.tsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 12,
+            "patches": [
+                {
+                    "date": 1708489853029,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1708489967255,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,13 @@\n+import Image from \"next/image\";\n+import styles from \"../styles/page.module.css\";\n+import TopMenu from \"@/components/topTab\";\n+import MainContent from \"@/components/mainPage/mainContent\";\n+\n+export default function Home() {\n+  return (\n+    <div>\n+      <TopMenu />\n+      <MainContent id={id} />\n+    </div>\n+  );\n+}\n"
+                },
+                {
+                    "date": 1708489973408,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,21 +6,8 @@\n export default function Home() {\n   return (\n     <div>\n       <TopMenu />\n-      <MainContent id={id} />\n+      <MainContent id={{ id }} />\n     </div>\n   );\n }\n-import Image from \"next/image\";\n-import styles from \"../styles/page.module.css\";\n-import TopMenu from \"@/components/topTab\";\n-import MainContent from \"@/components/mainPage/mainContent\";\n-\n-export default function Home() {\n-  return (\n-    <div>\n-      <TopMenu />\n-      <MainContent />\n-    </div>\n-  );\n-}\n"
+                },
+                {
+                    "date": 1708490034632,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n import styles from \"../styles/page.module.css\";\n import TopMenu from \"@/components/topTab\";\n import MainContent from \"@/components/mainPage/mainContent\";\n \n-export default function Home() {\n+export default function Home({ params }: { params: { id: string } }) {\n   return (\n     <div>\n       <TopMenu />\n       <MainContent id={{ id }} />\n"
+                },
+                {
+                    "date": 1708490052831,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,12 +2,12 @@\n import styles from \"../styles/page.module.css\";\n import TopMenu from \"@/components/topTab\";\n import MainContent from \"@/components/mainPage/mainContent\";\n \n-export default function Home({ params }: { params: { id: string } }) {\n+export default function Main({ params }: { params: { id: string } }) {\n   return (\n     <div>\n       <TopMenu />\n-      <MainContent id={{ id }} />\n+      <MainContent id={{ params.id }} />\n     </div>\n   );\n }\n"
+                },
+                {
+                    "date": 1708490068857,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,8 +6,8 @@\n export default function Main({ params }: { params: { id: string } }) {\n   return (\n     <div>\n       <TopMenu />\n-      <MainContent id={{ params.id }} />\n+      <MainContent id={params.id} />\n     </div>\n   );\n }\n"
+                },
+                {
+                    "date": 1708490085740,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,14 @@\n+import Image from \"next/image\";\n+import styles from \"../styles/page.module.css\";\n+import TopMenu from \"@/components/topTab\";\n+import MainContent from \"@/components/mainPage/mainContent\";\n+\n+export default function Main({ params }: { params: { id: string } }) {\n+  const id = parseInt(params.id); // Convert the id from string to number\n+  return (\n+    <div>\n+      <TopMenu />\n+      <MainContent id={id} /> // Pass the converted id to MainContent\n+    </div>\n+  );\n+}\n"
+                },
+                {
+                    "date": 1708490127843,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,17 +11,4 @@\n       <MainContent id={id} /> // Pass the converted id to MainContent\n     </div>\n   );\n }\n-import Image from \"next/image\";\n-import styles from \"../styles/page.module.css\";\n-import TopMenu from \"@/components/topTab\";\n-import MainContent from \"@/components/mainPage/mainContent\";\n-\n-export default function Main({ params }: { params: { id: string } }) {\n-  return (\n-    <div>\n-      <TopMenu />\n-      <MainContent id={params.id} />\n-    </div>\n-  );\n-}\n"
+                },
+                {
+                    "date": 1708490239237,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,14 +1,20 @@\n-import Image from \"next/image\";\n-import styles from \"../styles/page.module.css\";\n+import React from \"react\";\n import TopMenu from \"@/components/topTab\";\n-import MainContent from \"@/components/mainPage/mainContent\";\n \n-export default function Main({ params }: { params: { id: string } }) {\n-  const id = parseInt(params.id); // Convert the id from string to number\n+interface MainProps {\n+  params?: {\n+    id?: string;\n+  };\n+}\n+\n+export default function Main({ params }: MainProps) {\n+  // 使用可选链和空值合并运算符确保id有一个默认值\n+  const id = parseInt(params?.id ?? \"0\"); // 如果params或params.id不存在，则默认为\"0\"\n+\n   return (\n     <div>\n       <TopMenu />\n-      <MainContent id={id} /> // Pass the converted id to MainContent\n+      {/* 根据id渲染的内容 */}\n     </div>\n   );\n }\n"
+                },
+                {
+                    "date": 1708490593255,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,7 @@\n import React from \"react\";\n import TopMenu from \"@/components/topTab\";\n+import MainContent from \"@/components/mainPage/mainContent\";\n \n interface MainProps {\n   params?: {\n     id?: string;\n@@ -13,8 +14,8 @@\n \n   return (\n     <div>\n       <TopMenu />\n-      {/* 根据id渲染的内容 */}\n+      <MainContent id={id} />\n     </div>\n   );\n }\n"
+                },
+                {
+                    "date": 1708490638008,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n     id?: string;\n   };\n }\n \n-export default function Main({ params }: MainProps) {\n+export default function Page({ params }: MainProps) {\n   // 使用可选链和空值合并运算符确保id有一个默认值\n   const id = parseInt(params?.id ?? \"0\"); // 如果params或params.id不存在，则默认为\"0\"\n \n   return (\n"
+                },
+                {
+                    "date": 1708490669700,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,21 @@\n+import React from \"react\";\n+import TopMenu from \"@/components/topTab\";\n+import MainContent from \"@/components/mainPage/mainContent\";\n+\n+interface MainProps {\n+  params?: {\n+    id?: string;\n+  };\n+}\n+\n+export default function Page({ params }: MainProps) {\n+  // 使用可选链和空值合并运算符确保id有一个默认值\n+  const id = parseInt(params?.id ?? \"0\"); // 如果params或params.id不存在，则默认为\"0\"\n+\n+  return (\n+    <div>\n+      <TopMenu />\n+      <MainContent id={id} />\n+    </div>\n+  );\n+}\n"
+                },
+                {
+                    "date": 1708490794991,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,25 +18,4 @@\n       <MainContent id={id} />\n     </div>\n   );\n }\n-import React from \"react\";\n-import TopMenu from \"@/components/topTab\";\n-import MainContent from \"@/components/mainPage/mainContent\";\n-\n-interface MainProps {\n-  params?: {\n-    id?: string;\n-  };\n-}\n-\n-export default function Page({ params }: MainProps) {\n-  // 使用可选链和空值合并运算符确保id有一个默认值\n-  const id = parseInt(params?.id ?? \"0\"); // 如果params或params.id不存在，则默认为\"0\"\n-\n-  return (\n-    <div>\n-      <TopMenu />\n-      <MainContent id={id} />\n-    </div>\n-  );\n-}\n"
+                }
+            ],
+            "date": 1708489853029,
+            "name": "Commit-0",
+            "content": "import Image from \"next/image\";\nimport styles from \"../styles/page.module.css\";\nimport TopMenu from \"@/components/topTab\";\nimport MainContent from \"@/components/mainPage/mainContent\";\n\nexport default function Home() {\n  return (\n    <div>\n      <TopMenu />\n      <MainContent />\n    </div>\n  );\n}\n"
+        }
+    ]
+}

@@ -4,6 +4,7 @@ import { AppProps } from "next/app";
 import "../styles/globals.css"; // 全局样式
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
+import TopMenu from "@/components/topTab";
 
 const theme = createTheme({
   palette: {
@@ -34,6 +35,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <TopMenu />
       <Component {...pageProps} />
     </ThemeProvider>
   );

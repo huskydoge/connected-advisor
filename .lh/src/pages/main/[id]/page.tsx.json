@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/pages/main/[id]/page.tsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1708490660322,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1708490660322,
+            "name": "Commit-0",
+            "content": "import React from \"react\";\nimport TopMenu from \"@/components/topTab\";\nimport MainContent from \"@/components/mainPage/mainContent\";\n\ninterface MainProps {\n  params?: {\n    id?: string;\n  };\n}\n\nexport default function Page({ params }: MainProps) {\n  // 使用可选链和空值合并运算符确保id有一个默认值\n  const id = parseInt(params?.id ?? \"0\"); // 如果params或params.id不存在，则默认为\"0\"\n\n  return (\n    <div>\n      <TopMenu />\n      <MainContent id={id} />\n    </div>\n  );\n}\n"
+        }
+    ]
+}

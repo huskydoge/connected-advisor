@@ -70,11 +70,14 @@ interface Advisor {
   }[];
 }
 
-const currentMain = 0; // 记录主要advisor的ID
+let currentMain = 0; // 记录主要advisor的ID
+
 const advisors: Advisor[] = require("../../data/advisors.json");
-const advisorsReader = () => {
+
+const advisorsReader = (advisor_id: number) => {
   const nodes: any[] = [];
   const links: any[] = [];
+  currentMain = advisor_id; // 更新主要advisor的ID
   let minYear = new Date().getFullYear(); // 初始化为当前年份
   let maxYear = 0; // 初始化为0
   const currentYear = new Date().getFullYear();
@@ -93,9 +96,10 @@ const advisorsReader = () => {
   const mainAdvisor = advisors.find(
     (advisor) => advisor.advisor_id === currentMain
   );
+
   if (mainAdvisor) {
     nodes.push({
-      id: mainAdvisor.advisor_id,
+      id: String(mainAdvisor.advisor_id),
       symbolSize: 200, // main节点的大小
       itemStyle: { color: "red" }, // main节点为红色
       latestCollaboration: new Date().getFullYear(), // 假设主节点的最近合作时间为当前年
@@ -122,15 +126,15 @@ const advisorsReader = () => {
         const symbolSize = 20 + connection.relationFactor * 0.5;
 
         nodes.push({
-          id: connectedAdvisor?.advisor_id,
+          id: String(connectedAdvisor?.advisor_id),
           symbolSize: symbolSize,
           latestCollaboration: latestYear,
           ...connectedAdvisor,
         });
 
         links.push({
-          source: mainAdvisor.advisor_id,
-          target: connectedAdvisor?.advisor_id,
+          source: String(mainAdvisor.advisor_id),
+          target: String(connectedAdvisor?.advisor_id),
           value: connection.relationFactor,
           lineStyle: {
             width:
@@ -161,11 +165,11 @@ const advisorsReader = () => {
     });
   }
 
-  return { nodes, links, minYear, maxYear };
+  return { nodes, links, minYear, maxYear, advisor_id };
 };
 
 // @ts-ignore
-const GraphRender = ({ onNodeHover, onNodeClick }) => {
+const GraphRender = ({ onNodeHover, onNodeClick, advisor_id }) => {
   const chartRef = useRef(null);
   const [option, setOption] = useState({}); // 用于存储图表配置
   const [zoomFactor, setZoomFactor] = useState(1); // 存储当前的缩放因子
@@ -183,7 +187,7 @@ const GraphRender = ({ onNodeHover, onNodeClick }) => {
     }
 
     if (myChart) {
-      const { nodes, links, minYear, maxYear } = advisorsReader();
+      const { nodes, links, minYear, maxYear } = advisorsReader(advisor_id);
 
       // 更新节点样式，为选中节点添加边框
       // @ts-ignore

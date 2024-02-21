@@ -73,10 +73,9 @@ const advisor = {
   ],
 };
 
-function MainContent() {
-  const router = useRouter();
-  // const { advisor_id } = router.query; // default is 0
-  const advisor_id = 0;
+function MainContent({ id }: { id: number }) {
+  const advisor_id = Number(id);
+
   const [selectedNode, setSelectedNode] = useState(null); // 用于存储选中的节点信息
   const [clickedNode, setClickedNode] = useState(null);
 
@@ -107,6 +106,7 @@ function MainContent() {
           }}
         >
           <GraphRender
+            advisor_id={advisor_id}
             onNodeClick={(node: any) => {
               if (node) {
                 setSelectedNode(node);

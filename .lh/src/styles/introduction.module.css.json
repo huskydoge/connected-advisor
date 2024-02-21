@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/styles/introduction.module.css",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1708490206016,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1708490206016,
+            "name": "Commit-0",
+            "content": ".container {\n  background-color: #fff;\n  text-align: center;\n  padding-bottom: 2rem;\n}\n\n.introSection h1 {\n  margin-top: 2rem;\n  font-size: 2.5rem;\n}\n\n.introSection,\n.imageGallery,\n.commentsSection {\n  margin: 2rem 0;\n}\n\n.galleryGrid {\n  display: grid;\n  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));\n  gap: 1rem;\n  justify-content: center;\n  padding: 1rem;\n}\n\n.commentsList p {\n  margin: 0.5rem 0;\n}\n\n/* 调整媒体查询以适应不同屏幕尺寸 */\n@media (max-width: 768px) {\n  .introSection h1 {\n    font-size: 2rem;\n  }\n}\n"
+        }
+    ]
+}
