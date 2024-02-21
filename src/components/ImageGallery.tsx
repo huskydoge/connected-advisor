@@ -6,7 +6,7 @@ import styles from "../styles/home.module.css";
 
 export default function ImageGallery() {
   return (
-    <Box sx={{ width: 1000, height: 850, overflowY: "scroll" }}>
+    <Box sx={{ width: "60rem", height: "35rem", overflowY: "scroll" }}>
       <ImageList variant="masonry" cols={3} gap={8}>
         {itemData.map((item) => (
           <ImageListItem key={item.img}>
