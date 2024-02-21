@@ -19,4 +19,13 @@ export default {
   images: {
     domains: ["via.placeholder.com"], // 将占位符图片的域名添加到这里
   },
+  async redirects() {
+    return [
+      {
+        source: "/main",
+        destination: "/main/0",
+        permanent: true,
+      },
+    ];
+  },
 };

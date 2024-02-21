@@ -7,6 +7,8 @@ import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import Button from "@mui/material/Button";
 import AccountCircle from "@mui/icons-material/AccountCircle";
+import Link from "next/link";
+
 import { Box, useTheme } from "@mui/material";
 
 function TopMenu() {
@@ -16,13 +18,12 @@ function TopMenu() {
   return (
     <AppBar position="static" sx={{ bgcolor: "white", color: "blue" }}>
       <Toolbar>
-        {/* Logo或者品牌名 */}
         <Typography
           variant="h5"
           noWrap
           sx={{ color: "blue", textTransform: "none", marginRight: 2 }} // 将 marginRight 添加到这里，使 logo 和搜索框之间有一点空间
         >
-          Connected Advisor
+          <Link href="/"> Connected Advisor </Link>
         </Typography>
 
         {/* 搜索栏 */}

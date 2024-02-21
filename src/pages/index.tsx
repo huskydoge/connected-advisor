@@ -15,7 +15,7 @@ export default function Home() {
         </div>
         {/* 添加导航入口 */}
         <div className={styles.enterButton}>
-          <Link href="/main" passHref>
+          <Link href="/main/0" passHref>
             <button type="button">Enter Main Page</button>
           </Link>
         </div>
