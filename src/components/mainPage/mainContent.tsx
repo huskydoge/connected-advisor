@@ -99,12 +99,11 @@ function MainContent() {
       >
         {/* Left column for graph display */}
         <Paper
-          elevation={3}
           style={{
             flexGrow: 1,
-            overflow: "auto",
             borderRadius: 0,
             display: "flex",
+            maxHeight: "100vh",
           }}
         >
           <GraphRender

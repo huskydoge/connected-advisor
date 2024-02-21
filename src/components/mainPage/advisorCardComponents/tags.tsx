@@ -21,29 +21,37 @@ const getRandomColor = (): string => {
 
 const Tags: React.FC<TagsProps> = ({ tags, onClickTag }) => {
   return (
-    <Stack direction="row" spacing={1} sx={{ flexWrap: "wrap" }}>
+    <Stack
+      direction="row"
+      spacing={1} // 控制水平间距
+      sx={{
+        flexWrap: "wrap",
+        gap: "0.5rem", // 控制垂直间距，当元素换行时
+        justifyContent: "center", // 使元素整体居中
+        width: "100%", // 确保Stack占满其容器的宽度
+      }}
+    >
       {tags.map((tag) => {
-        // 移除了index参数，改用tag作为key
         const borderColor = getRandomColor();
         return (
           <Chip
-            key={tag} // 使用tag作为key，假设所有tag都是唯一的
+            key={tag}
             label={tag}
             onClick={() => onClickTag(tag)}
             variant="outlined"
             sx={{
-              border: `2px solid ${borderColor}`,
+              border: `0.1rem solid ${borderColor}`,
               color: borderColor,
               fontWeight: "bold",
               cursor: "pointer",
-              borderRadius: "4px",
+              borderRadius: "0.4rem",
               "&:hover": {
                 backgroundColor: borderColor,
                 color: "#000",
               },
-              padding: "0 2px",
-              paddingTop: 0.2,
-              height: "32px",
+              padding: "0 0.1rem",
+              height: "2rem",
+              fontSize: "0.6rem", // 调整字体大小
             }}
           />
         );

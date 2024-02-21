@@ -63,7 +63,12 @@ const AdvisorCard = ({ advisor }: { advisor: Advisor }) => {
       container
       spacing={2}
       alignItems="center"
-      sx={{ p: 2, marginTop: 4, maxHeight: "100", overflowY: "auto" }}
+      sx={{
+        p: 2,
+        marginTop: 4,
+        overflowY: "auto",
+        fontSize: { xs: "0.875rem", sm: "1rem", md: "1.125rem" },
+      }}
       direction="column"
     >
       {/* 将头像放置于顶部 */}
@@ -72,8 +77,8 @@ const AdvisorCard = ({ advisor }: { advisor: Advisor }) => {
           alt={advisor.name}
           src={advisor.avatar}
           sx={{
-            width: { xs: 80, sm: 100, md: 120 },
-            height: { xs: 80, sm: 100, md: 120 },
+            width: { xs: "8rem", sm: "10rem", md: "12rem" },
+            height: { xs: "8rem", sm: "10rem", md: "12rem" },
             mb: 2,
           }}
         />
@@ -83,7 +88,7 @@ const AdvisorCard = ({ advisor }: { advisor: Advisor }) => {
         <Typography
           variant="h5"
           sx={{
-            fontSize: { xs: "1rem", sm: "1.25rem", md: "1.5rem" },
+            fontSize: { xs: "0.75 rem", sm: "1rem", md: "1.25rem" },
             fontWeight: "bold",
             textAlign: "center", // 使文本在较小屏幕上居中对齐
           }}

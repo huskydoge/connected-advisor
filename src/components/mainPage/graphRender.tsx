@@ -245,7 +245,7 @@ const GraphRender = ({ onNodeHover, onNodeClick }) => {
           calculable: false,
           orient: "horizontal",
           left: "80%",
-          bottom: 20,
+
           inRange: {
             color: ["#eee", "#abc"], // 从浅灰到深灰的颜色渐变
           },
@@ -393,7 +393,7 @@ const GraphRender = ({ onNodeHover, onNodeClick }) => {
     }
   }, [zoomFactor, onNodeHover, selectedNodeId, myChart]);
 
-  return <div ref={chartRef} style={{ width: "100%", height: "100%" }} />;
+  return <div ref={chartRef} style={{ width: "100%", height: "90vh" }} />;
 };
 
 export default GraphRender;
