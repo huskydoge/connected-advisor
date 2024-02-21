@@ -63,7 +63,7 @@ const AdvisorCard = ({ advisor }: { advisor: Advisor }) => {
 
   // 点击事件处理函数
   const handleClick = () => {
-    router.push(advisor.id); // 使用router.push进行路由跳转
+    router.push(`/main/${advisor.id}`); // 使用模板字符串插入变量
   };
   return (
     <Grid

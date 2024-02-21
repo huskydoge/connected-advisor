@@ -1,8 +1,7 @@
 import React from "react";
-
+import Link from "next/link";
 import Image from "next/image";
 import styles from "../styles/home.module.css";
-
 import ImageGallery from "@/components/ImageGallery";
 
 export default function Home() {
@@ -10,13 +9,16 @@ export default function Home() {
     <div className={styles.container}>
       <main className={styles.main}>
         <h1 className={styles.title}>Welcome to Our Project!</h1>
-
         {/* 在这里插入ImageGallery组件 */}
         <div className={styles.galleryWrapper}>
           <ImageGallery />
         </div>
-
-        {/* 其他页面内容 */}
+        {/* 添加导航入口 */}
+        <div className={styles.enterButton}>
+          <Link href="/main" passHref>
+            <button type="button">Enter Main Page</button>
+          </Link>
+        </div>
       </main>
     </div>
   );

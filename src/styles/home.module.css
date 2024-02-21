@@ -37,3 +37,22 @@
   align-items: center;
   width: 100%;
 }
+
+/* home.module.css */
+.enterButton {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.enterButton button {
+  padding: 10px 20px;
+  background-color: #0070f3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.enterButton button:hover {
+  background-color: #0056b3;
+}
