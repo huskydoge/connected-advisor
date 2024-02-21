@@ -1,10 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import {
-  createStyles,
-  lighten,
-  makeStyles,
-  Theme,
-} from "@material-ui/core/styles";
 
 interface Advisor {
   advisor_id: number;
@@ -53,72 +47,16 @@ import {
 
 import CloseIcon from "@mui/icons-material/Close";
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      width: "100%",
-    },
-    paper: {
-      width: "100%",
-      marginBottom: theme.spacing(2),
-    },
-    table: {
-      minWidth: 750,
-    },
-    tableHeadRow: {
-      // 移除表格表头底部的边框线
-      borderBottom: "none",
-    },
-    visuallyHidden: {
-      border: 0,
-      clip: "rect(0 0 0 0)",
-      height: 1,
-      margin: -1,
-      overflow: "hidden",
-      padding: 0,
-      position: "absolute",
-      top: 20,
-      width: 1,
-    },
-  })
-);
-
-const useToolbarStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      paddingLeft: theme.spacing(2),
-      paddingRight: theme.spacing(1),
-    },
-    highlight:
-      theme.palette.type === "light"
-        ? {
-            color: theme.palette.secondary.main,
-            backgroundColor: lighten(theme.palette.secondary.light, 0.85),
-          }
-        : {
-            color: theme.palette.text.primary,
-            backgroundColor: theme.palette.secondary.dark,
-          },
-    title: {
-      flex: "1 1 100%",
-    },
-  })
-);
-
 //@ts-ignore
 const ListView = ({ onClose }) => {
-  const classes = useStyles();
-  const toolClasses = useToolbarStyles();
   return (
-    <div className={classes.paper}>
+    <div>
       <Paper
-        className={classes.paper}
         sx={{ width: "100%", paddingLeft: 2, paddingRight: 2, paddingTop: 2 }}
       >
         {" "}
         {/* 确保这一层也是充满父元素的 */}
         <Toolbar
-          className={toolClasses.root}
           sx={{
             display: "flex",
             justifyContent: "space-between",
@@ -133,7 +71,7 @@ const ListView = ({ onClose }) => {
           </IconButton>
         </Toolbar>
         <TableContainer component={Paper} sx={{ width: "100%" }}>
-          <Table stickyHeader className={classes.table}>
+          <Table stickyHeader>
             <TableHead>
               <TableRow>
                 <TableCell align="center">Advisor Name</TableCell>
