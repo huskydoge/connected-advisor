@@ -37,12 +37,19 @@ let currentMain = 0; // 记录主要advisor的ID
 
 const advisors: Advisor[] = require("../../../data/advisors.json");
 
-const advisorsReader = (advisor_id: number) => {
-  const nodes: any[] = [];
-  const links: any[] = [];
+const advisorsReader = (advisor_id: number, graphDegree: number) => {
+  let nodes: any[] = [];
+  let links: any[] = [];
+  let nodeQueue: Advisor[] = [];
+  let nodesSet = new Set<number>();
+  let linkSet = new Set<string>(); // 其实是冗余的，暂时先不管
   currentMain = advisor_id; // 更新主要advisor的ID
   let minYear = new Date().getFullYear(); // 初始化为当前年份
   let maxYear = 0; // 初始化为0
+
+  if (!graphDegree || graphDegree < 1) {
+    graphDegree = 1;
+  }
   const currentYear = new Date().getFullYear();
   const minRelationFactor = Math.min(
     ...advisors.flatMap((advisor) =>
@@ -60,79 +67,198 @@ const advisorsReader = (advisor_id: number) => {
     (advisor) => advisor.advisor_id === currentMain
   );
 
-  if (mainAdvisor) {
-    nodes.push({
-      id: String(mainAdvisor.advisor_id),
-      symbolSize: 200, // main节点的大小
-      itemStyle: { color: "red" }, // main节点为红色
-      latestCollaboration: new Date().getFullYear(), // 假设主节点的最近合作时间为当前年
-      ...mainAdvisor,
-    });
+  // @ts-ignore
+  nodeQueue.push(mainAdvisor);
 
-    mainAdvisor.connections.forEach((connection) => {
-      const connectedAdvisor = advisors.find(
-        (advisor) => advisor.advisor_id === connection.advisor_id
+  const addNode = (
+    nodes: any[],
+    advisor: Advisor,
+    symbolSize: number,
+    latestCollaboration: number
+  ) => {
+    if (nodesSet.has(advisor.advisor_id)) {
+      return nodes;
+    }
+
+    if (advisor.advisor_id === mainAdvisor?.advisor_id) {
+      nodes.push({
+        id: String(mainAdvisor.advisor_id),
+        symbolSize: 200, // main节点的大小
+        itemStyle: { color: "red" }, // main节点为红色
+        latestCollaboration: new Date().getFullYear(), // 假设主节点的最近合作时间为当前年
+        ...mainAdvisor,
+      });
+    } else {
+      nodes.push({
+        id: String(advisor?.advisor_id),
+        symbolSize: symbolSize,
+        latestCollaboration: latestCollaboration,
+        ...advisor,
+      });
+    }
+    nodesSet.add(advisor.advisor_id);
+    return nodes;
+  };
+
+  function addLink(
+    links: any[],
+    sourceId: number,
+    targetId: number,
+    connection: any
+  ) {
+    const width =
+      1 +
+      (4 * (connection.relationFactor - minRelationFactor)) /
+        (maxRelationFactor - minRelationFactor);
+    const formatter = `Relation factor: ${
+      connection.relationFactor
+    }<br/>${connection.relation
+      .map(
+        (rel: any) =>
+          `${rel.role} in ${rel.class}, from ${rel.duration.start.year}-${rel.duration.start.month} to ${rel.duration.end.year}-${rel.duration.end.month}`
+      )
+      .join("; ")}<br/>Collaborations: ${connection.collaborations
+      .map(
+        (collab: any) =>
+          `<a href="${collab.url}" target="_blank">${collab.papername} (${collab.year})</a>`
+      )
+      .join(", ")}`;
+
+    if (
+      linkSet.has(
+        `${Math.min(sourceId, targetId)}-${Math.max(sourceId, targetId)}`
+      )
+    ) {
+      return links;
+    }
+
+    links.push({
+      source: String(sourceId),
+      target: String(targetId),
+      value: connection.relationFactor,
+      lineStyle: {
+        width: width,
+        curveness: 0.1,
+      },
+      tooltip: {
+        show: true,
+        formatter: formatter,
+      },
+    });
+    // undirected
+    linkSet.add(
+      `${Math.min(sourceId, targetId)}-${Math.max(sourceId, targetId)}`
+    );
+
+    console.log(links);
+    console.log(linkSet);
+
+    return links;
+  }
+
+  while (nodeQueue.length > 0 && graphDegree > 0) {
+    const currentAdvisor = nodeQueue.shift();
+
+    if (currentAdvisor) {
+      nodes = addNode(
+        nodes,
+        currentAdvisor,
+        200,
+        currentAdvisor?.connections.reduce(
+          (max, conn) => Math.max(max, conn.latestCollaboration),
+          0
+        )
       );
-      if (connectedAdvisor) {
+      currentAdvisor.connections.forEach((connection) => {
         const connectedAdvisor = advisors.find(
           (advisor) => advisor.advisor_id === connection.advisor_id
         );
+        if (connectedAdvisor) {
+          const latestYear = connection.collaborations.reduce(
+            (max, collab) => Math.max(max, collab.year),
+            0
+          );
 
-        const latestYear = connection.collaborations.reduce(
-          (max, collab) => Math.max(max, collab.year),
-          0
-        );
+          minYear = Math.min(minYear, latestYear);
+          maxYear = Math.max(maxYear, latestYear);
 
-        minYear = Math.min(minYear, latestYear);
-        maxYear = Math.max(maxYear, latestYear);
+          const symbolSize = 20 + connection.relationFactor * 0.5;
 
-        const symbolSize = 20 + connection.relationFactor * 0.5;
-
-        nodes.push({
-          id: String(connectedAdvisor?.advisor_id),
-          symbolSize: symbolSize,
-          latestCollaboration: latestYear,
-          ...connectedAdvisor,
-        });
-
-        links.push({
-          source: String(mainAdvisor.advisor_id),
-          target: String(connectedAdvisor?.advisor_id),
-          value: connection.relationFactor,
-          lineStyle: {
-            width:
-              1 +
-              (4 * (connection.relationFactor - minRelationFactor)) /
-                (maxRelationFactor - minRelationFactor), // 根据relationFactor调整线条粗细
-            curveness: 0.1, // 连线的曲度
-          },
-          tooltip: {
-            show: true,
-            formatter: () =>
-              `Relation factor: ${
-                connection.relationFactor
-              }<br/>${connection.relation
-                .map(
-                  (rel) =>
-                    `${rel.role} in ${rel.class}, from ${rel.duration.start.year}-${rel.duration.start.month} to ${rel.duration.end.year}-${rel.duration.end.month}`
-                )
-                .join("; ")}<br/>Collaborations: ${connection.collaborations
-                .map(
-                  (collab) =>
-                    `<a href="${collab.url}" target="_blank">${collab.papername} (${collab.year})</a>`
-                )
-                .join(", ")}`,
-          },
-        });
-      }
-    });
+          // @ts-ignore
+          nodes = addNode(nodes, connectedAdvisor, symbolSize, latestYear);
+          //@ts-ignore
+          links = addLink(
+            links,
+            currentAdvisor.advisor_id,
+            // @ts-ignore
+            connectedAdvisor?.advisor_id,
+            connection
+          );
+          nodeQueue.push(connectedAdvisor);
+        }
+      });
+      graphDegree--;
+    }
   }
+
+  // if (mainAdvisor) {
+  //   nodes.push({
+  //     id: String(mainAdvisor.advisor_id),
+  //     symbolSize: 200, // main节点的大小
+  //     itemStyle: { color: "red" }, // main节点为红色
+  //     latestCollaboration: new Date().getFullYear(), // 假设主节点的最近合作时间为当前年
+  //     ...mainAdvisor,
+  //   });
+
+  //   nodesSet.add(mainAdvisor.advisor_id);
+
+  //   mainAdvisor.connections.forEach((connection) => {
+  //     const connectedAdvisor = advisors.find(
+  //       (advisor) => advisor.advisor_id === connection.advisor_id
+  //     );
+  //     if (connectedAdvisor) {
+  //       const connectedAdvisor = advisors.find(
+  //         (advisor) => advisor.advisor_id === connection.advisor_id
+  //       );
+
+  //       const latestYear = connection.collaborations.reduce(
+  //         (max, collab) => Math.max(max, collab.year),
+  //         0
+  //       );
+
+  //       minYear = Math.min(minYear, latestYear);
+  //       maxYear = Math.max(maxYear, latestYear);
+
+  //       const symbolSize = 20 + connection.relationFactor * 0.5;
+
+  //       // @ts-ignore
+  //       nodes = addNode(nodes, connectedAdvisor, symbolSize, latestYear);
+  //       //@ts-ignore
+  //       links = addLink(
+  //         links,
+  //         mainAdvisor.advisor_id,
+  //         // @ts-ignore
+  //         connectedAdvisor?.advisor_id,
+  //         connection
+  //       );
+  //     }
+  //   });
+
+  //   if (graphDegree >= 2) {
+  //   }
+  // }
 
   return { nodes, links, minYear, maxYear, advisor_id };
 };
 
 // @ts-ignore
-const GraphRender = ({ onNodeHover, onNodeClick, advisor_id }) => {
+const GraphRender = ({
+  onNodeHover,
+  onNodeClick,
+  advisor_id,
+  graphDegree,
+  graphType,
+}) => {
   const chartRef = useRef(null);
   const [option, setOption] = useState({}); // 用于存储图表配置
   const [zoomFactor, setZoomFactor] = useState(1); // 存储当前的缩放因子
@@ -151,7 +277,10 @@ const GraphRender = ({ onNodeHover, onNodeClick, advisor_id }) => {
     }
 
     if (myChart) {
-      const { nodes, links, minYear, maxYear } = advisorsReader(advisor_id);
+      const { nodes, links, minYear, maxYear } = advisorsReader(
+        advisor_id,
+        graphDegree
+      );
 
       // 更新节点样式，为选中节点添加边框
       // @ts-ignore
@@ -246,13 +375,15 @@ const GraphRender = ({ onNodeHover, onNodeClick, advisor_id }) => {
             links: links,
             categories: [{ name: "Main Node" }, { name: "Other" }],
             roam: true,
+            edgeSymbol: ["none", "none"],
+            edgeSymbolSize: [10, 20],
             label: {
               show: true,
               position: "top", // 将标签放置在节点的上方
               formatter: "{b}", // 使用节点的name作为标签文本
             },
             force: {
-              repulsion: 500,
+              repulsion: 2000,
               edgeLength: 400,
             },
             lineStyle: {
@@ -274,6 +405,14 @@ const GraphRender = ({ onNodeHover, onNodeClick, advisor_id }) => {
           },
         ],
       };
+
+      if (graphType === "directed") {
+        initialOption.series[0].edgeSymbol = ["none", "arrow"];
+      } else if (graphType === "undirected") {
+        initialOption.series[0].edgeSymbol = ["none", "none"];
+      } else {
+        console.error("Invalid graph type.");
+      }
 
       setOption(initialOption); // 设置图表配置
       // @ts-ignore

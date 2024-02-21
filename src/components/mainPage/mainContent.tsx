@@ -25,7 +25,8 @@ function MainContent({ id }: { id: number }) {
   const [clickedNode, setClickedNode] = useState(null);
   const [showCard, setShowCard] = useState("advisorCard");
   const [selectedTab, setSelectedTab] = useState(""); // 用于存储选中的Tab信息
-  const [showGraphOptions, setShowGraphOptions] = useState(false); // 新增状态用于控制显示GraphOptions
+  const [graphDegree, setGraphDegree] = useState(1);
+  const [graphType, setGraphType] = useState("undirected");
 
   const advisorInfo = advisorsData.find(
     (advisor) => advisor.advisor_id === advisor_id
@@ -51,6 +52,16 @@ function MainContent({ id }: { id: number }) {
     }
     setShowCard("graphCard"); // 显示GraphCard
     setSelectedTab("graphCard"); // Set graph as selected
+  };
+
+  const handleGraphDegreeChange = (degree: number) => {
+    // @ts-ignore
+    setGraphDegree(degree);
+    console.log("degree", degree);
+  };
+
+  const handleGraphTypeChange = (type: string) => {
+    setGraphType(type);
   };
 
   const handleListView = () => {
@@ -96,7 +107,13 @@ function MainContent({ id }: { id: number }) {
         return <AdvisorCard advisor={selectedNode} />;
       case "graphCard":
         // @ts-ignore
-        return <GraphCard onClose={closeFilterCard} />; // 假设GraphCard接受data作为prop
+        return (
+          <GraphCard
+            onClose={closeFilterCard}
+            onGraphDegreeChange={handleGraphDegreeChange}
+            onGraphTypeChange={handleGraphTypeChange}
+          />
+        ); // 假设GraphCard接受data作为prop
       case "filterCard":
         return <FilterCard onClose={closeFilterCard} />;
       default:
@@ -154,6 +171,8 @@ function MainContent({ id }: { id: number }) {
                   setClickedNode(null);
                 }
               }}
+              graphDegree={graphDegree}
+              graphType={graphType}
               onNodeHover={(node: any) => {
                 if (node) {
                   setSelectedNode(node);

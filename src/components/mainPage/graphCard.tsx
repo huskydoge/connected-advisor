@@ -15,13 +15,14 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 
 // @ts-ignore
-const GraphCard = ({ onClose }) => {
-  const [degree, setDegree] = React.useState("1");
+const GraphCard = ({ onClose, onGraphDegreeChange, onGraphTypeChange }) => {
   const [colorPattern, setColorPattern] = React.useState("pattern1");
   const [graphType, setGraphType] = React.useState("undirected");
+  const [graphDegree, setGraphDegree] = React.useState(1);
   // @ts-ignore
   const handleDegreeChange = (event) => {
-    setDegree(event.target.value);
+    onGraphDegreeChange(event.target.value);
+    setGraphDegree(event.target.value);
   };
   // @ts-ignore
   const handleColorChange = (event, newColor) => {
@@ -31,6 +32,7 @@ const GraphCard = ({ onClose }) => {
   };
   // @ts-ignore
   const handleGraphTypeChange = (event) => {
+    onGraphTypeChange(event.target.value);
     setGraphType(event.target.value);
   };
 
@@ -50,9 +52,9 @@ const GraphCard = ({ onClose }) => {
         <FormControl component="fieldset" sx={{ mb: 2 }}>
           <FormLabel component="legend">Graph Degree</FormLabel>
           <RadioGroup
+            value={graphDegree}
             row
             name="graph-degree"
-            value={degree}
             onChange={handleDegreeChange}
           >
             <FormControlLabel value="1" control={<Radio />} label="1" />
