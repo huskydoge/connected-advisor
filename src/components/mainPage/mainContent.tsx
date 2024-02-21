@@ -150,7 +150,12 @@ function MainContent() {
         {/* Right column for displaying node information */}
         <Paper
           elevation={3}
-          style={{ flexGrow: 1, overflow: "auto", borderRadius: 0 }}
+          style={{
+            flexGrow: 1,
+            overflow: "auto",
+            borderRadius: 0,
+            height: "100vh",
+          }}
         >
           {selectedNode && <AdvisorCard advisor={selectedNode} />}
         </Paper>

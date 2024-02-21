@@ -81,6 +81,34 @@
         ],
         "latestCollaboration": 2014,
         "relationFactor": 30
+      },
+      {
+        "advisor_id": 3,
+        "relation": [
+          {
+            "class": "Collaborator",
+            "role": "co-author",
+            "duration": {
+              "start": {
+                "year": 2022,
+                "month": 1
+              },
+              "end": {
+                "year": 2022,
+                "month": 12
+              }
+            }
+          }
+        ],
+        "collaborations": [
+          {
+            "papername": "Advances in Speech Recognition Techniques",
+            "year": 2022,
+            "url": "https://aiexample.com/paper/advances-in-speech-recognition-techniques"
+          }
+        ],
+        "latestCollaboration": 2022,
+        "relationFactor": 35
       }
     ]
   },
@@ -138,6 +166,34 @@
         ],
         "latestCollaboration": 2023,
         "relationFactor": 45
+      },
+      {
+        "advisor_id": 3,
+        "relation": [
+          {
+            "class": "Mentee",
+            "role": "mentored by",
+            "duration": {
+              "start": {
+                "year": 2021,
+                "month": 6
+              },
+              "end": {
+                "year": 2023,
+                "month": 5
+              }
+            }
+          }
+        ],
+        "collaborations": [
+          {
+            "papername": "Effective Teaching Methods in NLP",
+            "year": 2022,
+            "url": "https://nlpexample.com/paper/effective-teaching-methods-in-nlp"
+          }
+        ],
+        "latestCollaboration": 2022,
+        "relationFactor": 20
       }
     ]
   },
@@ -181,6 +237,109 @@
         ],
         "latestCollaboration": 2014,
         "relationFactor": 30
+      },
+      {
+        "advisor_id": 3,
+        "relation": [
+          {
+            "class": "Peer",
+            "role": "research collaborator",
+            "duration": {
+              "start": {
+                "year": 2020,
+                "month": 11
+              },
+              "end": {
+                "year": 2022,
+                "month": 10
+              }
+            }
+          }
+        ],
+        "collaborations": [
+          {
+            "papername": "New Frontiers in AI Research",
+            "year": 2021,
+            "url": "https://aiexample.com/paper/new-frontiers-in-ai-research"
+          }
+        ],
+        "latestCollaboration": 2021,
+        "relationFactor": 25
+      }
+    ]
+  },
+  {
+    "advisor_id": 3,
+    "name": "Ella Fitzgerald",
+    "tags": [
+      "Natural Language Processing",
+      "Speech Recognition",
+      "Innovative Teaching"
+    ],
+    "avatar": "https://example.com/avatar/ella.png",
+    "github": "https://github.com/ella",
+    "twitter": "https://twitter.com/ella",
+    "email": "ella@example.com",
+    "website": "https://ellafitzgerald.com",
+    "position": "Assistant Professor",
+    "affliation": "School of Computer Science, University of Somewhere",
+    "description": "Ella Fitzgerald is an Assistant Professor at the School of Computer Science, University of Somewhere, specializing in natural language processing and speech recognition. With a passion for innovative teaching methods, Ella is dedicated to preparing the next generation of AI experts.",
+    "connections": [
+      {
+        "advisor_id": 0,
+        "relation": [
+          {
+            "class": "PostDoc",
+            "role": "mentor",
+            "duration": {
+              "start": {
+                "year": 2021,
+                "month": 1
+              },
+              "end": {
+                "year": 2023,
+                "month": 12
+              }
+            }
+          }
+        ],
+        "collaborations": [
+          {
+            "papername": "Advances in Speech Recognition",
+            "year": 2022,
+            "url": "https://aiexample.com/paper/advances-in-speech-recognition"
+          }
+        ],
+        "latestCollaboration": 2022,
+        "relationFactor": 40
+      },
+      {
+        "advisor_id": 1,
+        "relation": [
+          {
+            "class": "Collaborator",
+            "role": "co-author",
+            "duration": {
+              "start": {
+                "year": 2020,
+                "month": 5
+              },
+              "end": {
+                "year": 2021,
+                "month": 11
+              }
+            }
+          }
+        ],
+        "collaborations": [
+          {
+            "papername": "Innovative Approaches in NLP Education",
+            "year": 2021,
+            "url": "https://nlpexample.com/paper/innovative-nlp-education"
+          }
+        ],
+        "latestCollaboration": 2021,
+        "relationFactor": 25
       }
     ]
   }
