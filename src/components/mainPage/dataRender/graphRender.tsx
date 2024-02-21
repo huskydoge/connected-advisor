@@ -8,35 +8,6 @@ import { TooltipComponent, VisualMapComponent } from "echarts/components";
 
 import { SVGRenderer } from "echarts/renderers";
 
-const generateGraphData = (nodesCount: number) => {
-  const nodes = [];
-  const links = [];
-
-  // 主节点
-  nodes.push({
-    name: "Main Node",
-    category: 0,
-    symbolSize: 70,
-    itemStyle: { color: "red" },
-  });
-
-  // 其他节点
-  for (let i = 1; i <= nodesCount; i++) {
-    nodes.push({
-      name: `Node ${i}`,
-      category: 1,
-      symbolSize: 20 + Math.random() * 40, // 20 ~ 60 的大小
-      itemStyle: { color: "grey" },
-    });
-    links.push({
-      source: "Main Node",
-      target: `Node ${i}`,
-    });
-  }
-
-  return { nodes, links };
-};
-
 // 注册必要的组件
 echarts.use([TooltipComponent, GraphChart, SVGRenderer, VisualMapComponent]);
 interface Advisor {
@@ -391,7 +362,7 @@ const GraphRender = ({ onNodeHover, onNodeClick, advisor_id }) => {
     }
   }, [zoomFactor, onNodeHover, selectedNodeId, myChart]);
 
-  return <div ref={chartRef} style={{ width: "100vh", height: "100vh" }} />;
+  return <div ref={chartRef} style={{ width: "100%", height: "100%" }} />;
 };
 
 export default GraphRender;

@@ -5,6 +5,7 @@ import Paper from "@mui/material/Paper";
 
 import advisorsData from "../../data/advisors.json"; // 假设你的数据文件路径
 import FilterCard from "./filterCard"; // Ensure FilterCard is imported correctly
+import GraphCard from "./graphCard";
 
 // 使用dynamic导入GraphRender组件，禁用SSR
 const GraphRender = dynamic(() => import("./dataRender/graphRender"), {
@@ -12,6 +13,7 @@ const GraphRender = dynamic(() => import("./dataRender/graphRender"), {
 });
 
 import AdvisorCard from "./advisorCard"; // Ensure AdvisorCard is imported correctly
+
 import RenderTabs from "./dataRender/renderTabs";
 import ListView from "./dataRender/listiew/listView";
 import { useRouter } from "next/router";
@@ -21,7 +23,7 @@ function MainContent({ id }: { id: number }) {
   const router = useRouter();
   const [selectedNode, setSelectedNode] = useState(null); // 用于存储选中的节点信息
   const [clickedNode, setClickedNode] = useState(null);
-  const [showFilter, setShowFilter] = useState(false);
+  const [showCard, setShowCard] = useState("advisorCard");
   const [selectedTab, setSelectedTab] = useState(""); // 用于存储选中的Tab信息
   const [showGraphOptions, setShowGraphOptions] = useState(false); // 新增状态用于控制显示GraphOptions
 
@@ -32,17 +34,23 @@ function MainContent({ id }: { id: number }) {
   const advisor = advisorInfo;
 
   const handleFilterClick = () => {
-    if (showFilter) {
-      setShowFilter(false);
+    if (showCard === "filterCard") {
+      setShowCard("advisorCard");
       setSelectedTab("");
       return;
     }
-    setShowFilter(true); // 显示FilterCard
-    setSelectedTab("filter"); // Set filter as selected
+    setShowCard("filterCard"); // 显示FilterCard
+    setSelectedTab("filterCard"); // Set filter as selected
   };
 
   const handleGraphMode = () => {
-    setShowGraphOptions(!showGraphOptions);
+    if (showCard === "graphCard") {
+      setShowCard("advisorCard");
+      setSelectedTab("");
+      return;
+    }
+    setShowCard("graphCard"); // 显示GraphCard
+    setSelectedTab("graphCard"); // Set graph as selected
   };
 
   const handleListView = () => {
@@ -69,8 +77,31 @@ function MainContent({ id }: { id: number }) {
   };
 
   const closeFilterCard = () => {
-    setShowFilter(false); // 关闭FilterCard
+    setShowCard("advisorCard"); // 关闭FilterCard
     setSelectedTab(""); // Reset selected tab
+  };
+
+  const closeGraphCard = () => {
+    setShowCard("advisorCard"); // 关闭GraphCard
+    setSelectedTab(""); // Reset selected tab
+  };
+
+  const renderCard = () => {
+    if (selectedNode === null) {
+      return null;
+    }
+    switch (showCard) {
+      case "advisorCard":
+        // @ts-ignore
+        return <AdvisorCard advisor={selectedNode} />;
+      case "graphCard":
+        // @ts-ignore
+        return <GraphCard onClose={closeFilterCard} />; // 假设GraphCard接受data作为prop
+      case "filterCard":
+        return <FilterCard onClose={closeFilterCard} />;
+      default:
+        return null; // 当showCard不匹配任何已知值时不渲染任何东西
+    }
   };
 
   useEffect(() => {
@@ -78,6 +109,7 @@ function MainContent({ id }: { id: number }) {
 
     setSelectedNode(advisorInfo || null);
   }, [advisor_id]);
+
   return (
     <Grid container style={{ height: "calc(100vh - 64px)" }}>
       {" "}
@@ -158,11 +190,7 @@ function MainContent({ id }: { id: number }) {
             height: "100vh",
           }}
         >
-          {showFilter ? (
-            <FilterCard onClose={closeFilterCard} />
-          ) : (
-            selectedNode && <AdvisorCard advisor={selectedNode} />
-          )}
+          {renderCard()};
         </Paper>
       </Grid>
     </Grid>
