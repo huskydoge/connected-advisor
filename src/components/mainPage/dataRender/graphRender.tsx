@@ -170,6 +170,26 @@ const GraphRender = ({ onNodeHover, onNodeClick, advisor_id }) => {
   const [myChart, setMyChart] = useState(null); // 用于存储 echarts 实例
   const router = useRouter();
 
+  function updateVisualMapPosition() {
+    // 获取视窗宽度和高度
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+
+    // 动态计算 visualMap 的位置
+    // 示例：将 visualMap 位置设置为视窗底部和左侧的一定比例或固定值
+    const bottom = Math.max(30, windowHeight * 0.05) + "px"; // 至少30px或视窗高度的5%
+    const left = Math.max(20, windowWidth * 0.05) + "px"; // 至少20px或视窗宽度的5%
+
+    // 更新图表配置
+    // @ts-ignore
+    myChart?.setOption({
+      visualMap: {
+        bottom: bottom,
+        left: left,
+      },
+    });
+  }
+
   useEffect(() => {
     if (chartRef.current && !myChart) {
       const initializedChart = echarts.init(chartRef.current, null, {
@@ -181,6 +201,14 @@ const GraphRender = ({ onNodeHover, onNodeClick, advisor_id }) => {
 
     if (myChart) {
       const { nodes, links, minYear, maxYear } = advisorsReader(advisor_id);
+
+      // 在初始化时更新位置
+      updateVisualMapPosition();
+
+      // 监听窗口 resize 事件以响应视窗大小变化
+      window.addEventListener("resize", () => {
+        updateVisualMapPosition();
+      });
 
       // 更新节点样式，为选中节点添加边框
       // @ts-ignore
@@ -239,9 +267,9 @@ const GraphRender = ({ onNodeHover, onNodeClick, advisor_id }) => {
           type: "continuous",
           min: minYear,
           max: maxYear,
-          calculable: false,
           orient: "horizontal",
-          left: "80%",
+          left: "85%",
+          bottom: "10%",
 
           inRange: {
             color: ["#eee", "#abc"], // 从浅灰到深灰的颜色渐变
@@ -391,7 +419,7 @@ const GraphRender = ({ onNodeHover, onNodeClick, advisor_id }) => {
     }
   }, [zoomFactor, onNodeHover, selectedNodeId, myChart]);
 
-  return <div ref={chartRef} style={{ width: "100%", height: "90vh" }} />;
+  return <div ref={chartRef} style={{ width: "100%", height: "100%" }} />;
 };
 
 export default GraphRender;

@@ -2,6 +2,7 @@
   background-color: #fff;
   min-height: 100vh;
   padding-top: 2rem; /* 顶部留白 */
+  overflow-y: auto; /* 滚动条 */
 }
 
 .main {

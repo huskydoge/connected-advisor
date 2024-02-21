@@ -23,6 +23,7 @@ function MainContent({ id }: { id: number }) {
   const [clickedNode, setClickedNode] = useState(null);
   const [showFilter, setShowFilter] = useState(false);
   const [selectedTab, setSelectedTab] = useState(""); // 用于存储选中的Tab信息
+  const [showGraphOptions, setShowGraphOptions] = useState(false); // 新增状态用于控制显示GraphOptions
 
   const advisorInfo = advisorsData.find(
     (advisor) => advisor.advisor_id === advisor_id
@@ -41,7 +42,7 @@ function MainContent({ id }: { id: number }) {
   };
 
   const handleGraphMode = () => {
-    // 显示GraphRender
+    setShowGraphOptions(!showGraphOptions);
   };
 
   const handleListView = () => {

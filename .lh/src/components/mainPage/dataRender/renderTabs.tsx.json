@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 26,
+            "activePatchIndex": 27,
             "patches": [
                 {
                     "date": 1708501683876,
@@ -112,6 +112,10 @@
                 {
                     "date": 1708506695108,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,11 +1,9 @@\n import React from \"react\";\n import { Toolbar, Button, Typography, Box } from \"@mui/material\";\n-import { useRouter } from \"next/router\";\n \n //@ts-ignore\n const RenderTabs = ({ onFilter, onListView, onGraphMode, selected }) => {\n-  const router = useRouter();\n   return (\n     <Toolbar\n       sx={{\n         justifyContent: \"space-between\",\n"
+                },
+                {
+                    "date": 1708523321040,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,19 +38,18 @@\n           }}\n         >\n           List View\n         </Button>\n-        <Button\n-          onClick={onGraphMode}\n-          color=\"inherit\"\n-          sx={{\n-            textTransform: \"none\",\n-            backgroundColor: selected === \"graphmode\" ? \"#e0e0e0\" : \"inherit\",\n-            fontSize: \"1rem\",\n-          }}\n-        >\n-          Graph Mode\n-        </Button>\n+        {showGraphOptions && (\n+          <Box sx={{ display: \"flex\", justifyContent: \"center\", padding: 2 }}>\n+            <Button variant=\"contained\" onClick={handleOption1}>\n+              Option 1\n+            </Button>\n+            <Button variant=\"contained\" onClick={handleOption2} sx={{ ml: 2 }}>\n+              Option 2\n+            </Button>\n+          </Box>\n+        )}\n       </Box>\n     </Toolbar>\n   );\n };\n"
                 }
             ],
             "date": 1708501683876,
