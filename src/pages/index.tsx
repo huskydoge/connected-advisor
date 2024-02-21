@@ -1,9 +1,23 @@
 import React from "react";
-import Head from "next/head";
-import styles from "../styles/Home.module.css"; // 确保路径正确，并根据需要调整样式
-import Link from "next/link";
-import TopMenu from "@/components/topTab"; // 确保路径正确
+
+import Image from "next/image";
+import styles from "../styles/home.module.css";
+
+import ImageGallery from "@/components/ImageGallery";
 
 export default function Home() {
-  return <div> ss</div>;
+  return (
+    <div className={styles.container}>
+      <main className={styles.main}>
+        <h1 className={styles.title}>Welcome to Our Project!</h1>
+
+        {/* 在这里插入ImageGallery组件 */}
+        <div className={styles.galleryWrapper}>
+          <ImageGallery />
+        </div>
+
+        {/* 其他页面内容 */}
+      </main>
+    </div>
+  );
 }

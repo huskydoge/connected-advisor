@@ -1,67 +1,39 @@
 .container {
-  padding: 0 2rem;
+  background-color: #fff;
+  min-height: 100vh;
+  padding-top: 2rem; /* 顶部留白 */
 }
 
 .main {
-  min-height: 80vh;
-  padding: 4rem 0;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  padding: 0 2rem;
 }
 
 .title {
-  margin: 0;
-  line-height: 1.15;
-  font-size: 4rem;
+  margin: 2rem 0;
+  font-size: 2.5rem; /* 大标题 */
   text-align: center;
 }
 
-.title span {
-  color: #0070f3; /* 自定义主题色 */
+.gallery {
+  margin: 2rem 0;
 }
 
-.description {
+.imageGrid {
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* 瀑布流布局 */
+  margin-top: 1rem;
+}
+
+.comments {
+  margin: 2rem 0;
   text-align: center;
-  line-height: 1.5;
-  font-size: 1.5rem;
 }
 
-.grid {
+/* Home.module.css */
+.galleryWrapper {
   display: flex;
-  align-items: center;
   justify-content: center;
-  flex-wrap: wrap;
-  max-width: 800px;
-  margin-top: 3rem;
-}
-
-.card {
-  margin: 1rem;
-  flex-basis: 45%;
-  padding: 1.5rem;
-  text-align: left;
-  color: inherit;
-  text-decoration: none;
-  border: 1px solid #eaeaea;
-  border-radius: 10px;
-  transition: color 0.15s ease, border-color 0.15s ease;
-}
-
-.card:hover,
-.card:focus,
-.card:active {
-  color: #0070f3;
-  border-color: #0070f3;
-}
-
-.footer {
+  align-items: center;
   width: 100%;
-  height: 100px;
-  border-top: 1px solid #eaeaea;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }

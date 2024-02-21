@@ -16,4 +16,7 @@ export default {
     // your project has ESLint errors.
     ignoreDuringBuilds: true,
   },
+  images: {
+    domains: ["via.placeholder.com"], // 将占位符图片的域名添加到这里
+  },
 };
