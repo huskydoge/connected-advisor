@@ -22,6 +22,7 @@ export default async function handler(
         query: {
           multi_match: {
             // 或者使用 match, term 或其他适合你数据的查询
+            // @ts-ignore
             query: query,
             fields: ["name", "description"], // 根据你的数据结构调整
           },
