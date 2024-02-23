@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 2,
+            "activePatchIndex": 3,
             "patches": [
                 {
                     "date": 1708615858552,
@@ -16,6 +16,10 @@
                 {
                     "date": 1708646181917,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,8 +21,9 @@\n       body: {\n         query: {\n           multi_match: {\n             // 或者使用 match, term 或其他适合你数据的查询\n+            // @ts-ignore\n             query: query,\n             fields: [\"name\", \"description\"], // 根据你的数据结构调整\n           },\n         },\n"
+                },
+                {
+                    "date": 1708705204892,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,39 @@\n+// pages/api/search.tsx\n+import type { NextApiRequest, NextApiResponse } from \"next\";\n+import client from \"../../lib/elasticSearch\"; // 引入你之前设置的 Elasticsearch 客户端实例\n+\n+export default async function handler(\n+  req: NextApiRequest,\n+  res: NextApiResponse\n+) {\n+  // 从请求中获取查询参数\n+  const { query } = req.query;\n+\n+  if (!query) {\n+    return res.status(400).json({ message: \"Query is required\" });\n+  }\n+\n+  try {\n+    // 向 Elasticsearch 发送搜索请求\n+    // @ts-ignore\n+    const { body } = await client.search({\n+      index: \"your-index-name\", // 替换成你的索引名\n+      body: {\n+        query: {\n+          multi_match: {\n+            // 或者使用 match, term 或其他适合你数据的查询\n+            // @ts-ignore\n+            query: query,\n+            fields: [\"name\", \"description\"], // 根据你的数据结构调整\n+          },\n+        },\n+      },\n+    });\n+\n+    // 返回搜索结果\n+    res.status(200).json(body.hits.hits);\n+  } catch (error) {\n+    console.error(\"Search error:\", error);\n+    res.status(500).json({ message: \"Error executing search\" });\n+  }\n+}\n"
                 }
             ],
             "date": 1708615858552,

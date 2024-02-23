@@ -15,7 +15,7 @@ const FilterCard = ({ onClose }) => {
       </IconButton>
       <CardContent>
         <Typography variant="h6">Filter Configuration</Typography>
-        {/* Filter配置内容 */}
+        fafaasfa
       </CardContent>
     </Box>
   );

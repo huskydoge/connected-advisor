@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 9,
+            "activePatchIndex": 12,
             "patches": [
                 {
                     "date": 1708502398109,
@@ -44,6 +44,18 @@
                 {
                     "date": 1708503256984,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,24 @@\n+// FilterCard.jsx\n+import React from \"react\";\n+import { Box, CardContent, Typography, IconButton } from \"@mui/material\";\n+import CloseIcon from \"@mui/icons-material/Close\";\n+\n+//@ts-ignore\n+const FilterCard = ({ onClose }) => {\n+  return (\n+    <Box sx={{ position: \"relative\" }}>\n+      <IconButton\n+        onClick={onClose}\n+        sx={{ position: \"absolute\", right: 8, top: 8 }}\n+      >\n+        <CloseIcon />\n+      </IconButton>\n+      <CardContent>\n+        <Typography variant=\"h6\">Filter Configuration</Typography>\n+        {/* Filter配置内容 */}\n+      </CardContent>\n+    </Box>\n+  );\n+};\n+\n+export default FilterCard;\n"
+                },
+                {
+                    "date": 1708705857231,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,28 +21,4 @@\n   );\n };\n \n export default FilterCard;\n-// FilterCard.jsx\n-import React from \"react\";\n-import { Box, CardContent, Typography, IconButton } from \"@mui/material\";\n-import CloseIcon from \"@mui/icons-material/Close\";\n-\n-//@ts-ignore\n-const FilterCard = ({ onClose }) => {\n-  return (\n-    <Box sx={{ position: \"relative\" }}>\n-      <IconButton\n-        onClick={onClose}\n-        sx={{ position: \"absolute\", right: 8, top: 8 }}\n-      >\n-        <CloseIcon />\n-      </IconButton>\n-      <CardContent>\n-        <Typography variant=\"h6\">Filter Configuration</Typography>\n-        {/* Filter配置内容 */}\n-      </CardContent>\n-    </Box>\n-  );\n-};\n-\n-export default FilterCard;\n"
+                },
+                {
+                    "date": 1708705864308,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n         <CloseIcon />\n       </IconButton>\n       <CardContent>\n         <Typography variant=\"h6\">Filter Configuration</Typography>\n-        {/* Filter配置内容 */}\n+        fafaasfa\n       </CardContent>\n     </Box>\n   );\n };\n"
+                },
+                {
+                    "date": 1708706051781,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,12 +12,8 @@\n         sx={{ position: \"absolute\", right: 8, top: 8 }}\n       >\n         <CloseIcon />\n       </IconButton>\n-      <CardContent>\n-        <Typography variant=\"h6\">Filter Configuration</Typography>\n-        fafaasfa\n-      </CardContent>\n     </Box>\n   );\n };\n \n"
                 }
             ],
             "date": 1708502398109,

@@ -2,7 +2,19 @@ import React from "react";
 import { Toolbar, Button, Typography, Box } from "@mui/material";
 
 //@ts-ignore
-const RenderTabs = ({ onFilter, onListView, onGraphMode, selected }) => {
+const RenderTabs = ({
+  onFilter,
+  onUpload,
+  onListView,
+  onGraphMode,
+  selected,
+}: {
+  onFilter: () => void;
+  onUpload: () => void;
+  onListView: () => void;
+  onGraphMode: () => void;
+  selected: string;
+}) => {
   return (
     <Toolbar
       sx={{
@@ -17,6 +29,17 @@ const RenderTabs = ({ onFilter, onListView, onGraphMode, selected }) => {
         Render Tab
       </Typography>
       <Box sx={{ display: "flex", gap: 5 }}>
+        <Button
+          onClick={onUpload}
+          color="inherit"
+          sx={{
+            textTransform: "none",
+            backgroundColor: selected === "upload" ? "#e0e0e0" : "inherit",
+            fontSize: "1rem",
+          }}
+        >
+          Upload
+        </Button>
         <Button
           onClick={onFilter}
           color="inherit"

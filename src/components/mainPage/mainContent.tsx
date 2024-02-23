@@ -6,6 +6,7 @@ import Paper from "@mui/material/Paper";
 import advisorsData from "../../data/advisors.json"; // 假设你的数据文件路径
 import FilterCard from "./filterCard"; // Ensure FilterCard is imported correctly
 import GraphCard from "./graphCard";
+import UploadCard from "./uploadCard";
 
 // 使用dynamic导入GraphRender组件，禁用SSR
 const GraphRender = dynamic(() => import("./dataRender/graphRender"), {
@@ -34,6 +35,16 @@ function MainContent({ id }: { id: number }) {
 
   const advisor = advisorInfo;
 
+  const handleUploadClick = () => {
+    if (showCard === "uploadCard") {
+      setShowCard("advisorCard");
+      setSelectedTab("");
+      return;
+    }
+    setShowCard("uploadCard"); // 显示FilterCard
+    setSelectedTab("upload"); // Set filter as selected
+  };
+
   const handleFilterClick = () => {
     if (showCard === "filterCard") {
       setShowCard("advisorCard");
@@ -41,7 +52,7 @@ function MainContent({ id }: { id: number }) {
       return;
     }
     setShowCard("filterCard"); // 显示FilterCard
-    setSelectedTab("filterCard"); // Set filter as selected
+    setSelectedTab("filter"); // Set filter as selected
   };
 
   const handleGraphMode = () => {
@@ -87,13 +98,8 @@ function MainContent({ id }: { id: number }) {
     });
   };
 
-  const closeFilterCard = () => {
+  const closeCard = () => {
     setShowCard("advisorCard"); // 关闭FilterCard
-    setSelectedTab(""); // Reset selected tab
-  };
-
-  const closeGraphCard = () => {
-    setShowCard("advisorCard"); // 关闭GraphCard
     setSelectedTab(""); // Reset selected tab
   };
 
@@ -109,13 +115,15 @@ function MainContent({ id }: { id: number }) {
         // @ts-ignore
         return (
           <GraphCard
-            onClose={closeFilterCard}
+            onClose={closeCard}
             onGraphDegreeChange={handleGraphDegreeChange}
             onGraphTypeChange={handleGraphTypeChange}
           />
         ); // 假设GraphCard接受data作为prop
       case "filterCard":
-        return <FilterCard onClose={closeFilterCard} />;
+        return <FilterCard onClose={closeCard} />;
+      case "uploadCard":
+        return <UploadCard onClose={closeCard} />;
       default:
         return null; // 当showCard不匹配任何已知值时不渲染任何东西
     }
@@ -139,6 +147,7 @@ function MainContent({ id }: { id: number }) {
         {/* Left column for graph display */}
 
         <RenderTabs
+          onUpload={handleUploadClick}
           onFilter={handleFilterClick}
           onGraphMode={handleGraphMode}
           onListView={handleListView}
@@ -209,7 +218,7 @@ function MainContent({ id }: { id: number }) {
             height: "100vh",
           }}
         >
-          {renderCard()};
+          {renderCard()}
         </Paper>
       </Grid>
     </Grid>
