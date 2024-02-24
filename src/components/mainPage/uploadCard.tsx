@@ -1,3 +1,6 @@
+// 这个文件是上传新的顾问的表单，包括顾问的基本信息，社交链接，标签，描述，以及顾问的关系
+// 需要好好修改，现在只是一个框架，没有实际的上传功能
+
 import React, { useState } from "react";
 import {
   Box,
@@ -7,12 +10,15 @@ import {
   TextField,
   Button,
   Grid,
-  Chip,
   Stack,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const UploadCard = ({ onClose }: { onClose: any }) => {
   // Initial state setup for the form
@@ -30,6 +36,63 @@ const UploadCard = ({ onClose }: { onClose: any }) => {
     description: "",
     connections: [],
   });
+
+  const handleAddConnection = () => {
+    // @ts-ignore
+    setFormData((prev) => ({
+      ...prev,
+      connections: [
+        ...prev.connections,
+        {
+          advisor_id: "",
+          relation: [],
+          collaborations: [],
+          latestCollaboration: "",
+          relationFactor: "",
+        },
+      ],
+    }));
+  };
+
+  // @ts-ignore
+  const handleConnectionChange = (index, field, value) => {
+    const updatedConnections = formData.connections.map((connection, idx) => {
+      if (idx === index) {
+        // @ts-ignore
+        return { ...connection, [field]: value };
+      }
+      return connection;
+    });
+    // @ts-ignore
+    setFormData((prev) => ({ ...prev, connections: updatedConnections }));
+  };
+
+  const handleAddRelation = (connectionIndex: number) => {
+    const updatedConnections = formData.connections.map((connection, idx) => {
+      if (idx === connectionIndex) {
+        return {
+          // @ts-ignore
+          ...connection,
+          relation: [
+            // @ts-ignore
+            ...connection.relation,
+            {
+              class: "",
+              role: "",
+              duration: {
+                start: { year: "", month: "" },
+                end: { year: "", month: "" },
+              },
+            },
+          ],
+        };
+      }
+      return connection;
+    });
+
+    // @ts-ignore
+    setFormData((prev) => ({ ...prev, connections: updatedConnections }));
+  };
 
   // Handle field change
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -193,6 +256,46 @@ const UploadCard = ({ onClose }: { onClose: any }) => {
             />
           </Grid>
         </Grid>
+
+        <Typography variant="h6" sx={{ mt: 2, mb: 5 }}>
+          Connections
+        </Typography>
+        {formData.connections.map((connection, index) => (
+          <Accordion key={index} defaultExpanded>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+              <Typography>Connection {index + 1}</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Stack spacing={2}>
+                {/* Inputs for connection fields */}
+                <TextField
+                  label="Advisor ID"
+                  // @ts-ignore
+                  value={connection.advisor_id}
+                  onChange={(e) =>
+                    handleConnectionChange(index, "advisor_id", e.target.value)
+                  }
+                  fullWidth
+                />
+                {/* Relation and Collaboration details */}
+                <Button
+                  onClick={() => handleAddRelation(index)}
+                  startIcon={<AddIcon />}
+                >
+                  Add Relation
+                </Button>
+                {/* Display Relations and Collaborations */}
+              </Stack>
+            </AccordionDetails>
+          </Accordion>
+        ))}
+        <Button
+          onClick={handleAddConnection}
+          startIcon={<AddIcon />}
+          sx={{ mt: 1 }}
+        >
+          Add Connection
+        </Button>
         <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>
           <Button type="submit" variant="contained">
             Submit
