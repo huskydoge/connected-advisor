@@ -32,32 +32,34 @@ const UploadCard = ({ onClose }: { onClose: any }) => {
   });
 
   // Handle field change
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   // Add tag
   const handleAddTag = () => {
+    // @ts-ignore
     setFormData((prev) => ({ ...prev, tags: [...prev.tags, ""] }));
   };
 
   // Remove tag
-  const handleRemoveTag = (index) => {
+  const handleRemoveTag = (index: number) => {
     const newTags = formData.tags.filter((_, idx) => idx !== index);
     setFormData((prev) => ({ ...prev, tags: newTags }));
   };
 
   // Update tag
-  const handleTagChange = (value, index) => {
+  const handleTagChange = (value: any, index: number) => {
     const newTags = formData.tags.map((tag, idx) =>
       idx === index ? value : tag
     );
+    // @ts-ignore
     setFormData((prev) => ({ ...prev, tags: newTags }));
   };
 
   // Form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Implement form submission logic here
     console.log(formData);
