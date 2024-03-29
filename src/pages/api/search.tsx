@@ -1,39 +1,63 @@
-// pages/api/search.tsx
+/*
+ * @Author: huskydoge hbh001098hbh@sjtu.edu.cn
+ * @Date: 2024-02-22 23:30:57
+ * @LastEditors: huskydoge hbh001098hbh@sjtu.edu.cn
+ * @LastEditTime: 2024-03-29 13:55:00
+ * @FilePath: /connected-advisor/src/pages/api/search.tsx
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 import type { NextApiRequest, NextApiResponse } from "next";
-import client from "../../lib/elasticSearch"; // 引入你之前设置的 Elasticsearch 客户端实例
+import { MongoClient, ObjectId } from "mongodb";
+
+// MongoDB URL and database name
+const MONGO_URL = process.env.MONGO_URL;
+const DB_NAME = "ConnectedAdvisor";
+const COLLECTION_NAME = "AdvisorTable";
+
+async function connectToDatabase() {
+  const client = new MongoClient(MONGO_URL);
+  await client.connect();
+  const db = client.db(DB_NAME);
+  return { db, client };
+}
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  // 从请求中获取查询参数
-  const { query } = req.query;
+  if (req.method !== "POST") {
+    res.setHeader("Allow", ["POST"]);
+    res.status(405).end(`Method ${req.method} Not Allowed`);
+    return;
+  }
 
-  if (!query) {
-    return res.status(400).json({ message: "Query is required" });
+  const { oid, name } = req.body;
+
+  if (!oid && !name) {
+    res.status(400).json({ message: "Missing query parameters" });
+    return;
   }
 
   try {
-    // 向 Elasticsearch 发送搜索请求
-    // @ts-ignore
-    const { body } = await client.search({
-      index: "your-index-name", // 替换成你的索引名
-      body: {
-        query: {
-          multi_match: {
-            // 或者使用 match, term 或其他适合你数据的查询
-            // @ts-ignore
-            query: query,
-            fields: ["name", "description"], // 根据你的数据结构调整
-          },
-        },
-      },
-    });
+    const { db, client } = await connectToDatabase();
+    let result;
 
-    // 返回搜索结果
-    res.status(200).json(body.hits.hits);
+    if (oid) {
+      result = await db
+        .collection(COLLECTION_NAME)
+        .findOne({ _id: new ObjectId(oid) });
+    } else if (name) {
+      result = await db.collection(COLLECTION_NAME).findOne({ name: name });
+    }
+
+    if (result) {
+      res.status(200).json(result);
+    } else {
+      res.status(404).json({ message: "No matching document found" });
+    }
+
+    client.close();
   } catch (error) {
-    console.error("Search error:", error);
-    res.status(500).json({ message: "Error executing search" });
+    res.status(500).json({ message: error.message });
   }
 }
