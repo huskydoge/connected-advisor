@@ -2,7 +2,7 @@
   "name": "connected-advisor",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://waline-connected-advisor-pud8gagjj-huskydoge.vercel.app",
+
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -19,6 +19,7 @@
     "d3-force": "^3.0.0",
     "echarts": "^5.5.0",
     "echarts-for-react": "^3.0.2",
+    "mongodb": "^6.5.0",
     "next": "14.1.0",
     "react": "^18",
     "react-dom": "^18",

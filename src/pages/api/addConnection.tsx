@@ -7,14 +7,12 @@
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 
-// pages/api/addData.tsx
-
 import type { NextApiRequest, NextApiResponse } from "next";
 import { MongoClient } from "mongodb";
 
 // MongoDB URL and database name
 const MONGO_URL = process.env.MONGO_URL; // Use the environment variable
-const DB_NAME = "ConnectedAdvisors";
+const DB_NAME = "ConnectedAdvisor";
 
 // Function to connect to the database
 async function connectToDatabase() {
@@ -33,10 +31,10 @@ export default async function handler(
     try {
       const db = await connectToDatabase();
       console.log("Database connected");
-      const collection = db.collection("AdvisorTable");
+      const collection = db.collection("connections");
       const result = await collection.insertOne(req.body);
       console.log("Document inserted", result);
-      res.status(200).json(result);
+      res.status(200).json({ ...result, _id: result.insertedId });
     } catch (error) {
       console.error("Error occurred:", error);
       res

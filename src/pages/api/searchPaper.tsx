@@ -1,18 +1,9 @@
-/*
- * @Author: huskydoge hbh001098hbh@sjtu.edu.cn
- * @Date: 2024-02-22 23:30:57
- * @LastEditors: huskydoge hbh001098hbh@sjtu.edu.cn
- * @LastEditTime: 2024-03-29 13:55:00
- * @FilePath: /connected-advisor/src/pages/api/search.tsx
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- */
-import type { NextApiRequest, NextApiResponse } from "next";
-import { MongoClient, ObjectId } from "mongodb";
+import { MongoClient } from "mongodb";
 
 // MongoDB URL and database name
 const MONGO_URL = process.env.MONGO_URL;
 const DB_NAME = "ConnectedAdvisor";
-const COLLECTION_NAME = "AdvisorTable";
+const COLLECTION_NAME = "papers";
 
 async function connectToDatabase() {
   const client = new MongoClient(MONGO_URL);
@@ -21,10 +12,11 @@ async function connectToDatabase() {
   return { db, client };
 }
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function handler(req, res) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
   if (req.method !== "POST") {
     res.setHeader("Allow", ["POST"]);
     res.status(405).end(`Method ${req.method} Not Allowed`);
@@ -40,17 +32,23 @@ export default async function handler(
 
   try {
     const { db, client } = await connectToDatabase();
-    let result;
 
+    let result;
     if (oid) {
       result = await db
         .collection(COLLECTION_NAME)
         .findOne({ _id: new ObjectId(oid) });
     } else if (name) {
-      result = await db.collection(COLLECTION_NAME).findOne({ name: name });
+      // 使用正则表达式实现模糊搜索
+      result = await db
+        .collection(COLLECTION_NAME)
+        .find({
+          name: { $regex: new RegExp(name, "i") },
+        })
+        .toArray();
     }
 
-    if (result) {
+    if (result && result.length > 0) {
       res.status(200).json(result);
     } else {
       res.status(404).json({ message: "No matching document found" });
@@ -58,6 +56,7 @@ export default async function handler(
 
     client.close();
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 }
