@@ -8,7 +8,7 @@ const Post = () => {
 
   return (
     <div>
-      <MainContent id={Number(id)} />
+      <MainContent id={String(id)} />
     </div>
   );
 };

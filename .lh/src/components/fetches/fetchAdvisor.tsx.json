@@ -1,0 +1,26 @@
+{
+    "sourceFile": "src/components/fetches/fetchAdvisor.tsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1711817424834,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1711817688507,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n     headers: { \"Content-Type\": \"application/json\" },\n     body: JSON.stringify({ oid: id }),\n   });\n   const data = await response.json();\n-  console.log(\"Search details by id:\", data);\n+//   console.log(\"Search details by id:\", data);\n   return data;\n };\n \n export { fetchSearchDetailsById };\n"
+                },
+                {
+                    "date": 1711845706439,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,5 +8,27 @@\n   //   console.log(\"Search details by id:\", data);\n   return data;\n };\n \n-export { fetchSearchDetailsById };\n+\n+const fetchSearchDetailsByName = async (searchText, ord) => {\n+  if (!searchText.trim()) return [];\n+\n+  const response = await fetch(\"/api/searchAdvisor\", {\n+    method: \"POST\",\n+    headers: { \"Content-Type\": \"application/json\" },\n+    body: JSON.stringify({ name: searchText }),\n+  });\n+  const data = await response.json();\n+\n+  const res = Array.isArray(data) ? data : [];\n+\n+  if (ord === 1) {\n+    setsearchResult_1(res);\n+  } else if (ord === 2) {\n+    setsearchResult_2(res);\n+  } else {\n+    alert(\"Invalid ord\");\n+  }\n+};\n+\n+export { fetchSearchDetailsById,fetchSearchDetailsByName };\n"
+                }
+            ],
+            "date": 1711817424834,
+            "name": "Commit-0",
+            "content": "const fetchSearchDetailsById = async (id) => {\n    const response = await fetch(\"/api/searchAdvisor\", {\n      method: \"POST\",\n      headers: { \"Content-Type\": \"application/json\" },\n      body: JSON.stringify({ oid: id }),\n    });\n    const data = await response.json();\n    console.log(\"Search details by id:\", data);\n    return data;\n  };\n\n\nexport { fetchSearchDetailsById };"
+        }
+    ]
+}

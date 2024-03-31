@@ -23,12 +23,11 @@ export default async function handler(req, res) {
     return;
   }
 
-  console.log("Received request:", req.method, req.body);
+  console.log("Received request from searchConnection:", req.method, req.body);
 
-  const id_1 = req.body["id-1"];
-  const id_2 = req.body["id-2"];
+  const conn_id = req.body["oid"];
 
-  if (!id_1 || !id_2) {
+  if (!conn_id) {
     res.status(400).json({ message: "Missing required parameters" });
     return;
   }
@@ -38,12 +37,7 @@ export default async function handler(req, res) {
 
     const results = await db
       .collection(COLLECTION_NAME)
-      .find({
-        $or: [
-          { "id-1": id_1, "id-2": id_2 },
-          { "id-1": id_2, "id-2": id_1 },
-        ],
-      })
+      .find({ _id: new ObjectId(conn_id) })
       .toArray();
 
     if (results.length > 0) {

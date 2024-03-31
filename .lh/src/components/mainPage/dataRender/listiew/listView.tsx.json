@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 143,
+            "activePatchIndex": 144,
             "patches": [
                 {
                     "date": 1708503665020,
@@ -580,6 +580,10 @@
                 {
                     "date": 1708522943903,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n interface Advisor {\n   advisor_id: number;\n   name: string;\n   affiliation: string;\n-  homepage: string;\n+  website: string;\n   twitter: string;\n   github: string;\n   email: string;\n   position: string;\n"
+                },
+                {
+                    "date": 1711874353546,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,10 +15,10 @@\n     relation: Array<{\n       class: string;\n       role: string;\n       duration: {\n-        start: { year: number; month: number };\n-        end: { year: number; month: number };\n+        start: number\n+        end: number\n       };\n     }>;\n     collaborations: Array<{\n       papername: string;\n"
                 }
             ],
             "date": 1708503665020,

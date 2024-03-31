@@ -2,25 +2,30 @@ import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import advisorsData from "../../data/advisors.json"; // 假设你的数据文件路径
-import FilterCard from "./filterCard"; // Ensure FilterCard is imported correctly
-import GraphCard from "./graphCard";
-import UploadCard from "./uploadCard";
-
-// 使用dynamic导入GraphRender组件，禁用SSR
+// 动态导入组件，实现懒加载
+const FilterCard = dynamic(() => import("./filterCard"), { ssr: false });
+const GraphCard = dynamic(() => import("./graphCard"), { ssr: false });
+const UploadCard = dynamic(() => import("./uploadCard"), { ssr: false });
+const AdvisorCard = dynamic(() => import("./advisorCard"), { ssr: false });
+const RenderTabs = dynamic(() => import("./dataRender/renderTabs"), {
+  ssr: false,
+});
+const ListView = dynamic(() => import("./dataRender/listiew/listView"), {
+  ssr: false,
+});
 const GraphRender = dynamic(() => import("./dataRender/graphRender"), {
-  ssr: false, // 确保只在客户端渲染
+  ssr: false,
 });
 
-import AdvisorCard from "./advisorCard"; // Ensure AdvisorCard is imported correctly
+import { fetchAdvisorDetails } from "../fetches/fetchAdvisor";
 
-import RenderTabs from "./dataRender/renderTabs";
-import ListView from "./dataRender/listiew/listView";
 import { useRouter } from "next/router";
 
-function MainContent({ id }: { id: number }) {
-  const advisor_id = Number(id);
+function MainContent({ id }: { id: string }) {
+  const advisor_id = String(id);
   const router = useRouter();
   const [selectedNode, setSelectedNode] = useState(null); // 用于存储选中的节点信息
   const [clickedNode, setClickedNode] = useState(null);
@@ -28,12 +33,44 @@ function MainContent({ id }: { id: number }) {
   const [selectedTab, setSelectedTab] = useState(""); // 用于存储选中的Tab信息
   const [graphDegree, setGraphDegree] = useState(1);
   const [graphType, setGraphType] = useState("undirected");
+  const [defaultNode, setDefaultNode] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [advisorInfo, setAdvisorInfo] = useState(null);
 
-  const advisorInfo = advisorsData.find(
-    (advisor) => advisor.advisor_id === advisor_id
-  );
+  let _id = advisor_id;
+  useEffect(() => {
+    const fetchAdvisorInfo = async () => {
+      setIsLoading(true);
+      const info = await fetchAdvisorDetails(_id);
+      setAdvisorInfo(info);
+      setSelectedNode(info);
+      setDefaultNode(info);
+      setIsLoading(false);
+    };
 
-  const advisor = advisorInfo;
+    if (typeof _id !== "undefined" && _id !== advisorInfo?.advisor) {
+      fetchAdvisorInfo();
+    }
+  }, [_id]);
+
+  if (isLoading || !advisorInfo) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <CircularProgress />
+      </div>
+    );
+  }
+
+  // const advisorInfo = advisorsData.find(
+  //   (advisor) => advisor.advisor_id === advisor_id
+  // );
 
   const handleUploadClick = () => {
     if (showCard === "uploadCard") {
@@ -129,12 +166,6 @@ function MainContent({ id }: { id: number }) {
     }
   };
 
-  useEffect(() => {
-    // @ts-ignore
-
-    setSelectedNode(advisorInfo || null);
-  }, [advisor_id]);
-
   return (
     <Grid container style={{ height: "calc(100vh - 64px)" }}>
       {" "}
@@ -165,38 +196,12 @@ function MainContent({ id }: { id: number }) {
             <ListView onClose={closeListView} mainAdvisor={advisorInfo} />
           ) : (
             <GraphRender
-              advisor_id={String(advisor_id)}
-              onNodeClick={(node: any) => {
-                if (node) {
-                  setSelectedNode(node);
-                  setClickedNode(node);
-                } else {
-                  // 当没有节点被悬停时，恢复到默认的主节点信息
-                  const defaultNode = advisorsData.find(
-                    (advisor) => advisor.advisor_id === advisor_id
-                  );
-                  // @ts-ignore
-                  setSelectedNode(defaultNode);
-                  setClickedNode(null);
-                }
-              }}
+              advisor={advisorInfo}
               graphDegree={graphDegree}
               graphType={graphType}
               onNodeHover={(node: any) => {
                 if (node) {
                   setSelectedNode(node);
-                } else {
-                  // 当没有节点被悬停时，恢复到默认的主节点信息
-
-                  const defaultNode = advisorsData.find(
-                    (advisor) => advisor.advisor_id === advisor_id
-                  );
-                  if (clickedNode) {
-                    setSelectedNode(clickedNode);
-                  } else {
-                    // @ts-ignore
-                    setSelectedNode(defaultNode);
-                  }
                 }
               }}
             />

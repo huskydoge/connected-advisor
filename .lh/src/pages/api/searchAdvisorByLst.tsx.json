@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/pages/api/searchAdvisorByLst.tsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1711858497327,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1711858497327,
+            "name": "Commit-0",
+            "content": "import { MongoClient, ObjectId } from \"mongodb\";\n\nconst MONGO_URL = process.env.MONGO_URL;\nconst DB_NAME = \"ConnectedAdvisor\";\nconst COLLECTION_NAME = \"AdvisorTable\";\n\nasync function connectToDatabase() {\n  const client = new MongoClient(MONGO_URL);\n  await client.connect();\n  const db = client.db(DB_NAME);\n  return { db, client };\n}\n\nexport default async function handler(req, res) {\n  res.setHeader(\"Access-Control-Allow-Origin\", \"*\");\n  res.setHeader(\"Access-Control-Allow-Methods\", \"POST, GET, OPTIONS\");\n  res.setHeader(\"Access-Control-Allow-Headers\", \"Content-Type\");\n\n  if (req.method !== \"POST\") {\n    res.setHeader(\"Allow\", [\"POST\"]);\n    res.status(405).end(`Method ${req.method} Not Allowed`);\n    return;\n  }\n\n  const ids = req.body.ids;\n\n  if (!ids || !Array.isArray(ids) || ids.length === 0) {\n    res.status(400).json({ message: \"Missing or invalid parameters\" });\n    return;\n  }\n\n  try {\n    const { db, client } = await connectToDatabase();\n\n    const objectIds = ids.map((id) => new ObjectId(id));\n    const results = await db\n      .collection(COLLECTION_NAME)\n      .find({ _id: { $in: objectIds } })\n      .toArray();\n\n    if (results.length > 0) {\n      res.status(200).json(results);\n    } else {\n      res.status(404).json({ message: \"No matching connections found\" });\n    }\n\n    client.close();\n  } catch (error) {\n    console.error(error);\n    res.status(500).json({ message: \"Internal Server Error\" });\n  }\n}\n"
+        }
+    ]
+}

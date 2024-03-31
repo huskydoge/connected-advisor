@@ -3,11 +3,39 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 7,
             "patches": [
                 {
                     "date": 1711782104837,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1711851281675,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-import { MongoClient } from \"mongodb\";\n+import { MongoClient, ObjectId } from \"mongodb\";\n \n // MongoDB URL and database name\n const MONGO_URL = process.env.MONGO_URL;\n const DB_NAME = \"ConnectedAdvisor\";\n"
+                },
+                {
+                    "date": 1711851359938,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -56,7 +56,6 @@\n \n     client.close();\n   } catch (error) {\n     console.error(error);\n-    res.status(500).json({ message: \"Internal Server Error\" });\n   }\n }\n"
+                },
+                {
+                    "date": 1711851429806,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,8 +24,12 @@\n   }\n \n   const { oid, name } = req.body;\n \n+  console.log(\"In searchPaper.tsx\");\n+  console.log(\"oid\", oid);\n+  console.log(\"name\", name);\n+\n   if (!oid && !name) {\n     res.status(400).json({ message: \"Missing query parameters\" });\n     return;\n   }\n"
+                },
+                {
+                    "date": 1711851457785,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,11 +24,9 @@\n   }\n \n   const { oid, name } = req.body;\n \n-  console.log(\"In searchPaper.tsx\");\n-  console.log(\"oid\", oid);\n-  console.log(\"name\", name);\n+  console.log(\"In searchPaper.tsx\", \"oid\", oid, \"name\", name);\n \n   if (!oid && !name) {\n     res.status(400).json({ message: \"Missing query parameters\" });\n     return;\n"
+                },
+                {
+                    "date": 1711853941971,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,9 +38,9 @@\n     let result;\n     if (oid) {\n       result = await db\n         .collection(COLLECTION_NAME)\n-        .findOne({ _id: new ObjectId(oid) });\n+        .find({ _id: new ObjectId(oid) });\n     } else if (name) {\n       // 使用正则表达式实现模糊搜索\n       result = await db\n         .collection(COLLECTION_NAME)\n"
+                },
+                {
+                    "date": 1711853948822,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,9 +38,10 @@\n     let result;\n     if (oid) {\n       result = await db\n         .collection(COLLECTION_NAME)\n-        .find({ _id: new ObjectId(oid) });\n+        .find({ _id: new ObjectId(oid) })\n+        .toArray;\n     } else if (name) {\n       // 使用正则表达式实现模糊搜索\n       result = await db\n         .collection(COLLECTION_NAME)\n"
+                },
+                {
+                    "date": 1711853955431,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,9 +38,9 @@\n     let result;\n     if (oid) {\n       result = await db\n         .collection(COLLECTION_NAME)\n-        .find({ _id: new ObjectId(oid) }).toArray;\n+        .find({ _id: new ObjectId(oid) }).toArray();\n     } else if (name) {\n       // 使用正则表达式实现模糊搜索\n       result = await db\n         .collection(COLLECTION_NAME)\n"
                 }
             ],
             "date": 1711782104837,

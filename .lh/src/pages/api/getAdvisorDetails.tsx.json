@@ -1,0 +1,26 @@
+{
+    "sourceFile": "src/pages/api/getAdvisorDetails.tsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1711874498940,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1711874615501,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -73,8 +73,9 @@\n     return;\n   }\n \n   const { advisor_id } = req.body;\n+  console.log(\"advisor_id\", advisor_id);\n   if (!advisor_id) {\n     res.status(400).json({ error: \"Advisor ID is required\" });\n     return;\n   }\n"
+                },
+                {
+                    "date": 1711874646988,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,13 +19,15 @@\n \n   try {\n     const advisor = await db\n       .collection(\"AdvisorTable\")\n-      .findOne({ _id: new ObjectId(advisorId) });\n+      .find({ _id: new ObjectId(advisorId) });\n     if (!advisor) {\n       return null;\n     }\n \n+    console.log(\"advisor\", advisor);\n+\n     // 获取 advisor 的连接信息\n     const connections = await Promise.all(\n       advisor.connections.map(async (connId) => {\n         return db\n"
+                }
+            ],
+            "date": 1711874498940,
+            "name": "Commit-0",
+            "content": "// pages/api/getAdvisorDetails.tsx\n\nimport { NextApiRequest, NextApiResponse } from \"next\";\nimport { MongoClient, ObjectId } from \"mongodb\";\n\n// 环境变量中获取 MongoDB 的连接 URL\nconst MONGO_URL = process.env.MONGO_URL;\nconst DB_NAME = \"ConnectedAdvisor\";\n\nasync function connectToDatabase() {\n    const client = new MongoClient(MONGO_URL);\n    await client.connect();\n    const db = client.db(DB_NAME);\n    return { db, client };\n}\n\nasync function getAdvisorDetails(advisorId: string) {\n    const { db, client } = await connectToDatabase();\n    \n    try {\n        const advisor = await db.collection(\"AdvisorTable\").findOne({ _id: new ObjectId(advisorId) });\n        if (!advisor) {\n            return null;\n        }\n\n        // 获取 advisor 的连接信息\n        const connections = await Promise.all(\n            advisor.connections.map(async (connId) => {\n                return db.collection(\"connections\").findOne({ _id: new ObjectId(connId) });\n            })\n        );\n\n        // 获取每个连接的详细关系和论文信息\n        for (const conn of connections) {\n            conn.relation = await Promise.all(\n                conn.relation.map(async (relId) => {\n                    return db.collection(\"relations\").findOne({ _id: new ObjectId(relId) });\n                })\n            );\n\n            conn[\"collaborate-papers\"] = await Promise.all(\n                conn[\"collaborate-papers\"].map(async (paperId) => {\n                    return db.collection(\"papers\").findOne({ _id: new ObjectId(paperId) });\n                })\n            );\n        }\n\n        advisor.connections = connections;\n        return advisor;\n    } catch (error) {\n        console.error(\"Error fetching advisor details:\", error);\n        return null;\n    } finally {\n        client.close();\n    }\n}\n\nexport default async function handler(req: NextApiRequest, res: NextApiResponse) {\n    if (req.method !== \"POST\") {\n        res.setHeader(\"Allow\", [\"POST\"]);\n        res.status(405).end(`Method ${req.method} Not Allowed`);\n        return;\n    }\n\n    const { advisor_id } = req.body;\n    if (!advisor_id) {\n        res.status(400).json({ error: \"Advisor ID is required\" });\n        return;\n    }\n\n    const advisorDetails = await getAdvisorDetails(advisor_id);\n    if (advisorDetails) {\n        res.status(200).json(advisorDetails);\n    } else {\n        res.status(404).json({ error: \"Advisor not found\" });\n    }\n}\n"
+        }
+    ]
+}

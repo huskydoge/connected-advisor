@@ -1,0 +1,26 @@
+{
+    "sourceFile": "src/components/fetches/fetchRelation.tsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1711845955238,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1711846777107,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,5 +35,26 @@\n   console.log(\"Relation IDs:\", relation_ids);\n   return relation_ids;\n };\n \n+const fetchRelations = async ({ selectedNameOne, selectedNameTwo }) => {\n+  if (!selectedNameOne || !selectedNameTwo) {\n+    alert(\"Both persons must be selected to form a connection.\");\n+    return;\n+  }\n+  const response = await fetch(\"/api/searchRelation\", {\n+    method: \"POST\",\n+    headers: { \"Content-Type\": \"application/json\" },\n+    body: JSON.stringify({\n+      \"id-1\": selectedNameOne?._id,\n+      \"id-2\": selectedNameTwo?._id,\n+    }),\n+  });\n+  const existingRelations = await response.json();\n+  if (!response.ok) {\n+    return [];\n+  } else {\n+    return existingRelations;\n+  }\n+};\n+\n export { addRelations };\n"
+                },
+                {
+                    "date": 1711847804095,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -40,9 +40,9 @@\n   if (!selectedNameOne || !selectedNameTwo) {\n     alert(\"Both persons must be selected to form a connection.\");\n     return;\n   }\n-  const response = await fetch(\"/api/searchRelation\", {\n+  const response = await fetch(\"/api/fuzzySearchRelation\", {\n     method: \"POST\",\n     headers: { \"Content-Type\": \"application/json\" },\n     body: JSON.stringify({\n       \"id-1\": selectedNameOne?._id,\n@@ -56,5 +56,5 @@\n     return existingRelations;\n   }\n };\n \n-export { addRelations };\n+export { addRelations, fetchRelations };\n"
+                }
+            ],
+            "date": 1711845955238,
+            "name": "Commit-0",
+            "content": "const addRelations = async ({\n    selectedNameOne,\n    selectedNameTwo,\n    relations,\n  }) => {\n    const relation_list = relations.map((relation) => {\n      console.log(relation, selectedNameOne._id, selectedNameTwo._id);\n      return {\n        type: relation.type,\n        \"id-1\": selectedNameOne._id,\n        \"id-2\": selectedNameTwo._id,\n        \"role-1\": relation.role1,\n        \"role-2\": relation.role2,\n        duration: {\n          start: relation.start,\n          end: relation.end,\n        },\n      };\n    });\n\n    let relation_ids = [];\n    for (let relation of relation_list) {\n      const response = await fetch(\"/api/addRelation\", {\n        method: \"POST\",\n        headers: { \"Content-Type\": \"application/json\" },\n        body: JSON.stringify(relation),\n      });\n      if (!response.ok) {\n        console.error(\"Failed to add relation\", relation);\n        return false;\n      } else {\n        relation_ids.push((await response.json())._id);\n      }\n    }\n    console.log(\"Relation IDs:\", relation_ids);\n    return relation_ids;\n  };\n\nexport { addRelations };"
+        }
+    ]
+}

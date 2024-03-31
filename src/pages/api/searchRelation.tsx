@@ -25,10 +25,9 @@ export default async function handler(req, res) {
 
   console.log("Received request:", req.method, req.body);
 
-  const id_1 = req.body["id-1"];
-  const id_2 = req.body["id-2"];
+  const rel_id = req.body["oid"];
 
-  if (!id_1 || !id_2) {
+  if (!rel_id) {
     res.status(400).json({ message: "Missing required parameters" });
     return;
   }
@@ -36,14 +35,10 @@ export default async function handler(req, res) {
   try {
     const { db, client } = await connectToDatabase();
 
-    const results = await db
-      .collection(COLLECTION_NAME)
-      .find({
-        $or: [
-          { "id-1": id_1, "id-2": id_2 },
-          { "id-1": id_2, "id-2": id_1 },
-        ],
-      })
+    const collection = db.collection(COLLECTION_NAME);
+
+    const results = await collection
+      .find({ _id: new ObjectId(rel_id) })
       .toArray();
 
     if (results.length > 0) {

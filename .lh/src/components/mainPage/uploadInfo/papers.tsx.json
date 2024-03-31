@@ -1,0 +1,26 @@
+{
+    "sourceFile": "src/components/mainPage/uploadInfo/papers.tsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1711815891034,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1711815940423,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,7 +21,21 @@\n import CloseIcon from \"@mui/icons-material/Close\";\n import AddIcon from \"@mui/icons-material/Add\";\n import Relation from \"./relation\";\n \n-const Papers = ({ newPaper, setNewPaper }) => {};\n+const Papers = ({ newPaper, setNewPaper }) => {\n \n+    const fetchPaperDetails = async (searchText) => {\n+        if (!searchText.trim()) return;\n+        const response = await fetch(\"/api/searchPaper\", {\n+          method: \"POST\",\n+          headers: { \"Content-Type\": \"application/json\" },\n+          body: JSON.stringify({ name: searchText }),\n+        });\n+        const data = await response.json();\n+        setPaperSearchResult(Array.isArray(data) ? data : []);\n+      };\n+    \n+\n+};\n+\n export default Papers;\n"
+                },
+                {
+                    "date": 1711815997233,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,8 +22,11 @@\n import AddIcon from \"@mui/icons-material/Add\";\n import Relation from \"./relation\";\n \n const Papers = ({ newPaper, setNewPaper }) => {\n+    const [paperSearchResult, setPaperSearchResult] = useState([]);\n+    const [submitPaperOpen, setSubmitPaperOpen] = useState(false);\n+    const [selectedPaper, setSelectedPaper] = useState(null);\n   const fetchPaperDetails = async (searchText) => {\n     if (!searchText.trim()) return;\n     const response = await fetch(\"/api/searchPaper\", {\n       method: \"POST\",\n@@ -32,7 +35,20 @@\n     });\n     const data = await response.json();\n     setPaperSearchResult(Array.isArray(data) ? data : []);\n   };\n+  const handlePaperDialogOpen = () => {\n+    setPaperDialogOpen(true);\n+  };\n+\n+  const handlePaperDialogClose = () => {\n+    if (submitPaperOpen) {\n+      // clear new paper data\n+      setNewPaper({ name: \"\", year: \"\" });\n+      setSubmitPaperOpen(false); // Return to search paper view\n+    } else {\n+      setPaperDialogOpen(false); // Close dialog\n+    }\n+  };\n };\n \n export default Papers;\n"
+                }
+            ],
+            "date": 1711815891034,
+            "name": "Commit-0",
+            "content": "import React, { useState } from \"react\";\nimport {\n  Box,\n  Button,\n  CardContent,\n  Typography,\n  Grid,\n  TextField,\n  Autocomplete,\n  Chip,\n  Dialog,\n  DialogContent,\n  DialogActions,\n  List,\n  ListItem,\n  ListItemText,\n  IconButton,\n  DialogTitle,\n  DialogContentText,\n} from \"@mui/material\";\nimport CloseIcon from \"@mui/icons-material/Close\";\nimport AddIcon from \"@mui/icons-material/Add\";\nimport Relation from \"./relation\";\n\n\nconst Papers = ({newPaper, setNewPaper}) => {\n};\n\nexport default Papers;\n"
+        }
+    ]
+}

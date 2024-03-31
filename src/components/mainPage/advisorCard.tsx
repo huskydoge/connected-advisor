@@ -21,13 +21,11 @@ import {
   Collapse,
   Button,
 } from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { styled } from "@mui/material/styles";
 import AdvisorConnection from "./advisorCardComponents/advisorConnections";
 import Tags from "./advisorCardComponents/tags";
 import AvatarLoader from "../AvatarLoader";
-import { Waline } from "./advisorCardComponents/advisorComments";
-import Router from "next/router";
+// import { Waline } from "./advisorCardComponents/advisorComments";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean; // 明确指出expand属性是一个布尔值
@@ -212,7 +210,7 @@ const AdvisorCard = ({ advisor }: { advisor: Advisor }) => {
         ))}
       </Grid>
 
-      {/* Comments Section */}
+      {/* Comments Section
       <Grid item xs={12}>
         <Typography
           variant="h5"
@@ -231,7 +229,7 @@ const AdvisorCard = ({ advisor }: { advisor: Advisor }) => {
           serverURL="https://waline-connected-advisor-pud8gagjj-huskydoge.vercel.app"
           path={advisor.advisor_id}
         />
-      </Grid>
+      </Grid> */}
     </Grid>
   );
 };

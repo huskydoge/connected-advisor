@@ -16,8 +16,8 @@ interface Advisor {
       class: string;
       role: string;
       duration: {
-        start: { year: number; month: number };
-        end: { year: number; month: number };
+        start: number;
+        end: number;
       };
     }>;
     collaborations: Array<{

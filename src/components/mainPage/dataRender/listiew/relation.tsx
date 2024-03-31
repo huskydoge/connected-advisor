@@ -53,8 +53,7 @@ const RelationComponent = ({ main, second, onBack }) => {
               </Typography>
             </Box>
             <Typography variant="h6">
-              {rel.duration.start.year}/{rel.duration.start.month} to{" "}
-              {rel.duration.end.year}/{rel.duration.end.month}
+              {rel.duration.start} to {rel.duration.end}
             </Typography>
           </ListItem>
         ))}

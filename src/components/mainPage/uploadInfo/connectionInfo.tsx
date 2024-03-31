@@ -575,9 +575,7 @@ const ConnectionInfo = () => {
         aria-labelledby="error-dialog-title"
         aria-describedby="error-dialog-description"
       >
-        <DialogTitle id="error-dialog-title">
-          {"Duplicate Relation Error"}
-        </DialogTitle>
+        <DialogTitle id="error-dialog-title">{"Information: "}</DialogTitle>
         <DialogContent>
           <DialogContentText
             id="error-dialog-description"

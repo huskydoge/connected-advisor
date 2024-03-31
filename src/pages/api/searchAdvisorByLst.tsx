@@ -1,9 +1,8 @@
 import { MongoClient, ObjectId } from "mongodb";
 
-// MongoDB URL and database name
 const MONGO_URL = process.env.MONGO_URL;
 const DB_NAME = "ConnectedAdvisor";
-const COLLECTION_NAME = "papers";
+const COLLECTION_NAME = "AdvisorTable";
 
 async function connectToDatabase() {
   const client = new MongoClient(MONGO_URL);
@@ -23,42 +22,31 @@ export default async function handler(req, res) {
     return;
   }
 
-  const { oid, name } = req.body;
+  const ids = req.body.ids;
 
-  console.log("In searchPaper.tsx", "oid", oid, "name", name);
-
-  if (!oid && !name) {
-    res.status(400).json({ message: "Missing query parameters" });
+  if (!ids || !Array.isArray(ids) || ids.length === 0) {
+    res.status(400).json({ message: "Missing or invalid parameters" });
     return;
   }
 
   try {
     const { db, client } = await connectToDatabase();
 
-    let result;
-    if (oid) {
-      result = await db
-        .collection(COLLECTION_NAME)
-        .find({ _id: new ObjectId(oid) })
-        .toArray();
-    } else if (name) {
-      // 使用正则表达式实现模糊搜索
-      result = await db
-        .collection(COLLECTION_NAME)
-        .find({
-          name: { $regex: new RegExp(name, "i") },
-        })
-        .toArray();
-    }
+    const objectIds = ids.map((id) => new ObjectId(id));
+    const results = await db
+      .collection(COLLECTION_NAME)
+      .find({ _id: { $in: objectIds } })
+      .toArray();
 
-    if (result && result.length > 0) {
-      res.status(200).json(result);
+    if (results.length > 0) {
+      res.status(200).json(results);
     } else {
-      res.status(404).json({ message: "No matching document found" });
+      res.status(404).json({ message: "No matching connections found" });
     }
 
     client.close();
   } catch (error) {
     console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 }
