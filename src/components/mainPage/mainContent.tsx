@@ -36,6 +36,8 @@ function MainContent({ id }: { id: string }) {
   const [defaultNode, setDefaultNode] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [advisorInfo, setAdvisorInfo] = useState(null);
+  // 初始左侧面板flex值为3，右侧面板flex值为1，总flex值为4
+  const [splitPercentage, setSplitPercentage] = useState(60);
 
   let _id = advisor_id;
   useEffect(() => {
@@ -166,17 +168,47 @@ function MainContent({ id }: { id: string }) {
     }
   };
 
+  // 鼠标拖动事件处理
+  const onMouseDown = (e) => {
+    // 添加mousemove和mouseup事件监听
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseup", onMouseUp);
+    e.preventDefault(); // 防止默认事件和文本选择
+  };
+
+  const onMouseMove = (e) => {
+    // 计算新的分割位置百分比
+    const newSplitPercentage = (e.clientX / window.innerWidth) * 100;
+    // 设置状态以更新UI
+    if (newSplitPercentage <= 30 || newSplitPercentage >= 70) {
+      e.preventDefault();
+    } else {
+      setSplitPercentage(newSplitPercentage);
+      e.preventDefault();
+    }
+  };
+
+  const onMouseUp = (e) => {
+    // 移除事件监听
+    window.removeEventListener("mousemove", onMouseMove);
+    window.removeEventListener("mouseup", onMouseUp);
+    e.preventDefault();
+  };
+
+  // ================================================================================================================================================
   return (
-    <Grid container style={{ height: "calc(100vh - 64px)" }}>
-      {" "}
-      {/* Adjust height to take the AppBar height into account */}
+    <Grid
+      container
+      style={{ height: "calc(100vh - 64px)", width: "100%", display: "flex" }}
+    >
       <Grid
         item
-        xs={9}
-        style={{ padding: 0, display: "flex", flexDirection: "column" }}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          width: `${splitPercentage}%`,
+        }}
       >
-        {/* Left column for graph display */}
-
         <RenderTabs
           onUpload={handleUploadClick}
           onFilter={handleFilterClick}
@@ -208,12 +240,26 @@ function MainContent({ id }: { id: string }) {
           )}
         </Paper>
       </Grid>
+
+      <div
+        onMouseDown={onMouseDown}
+        style={{
+          width: "5px",
+          cursor: "ew-resize",
+          background: "darkgray",
+          zIndex: 1, // 确保分隔条在顶层
+        }}
+      >
+        {/* 分隔条 */}
+      </div>
       <Grid
         item
-        xs={3}
-        style={{ padding: 0, display: "flex", flexDirection: "column" }}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          flex: 1, // 使用flex属性而不是百分比宽度
+        }}
       >
-        {/* Right column for displaying node information */}
         <Paper
           elevation={3}
           style={{

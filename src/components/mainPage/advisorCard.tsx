@@ -59,7 +59,6 @@ interface Advisor {
 
 const AdvisorCard = ({ advisor }: { advisor: Advisor }) => {
   const router = useRouter(); // 使用useRouter钩子
-
   // 点击事件处理函数
   const handleClick = () => {
     router.push(`/main/${advisor.advisor_id}`); // 使用模板字符串插入变量
@@ -72,7 +71,8 @@ const AdvisorCard = ({ advisor }: { advisor: Advisor }) => {
       sx={{
         p: 2,
         marginTop: 4,
-        overflowY: "auto",
+        marginBottom: 4,
+        overflowY: "scroll",
         fontSize: { xs: "0.875rem", sm: "1rem", md: "1.125rem" },
       }}
       direction="column"
@@ -165,8 +165,8 @@ const AdvisorCard = ({ advisor }: { advisor: Advisor }) => {
           sx={{
             mt: 2,
             fontSize: { xs: "0.875rem", sm: "1rem", md: "1.125rem" },
-
             paddingLeft: 5,
+            paddingRight: 5,
           }}
           variant="body1"
           paragraph

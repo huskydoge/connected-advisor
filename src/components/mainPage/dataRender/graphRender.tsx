@@ -12,6 +12,7 @@ import { TooltipComponent, VisualMapComponent } from "echarts/components";
 import { SVGRenderer } from "echarts/renderers";
 
 import { fetchAdvisorDetails } from "@/components/fetches/fetchAdvisor";
+import { integer } from "@elastic/elasticsearch/lib/api/types";
 
 // 注册必要的组件
 echarts.use([
@@ -124,8 +125,8 @@ const advisorsReader = async (
 
   function addLink(
     links: any[],
-    sourceId: number,
-    targetId: number,
+    sourceId: string,
+    targetId: string,
     connection: any
   ) {
     const width =
@@ -220,7 +221,8 @@ const advisorsReader = async (
           minYear = Math.min(minYear, latestYear);
           maxYear = Math.max(maxYear, latestYear);
 
-          const symbolSize = 20 + connection.relationFactor * 0.5;
+          // const symbolSize = 20 + connection.relationFactor * 0.5;
+          const symbolSize = 200;
 
           nodes = addNode(nodes, connectedAdvisor, symbolSize, latestYear);
           links = addLink(
@@ -246,13 +248,16 @@ const GraphRender = ({
   advisor,
   graphDegree,
   graphType,
+  split,
 }: {
   onNodeHover: Function;
   advisor: Advisor;
   graphDegree: number;
   graphType: string;
+  split: integer;
 }) => {
   const chartRef = useRef(null);
+  const chartInstance = useRef(null);
   const [option, setOption] = useState({}); // 用于存储图表配置
   const [zoomFactor, setZoomFactor] = useState(1); // 存储当前的缩放因子
   const [selectedNode, setSelectedNode] = useState(null); // 新增状态来跟踪选中的节点
@@ -276,6 +281,8 @@ const GraphRender = ({
           graphDegree,
           advisor
         );
+
+        myChart.resize();
 
         // 更新节点样式，为选中节点添加边框
         // @ts-ignore
@@ -466,6 +473,7 @@ const GraphRender = ({
     renderGraph();
   }, [
     zoomFactor,
+    split,
     onNodeHover,
     selectedNodeId,
     myChart,

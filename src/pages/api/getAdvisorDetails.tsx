@@ -94,9 +94,9 @@ async function getAdvisorDetails(advisorId: string) {
         }
         const paper = papers.find((paper) => paper._id.equals(paperId));
         return {
-          papername: paper.name,
-          year: paper.year,
-          url: paper.url,
+          papername: paper?.name,
+          year: paper?.year,
+          url: paper?.url,
         };
       });
 
@@ -139,7 +139,7 @@ async function getAdvisorDetails(advisorId: string) {
       avatar: advisor[0].picture,
       twitter: advisor[0].contacts.twitter,
       email: advisor[0].contacts.email,
-      website: advisor[0].contacts.website,
+      website: advisor[0].homepage,
       github: advisor[0].contacts.github,
       description: advisor[0].descriptions,
     };
