@@ -1,0 +1,18 @@
+{
+    "sourceFile": "TODO.txt",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1713804837751,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1713804837751,
+            "name": "Commit-0",
+            "content": "echarts的节点选择以头像展示 完善echarts的configuration\necharts中节点大小公式\n加入更多的datapoints\n完善listview\n增加整体可视化"
+        }
+    ]
+}
