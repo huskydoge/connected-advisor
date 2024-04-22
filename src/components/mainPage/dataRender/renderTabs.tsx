@@ -71,7 +71,7 @@ const RenderTabs = ({
             fontSize: "1rem",
           }}
         >
-          Graph Mode
+          Configuration
         </Button>
       </Box>
     </Toolbar>

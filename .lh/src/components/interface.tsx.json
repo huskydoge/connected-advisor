@@ -20,7 +20,7 @@
       ],
       "date": 1713755498789,
       "name": "Commit-0",
-      "content": "interface Advisor {\n    _id: number;\n    name: string;\n    affiliation: string;\n    website: string;\n    twitter: string;\n    github: string;\n    email: string;\n    position: string;\n    connections: {\n      _id: number;\n  \n      relation: Array<{\n        class: string;\n        role: string;\n        duration: {\n          start: number;\n          end: number;\n        };\n      }>;\n      collaborations: Array<{\n        papername: string;\n        year: number;\n        url: string;\n      }>;\n      latestCollaboration: number;\n      relationFactor: number;\n    }[];\n  }"
+      "content": "interface Advisor {\n    _id: number;\n    name: string;\n    affiliation: string;\n    homepage: string;\n    twitter: string;\n    github: string;\n    email: string;\n    position: string;\n    connections: {\n      _id: number;\n  \n      relation: Array<{\n        class: string;\n        role: string;\n        duration: {\n          start: number;\n          end: number;\n        };\n      }>;\n      collaborations: Array<{\n        papername: string;\n        year: number;\n        url: string;\n      }>;\n      latestCollaboration: number;\n      relationFactor: number;\n    }[];\n  }"
     }
   ]
 }

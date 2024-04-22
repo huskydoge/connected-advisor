@@ -25,6 +25,9 @@ import { styled } from "@mui/material/styles";
 import AdvisorConnection from "./advisorCardComponents/advisorConnections";
 import Tags from "./advisorCardComponents/tags";
 import AvatarLoader from "../AvatarLoader";
+
+import { scholarImg } from "@/components/const";
+
 // import { Waline } from "./advisorCardComponents/advisorComments";
 
 interface ExpandMoreProps extends IconButtonProps {
@@ -50,7 +53,7 @@ interface Advisor {
   github?: string;
   twitter?: string;
   email: string;
-  website?: string;
+  homepage?: string;
   description?: string;
   tags?: string[];
   connections?: any[]; // 根据你的具体需求来调整类型
@@ -81,7 +84,7 @@ const AdvisorCard = ({ advisor }: { advisor: Advisor }) => {
       <Grid item xs={12} sx={{ display: "flex", justifyContent: "center" }}>
         <AvatarLoader
           alt={advisor.name}
-          src={advisor.avatar}
+          src={advisor.avatar ? advisor.avatar : scholarImg}
           sx={{
             width: { xs: "8rem", sm: "10rem", md: "12rem" },
             height: { xs: "8rem", sm: "10rem", md: "12rem" },
@@ -153,7 +156,7 @@ const AdvisorCard = ({ advisor }: { advisor: Advisor }) => {
             <Email sx={{ mr: 0.5 }} /> Email
           </Link>
           <Link
-            href={advisor.website}
+            href={advisor.homepage}
             target="_blank"
             rel="noopener noreferrer"
             sx={{ display: "flex", alignItems: "center" }}

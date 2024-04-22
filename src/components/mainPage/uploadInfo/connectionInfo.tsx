@@ -21,6 +21,7 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
 import Relation from "./relation";
+import { Paper } from "@/components/interface";
 
 const ConnectionInfo = () => {
   const [relations, setRelations] = useState([]);
@@ -32,15 +33,16 @@ const ConnectionInfo = () => {
   const [paperDialogOpen, setPaperDialogOpen] = useState(false);
   const [paperSearchResult, setPaperSearchResult] = useState([]);
   const [submitPaperOpen, setSubmitPaperOpen] = useState(false);
-  const [selectedPaper, setSelectedPaper] = useState(null);
+  const [selectedPaper, setSelectedPaper] = useState<Paper>();
   const [errors, setErrors] = useState({});
   const [infoDialogOpen, setInfoDialogOpen] = useState(false);
   const [infoDialogMessage, setInfoDialogMessage] = useState("");
+  const [authorSearchResult, setAuthorSearchResult] = useState([]);
 
   // submitted by user
   const [newPaper, setNewPaper] = useState({ name: "", year: "" });
 
-  const fetchPaperDetails = async (searchText) => {
+  const fetchPaperDetails = async (searchText: string) => {
     if (!searchText.trim()) return;
     const response = await fetch("/api/searchPaper", {
       method: "POST",
@@ -125,13 +127,14 @@ const ConnectionInfo = () => {
 
   const addPaper = () => {
     // check whether a paper is selected
+    console.log("adding Paper");
     console.log(selectedPaper);
     if (!selectedPaper) {
       setErrors({ paper: "Please select a paper" });
       return;
     }
     // check whether the paper is already added
-    if (papers.find((paper) => paper._id === selectedPaper._id)) {
+    if (papers.find((paper: Paper) => paper._id === selectedPaper._id)) {
       setErrors({ paper: "This paper is already added" });
       return;
     }
@@ -177,16 +180,37 @@ const ConnectionInfo = () => {
     setSubmitPaperOpen(true);
   };
 
+  const renderAuthorChip = (author, index) => (
+    <Chip key={index} label={author.name} />
+  );
+
+  const fetchAuthors = async (searchText) => {
+    if (!searchText.trim()) return;
+    const response = await fetch("/api/searchAdvisor", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: searchText }),
+    });
+    const data = await response.json();
+    setAuthorSearchResult(data);
+  };
+
+  const handleAuthorChange = (event, newValue) => {
+    setNewPaper({ ...newPaper, authors: newValue });
+  };
+
+  const handleAuthorSearch = (event, newInputValue) => {
+    fetchAuthors(newInputValue);
+  };
   const renderPaperDialog = () => (
-    <Dialog
-      open={paperDialogOpen}
-      onClose={handlePaperDialogClose}
-      maxWidth="sm"
-      fullWidth
-    >
+    <Dialog open={paperDialogOpen} onClose={handlePaperDialogClose} fullWidth>
+      <DialogTitle>
+        {submitPaperOpen ? "Submit New Paper" : "Add Paper"}
+      </DialogTitle>
+
       <DialogContent>
         {submitPaperOpen ? (
-          <>
+          <div>
             <TextField
               label="Paper Name"
               fullWidth
@@ -197,6 +221,7 @@ const ConnectionInfo = () => {
                 setNewPaper({ ...newPaper, name: e.target.value })
               }
             />
+
             <TextField
               label="Year"
               fullWidth
@@ -207,10 +232,60 @@ const ConnectionInfo = () => {
                 setNewPaper({ ...newPaper, year: e.target.value })
               }
             />
-          </>
+
+            <TextField
+              label="URL"
+              fullWidth
+              variant="outlined"
+              margin="dense"
+              sx={{ mt: 2 }}
+              value={newPaper.url}
+              onChange={(e) =>
+                setNewPaper({ ...newPaper, url: e.target.value })
+              }
+            />
+
+            <TextField
+              label="Abstract"
+              fullWidth
+              sx={{ mt: 2 }}
+              variant="outlined"
+              margin="dense"
+              multiline
+              rows={4}
+              value={newPaper.abstract}
+              onChange={(e) =>
+                setNewPaper({ ...newPaper, abstract: e.target.value })
+              }
+            />
+
+            <Autocomplete
+              multiple
+              sx={{ mt: 2 }}
+              options={authorSearchResult}
+              value={newPaper.authors}
+              onChange={handleAuthorChange}
+              onInputChange={handleAuthorSearch}
+              getOptionLabel={(option) =>
+                `${option.name} - ${option.position} - ${option.affiliation}`
+              }
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Add Authors"
+                  variant="outlined"
+                  onClick={() => fetchAuthors("")}
+                />
+              )}
+              renderTags={(value, getTagProps) =>
+                value.map((author, index) => renderAuthorChip(author, index))
+              }
+            />
+          </div>
         ) : (
           <Autocomplete
             freeSolo
+            sx={{ mt: 2 }}
             options={paperSearchResult}
             getOptionLabel={(option) => `${option.name} - ${option.year}`}
             onInputChange={(event, newValue) => {
@@ -245,7 +320,7 @@ const ConnectionInfo = () => {
           </Grid>
           {!submitPaperOpen && (
             <Grid item>
-              <Button onClick={() => addPaper(selectedPaper)}>Add Paper</Button>
+              <Button onClick={addPaper}>Add Paper</Button>
             </Grid>
           )}
           {submitPaperOpen ? (

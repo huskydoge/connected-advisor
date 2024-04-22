@@ -1,7 +1,7 @@
 import { MongoClient, ObjectId } from "mongodb";
 
 // MongoDB URL and database name
-const MONGO_URL = process.env.MONGO_URL;
+const MONGO_URL = process.env.MONGO_URL || "";
 const DB_NAME = "ConnectedAdvisor";
 const COLLECTION_NAME = "tmp-papers";
 
@@ -12,7 +12,7 @@ async function connectToDatabase() {
   return { db, client };
 }
 
-export default async function handler(req, res) {
+export default async function handler(req: any, res: any) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");

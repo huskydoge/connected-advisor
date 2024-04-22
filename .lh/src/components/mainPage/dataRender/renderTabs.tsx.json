@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 34,
+            "activePatchIndex": 35,
             "patches": [
                 {
                     "date": 1708501683876,
@@ -144,6 +144,10 @@
                 {
                     "date": 1708705818998,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,8 @@\n import { Toolbar, Button, Typography, Box } from \"@mui/material\";\n \n //@ts-ignore\n const RenderTabs = ({\n-  //@ts-ignore\n   onFilter,\n   onUpload,\n   onListView,\n   onGraphMode,\n"
+                },
+                {
+                    "date": 1713791643491,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -70,9 +70,9 @@\n             backgroundColor: selected === \"graphmode\" ? \"#e0e0e0\" : \"inherit\",\n             fontSize: \"1rem\",\n           }}\n         >\n-          Graph Mode\n+          Configuration\n         </Button>\n       </Box>\n     </Toolbar>\n   );\n"
                 }
             ],
             "date": 1708501683876,

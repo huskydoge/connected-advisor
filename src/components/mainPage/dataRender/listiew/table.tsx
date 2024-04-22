@@ -11,10 +11,17 @@ import {
   Tooltip,
 } from "@mui/material";
 
+import { useRouter } from "next/router";
 import { AdvisorDetails } from "@/components/interface";
 
 // @ts-ignore
 const TableView = ({ onClickConnection, advisors }) => {
+  const router = useRouter();
+  const handleClick = (id: string) => {
+    router.push(`${id}?view=graph`, undefined, {
+      shallow: true,
+    });
+  };
   console.log("table", advisors);
   return (
     <TableContainer component={Paper} sx={{ width: "100%" }}>
@@ -24,7 +31,7 @@ const TableView = ({ onClickConnection, advisors }) => {
             <TableCell align="center">Advisor Name</TableCell>
             <TableCell align="center">Position</TableCell>
             <TableCell align="center">Affliation</TableCell>
-            <TableCell align="center">Website</TableCell>
+            <TableCell align="center">HomePage</TableCell>
             <TableCell align="center">Email</TableCell>
             <TableCell align="center">Twitter</TableCell>
             <TableCell align="center">GitHub</TableCell>
@@ -34,16 +41,22 @@ const TableView = ({ onClickConnection, advisors }) => {
         <TableBody>
           {advisors?.map((advisor: AdvisorDetails) => (
             <TableRow sx={{ border: "none" }} key={advisor?._id} hover>
-              <TableCell align="center">{advisor?.name}</TableCell>
+              <TableCell align="center">
+                <Button onClick={() => handleClick(advisor._id)}>
+                  {advisor?.name}
+                </Button>
+              </TableCell>
               <TableCell align="center">{advisor?.position}</TableCell>
               <TableCell align="center">{advisor?.affiliation}</TableCell>
               <TableCell align="center">
-                {advisor.homepage ? (
+                {advisor["homepage"] ? (
                   <Link
                     href={advisor?.homepage}
                     target="_blank"
                     rel="noopener noreferrer"
-                  ></Link>
+                  >
+                    {advisor["homepage"]}
+                  </Link>
                 ) : (
                   "N/A"
                 )}
@@ -59,7 +72,9 @@ const TableView = ({ onClickConnection, advisors }) => {
                     href={advisor?.contacts.twitter}
                     target="_blank"
                     rel="noopener noreferrer"
-                  ></Link>
+                  >
+                    {advisor.contacts.twitter}
+                  </Link>
                 ) : (
                   "N/A"
                 )}

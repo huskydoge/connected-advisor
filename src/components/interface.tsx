@@ -2,7 +2,7 @@ export interface Advisor {
   _id: string;
   name: string;
   affiliation: string;
-  website: string;
+  homepage: string;
   twitter: string;
   github: string;
   email: string;
@@ -64,4 +64,22 @@ export interface Connection {
   }>;
   latestCollaboration: number;
   relationFactor: number;
+}
+
+export interface Relation {
+  class: string;
+  role: string;
+  duration: {
+    start: number;
+    end: number;
+  };
+}
+
+export interface Paper {
+  _id: string;
+  name: string;
+  year: number;
+  url: string;
+  abstract: string;
+  authors: string[];
 }

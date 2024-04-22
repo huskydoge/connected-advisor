@@ -123,61 +123,55 @@ const Papers = ({ papers, setPapers, newPaper, setNewPaper, errors }) => {
               }
             />
           </Grid>
-          {submitPaperOpen && (
-            <>
-              <Grid item xs={12}>
+          <Grid item xs={12}>
+            <TextField
+              label="URL"
+              fullWidth
+              variant="outlined"
+              margin="dense"
+              value={newPaper.url}
+              onChange={(e) =>
+                setNewPaper({ ...newPaper, url: e.target.value })
+              }
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              label="Abstract"
+              fullWidth
+              variant="outlined"
+              margin="dense"
+              multiline
+              rows={4}
+              value={newPaper.abstract}
+              onChange={(e) =>
+                setNewPaper({ ...newPaper, abstract: e.target.value })
+              }
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <Autocomplete
+              multiple
+              options={authorSearchResult}
+              value={newPaper.authors}
+              onChange={handleAuthorChange}
+              onInputChange={handleAuthorSearch}
+              getOptionLabel={(option) =>
+                `${option.name} - ${option.position} - ${option.affiliation}`
+              }
+              renderInput={(params) => (
                 <TextField
-                  label="URL"
-                  fullWidth
+                  {...params}
+                  label="Add Authors"
                   variant="outlined"
-                  margin="dense"
-                  value={newPaper.url}
-                  onChange={(e) =>
-                    setNewPaper({ ...newPaper, url: e.target.value })
-                  }
+                  onClick={() => fetchAuthors("")}
                 />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  label="Abstract"
-                  fullWidth
-                  variant="outlined"
-                  margin="dense"
-                  multiline
-                  rows={4}
-                  value={newPaper.abstract}
-                  onChange={(e) =>
-                    setNewPaper({ ...newPaper, abstract: e.target.value })
-                  }
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <Autocomplete
-                  multiple
-                  options={authorSearchResult}
-                  value={newPaper.authors}
-                  onChange={handleAuthorChange}
-                  onInputChange={handleAuthorSearch}
-                  getOptionLabel={(option) =>
-                    `${option.name} - ${option.position} - ${option.affiliation}`
-                  }
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="Add Authors"
-                      variant="outlined"
-                      onClick={() => fetchAuthors("")}
-                    />
-                  )}
-                  renderTags={(value, getTagProps) =>
-                    value.map((author, index) =>
-                      renderAuthorChip(author, index)
-                    )
-                  }
-                />
-              </Grid>
-            </>
-          )}
+              )}
+              renderTags={(value, getTagProps) =>
+                value.map((author, index) => renderAuthorChip(author, index))
+              }
+            />
+          </Grid>
         </Grid>
       </DialogContent>
       <DialogActions>

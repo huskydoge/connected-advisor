@@ -20,6 +20,9 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { styled } from "@mui/material/styles";
 import AvatarLoader from "@/components/AvatarLoader";
 import { fetchAdvisorDetails } from "@/components/fetches/fetchAdvisor";
+import { Connection, AdvisorDetails, Relation } from "@/components/interface";
+
+import { scholarImg } from "@/components/const";
 
 const ExpandMore = styled(({ expand, ...other }) => <IconButton {...other} />)(
   ({ theme, expand }) => ({
@@ -32,37 +35,39 @@ const ExpandMore = styled(({ expand, ...other }) => <IconButton {...other} />)(
 );
 
 // 分离 Experience 和 Collaboration 组件
-const Experience = memo(({ relation, advisorName }) => (
-  <List dense sx={{ mb: 2 }}>
-    {relation.map((rel, index) => (
-      <ListItem
-        key={index}
-        sx={{
-          pl: 4,
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <Typography
+const Experience = memo(
+  ({ relation, advisorName }: { relation: Relation; advisorName: string }) => (
+    <List dense sx={{ mb: 2 }}>
+      {relation.map((rel, index) => (
+        <ListItem
+          key={index}
           sx={{
-            fontSize: "1rem",
-            width: "100%",
+            pl: 4,
             display: "flex",
             justifyContent: "space-between",
+            alignItems: "center",
           }}
         >
-          <span>
-            {rel.class}, the {rel.role} of {advisorName},
-          </span>
-          <span>
-            {rel.duration.start} - {rel.duration.end}
-          </span>
-        </Typography>
-      </ListItem>
-    ))}
-  </List>
-));
+          <Typography
+            sx={{
+              fontSize: "1rem",
+              width: "100%",
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            <span>
+              {rel.class}, the {rel.role} of {advisorName},
+            </span>
+            <span>
+              {rel.duration.start} - {rel.duration.end}
+            </span>
+          </Typography>
+        </ListItem>
+      ))}
+    </List>
+  )
+);
 
 const Collaborations = memo(({ collaborations }) => (
   <>
@@ -106,9 +111,11 @@ const Collaborations = memo(({ collaborations }) => (
   </>
 ));
 
-const AdvisorConnection = ({ connection }) => {
+const AdvisorConnection = ({ connection }: { connection: Connection }) => {
   const [expanded, setExpanded] = useState(false);
   const [advisor, setAdvisor] = useState(null);
+
+  // set the type of advisor to AdvisorDetails
 
   useEffect(() => {
     const fetchAdvisor = async () => {
@@ -116,27 +123,35 @@ const AdvisorConnection = ({ connection }) => {
       setAdvisor(advisorData);
     };
     fetchAdvisor();
+    console.log(advisor);
   }, [connection._id]);
 
   return (
     <Card sx={{ marginBottom: 2, width: "100%" }}>
-      <CardHeader
-        avatar={
-          advisor && <AvatarLoader src={advisor.avatar} alt={advisor.name} />
-        }
-        action={
-          <ExpandMore
-            expand={expanded}
-            onClick={() => setExpanded(!expanded)}
-            aria-expanded={expanded}
-            aria-label="show more"
-          >
-            <ExpandMoreIcon />
-          </ExpandMore>
-        }
-        title={advisor?.name}
-        subheader={advisor?.position}
-      />
+      {advisor && (
+        <CardHeader
+          avatar={
+            <AvatarLoader
+              src={advisor["avatar"] ? advisor["avatar"] : scholarImg}
+              alt={advisor["name"]}
+            />
+          }
+          action={
+            //@ts-ignore
+            <ExpandMore
+              expand={expanded}
+              onClick={() => setExpanded(!expanded)}
+              aria-expanded={expanded}
+              aria-label="show more"
+            >
+              <ExpandMoreIcon />
+            </ExpandMore>
+          }
+          title={advisor["name"]}
+          subheader={advisor["position"]}
+        />
+      )}
+
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography

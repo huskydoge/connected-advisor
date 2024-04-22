@@ -143,7 +143,7 @@ async function getAdvisorDetails(advisorId: string) {
       avatar: advisor[0].picture,
       twitter: advisor[0].contacts.twitter,
       email: advisor[0].contacts.email,
-      website: advisor[0].homepage,
+      homepage: advisor[0].homepage,
       github: advisor[0].contacts.github,
       description: advisor[0].descriptions,
     };
