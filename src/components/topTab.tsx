@@ -20,7 +20,7 @@ import {
   ListItemText,
 } from "@mui/material";
 
-import { searchAdvisorDetailsByName } from "./fetches/fetchAdvisor";
+import { searchAdvisorDetailsByName } from "./wrapped_api/fetchAdvisor";
 import { useRouter } from "next/router";
 import { AdvisorDetails } from "./interface";
 

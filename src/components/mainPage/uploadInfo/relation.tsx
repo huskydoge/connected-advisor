@@ -165,6 +165,7 @@ const Relation = ({ relations, setRelations }) => {
                 <MenuItem value="MS">Master</MenuItem>
                 <MenuItem value="Undergrad">Undergrad</MenuItem>
                 <MenuItem value="Working">Working</MenuItem>
+                <MenuItem value="Collaboration">Collaboration</MenuItem>
               </Select>
             </Grid>
             <Grid item xs={12}>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import RelationComponent from "./relation";
 import { Advisor, Connection } from "@/components/interface";
-import { fetchAdvisorByIdLst } from "@/components/fetches/fetchAdvisor";
+import { fetchAdvisorByIdLst } from "@/components/wrapped_api/fetchAdvisor";
 import {
   Tooltip,
   Paper,

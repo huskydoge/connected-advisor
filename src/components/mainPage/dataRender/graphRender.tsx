@@ -11,7 +11,7 @@ import { TooltipComponent, VisualMapComponent } from "echarts/components";
 
 import { SVGRenderer } from "echarts/renderers";
 
-import { fetchAdvisorDetails } from "@/components/fetches/fetchAdvisor";
+import { fetchAdvisorDetails } from "@/components/wrapped_api/fetchAdvisor";
 import { integer } from "@elastic/elasticsearch/lib/api/types";
 
 // 注册必要的组件

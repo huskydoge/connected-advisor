@@ -17,13 +17,15 @@ import {
   IconButton,
   DialogTitle,
   DialogContentText,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
 import Relation from "./relation";
-import { Paper } from "@/components/interface";
+import { Advisor, Paper } from "@/components/interface";
 import { integer } from "@elastic/elasticsearch/lib/api/types";
-import { searchAdvisorDetailsById } from "@/components/fetches/fetchAdvisor";
+import { searchAdvisorDetailsById } from "@/components/wrapped_api/fetchAdvisor";
 
 const ConnectionInfo = () => {
   const [relations, setRelations] = useState([]);
@@ -40,9 +42,16 @@ const ConnectionInfo = () => {
   const [infoDialogOpen, setInfoDialogOpen] = useState(false);
   const [infoDialogMessage, setInfoDialogMessage] = useState("");
   const [authorSearchResult, setAuthorSearchResult] = useState([]);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
   // submitted by user
-  const [newPaper, setNewPaper] = useState({ name: "", year: "" });
+  const [newPaper, setNewPaper] = useState({
+    name: "",
+    year: "",
+    url: "",
+    abstract: "",
+    authors: [],
+  });
 
   const fetchPaperDetails = async (searchText: string) => {
     if (!searchText.trim()) return;
@@ -113,14 +122,18 @@ const ConnectionInfo = () => {
   const handlePaperDialogClose = () => {
     if (submitPaperOpen) {
       // clear new paper data
-      setNewPaper({ name: "", year: "" });
+      setNewPaper({ name: "", year: "", url: "", abstract: "", authors: [] });
       setSubmitPaperOpen(false); // Return to search paper view
     } else {
       setPaperDialogOpen(false); // Close dialog
     }
   };
 
-  const addPaper = () => {
+  const handleClose = () => {
+    setOpenSnackbar(false);
+  };
+
+  const addExistingPaper = () => {
     // check whether a paper is selected
     console.log("adding Paper");
     console.log(selectedPaper);
@@ -138,6 +151,43 @@ const ConnectionInfo = () => {
     setPaperDialogOpen(false);
     setSubmitPaperOpen(false);
     setSelectedPaper(null);
+  };
+
+  const submitNewPaper = async () => {
+    let process_paper = {
+      name: "",
+      year: "",
+      url: "",
+      abstract: "",
+      authors: [],
+    };
+    process_paper["name"] = newPaper.name;
+    process_paper["year"] = newPaper.year;
+    process_paper["url"] = newPaper.url;
+    process_paper["abstract"] = newPaper.abstract;
+    process_paper["authors"] = newPaper.authors.map(
+      (author: Advisor) => author._id
+    );
+    try {
+      const response = await fetch("/api/addPaper", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newPaper),
+      });
+
+      if (!response.ok) {
+        throw new Error("Something went wrong");
+      }
+
+      const result = await response.json();
+      setOpenSnackbar(true);
+      console.log("Submit result:", result);
+      setNewPaper({ name: "", year: "", url: "", abstract: "", authors: [] });
+    } catch (error) {
+      console.error("Submit error:", error);
+    }
   };
 
   const renderDetail = (selectedName) => (
@@ -315,12 +365,12 @@ const ConnectionInfo = () => {
           </Grid>
           {!submitPaperOpen && (
             <Grid item>
-              <Button onClick={addPaper}>Add Paper</Button>
+              <Button onClick={addExistingPaper}>Add Paper</Button>
             </Grid>
           )}
           {submitPaperOpen ? (
             <Grid item>
-              <Button onClick={addPaper}>Confirm Submit</Button>
+              <Button onClick={submitNewPaper}>Confirm Submit</Button>
             </Grid>
           ) : (
             <Grid item>
@@ -514,10 +564,24 @@ const ConnectionInfo = () => {
 
     setInfoDialogMessage("Connection submitted successfully");
     setInfoDialogOpen(true);
+    // clear all the data
+    setRelations([]);
+    setPapers([]);
+    setSelectedNameOne(null);
+    setSelectedNameTwo(null);
   };
 
   return (
     <Box>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={6000}
+        onClose={handleClose}
+      >
+        <Alert onClose={handleClose} severity="success">
+          Paper submitted successfully!
+        </Alert>
+      </Snackbar>
       <CardContent>
         <Grid
           sx={{

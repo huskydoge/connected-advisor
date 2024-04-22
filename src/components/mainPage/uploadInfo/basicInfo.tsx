@@ -27,7 +27,16 @@ const BasicInfo = ({ formData, setFormData }) => {
   const [inputValue, setInputValue] = useState("");
   const inputValueRef = useRef(""); // 用于跟踪最新的输入值
   const [errors, setErrors] = useState({});
-  const availableTags = ["CV", "NLP", "Robotics", "ML", "Theory", "LLM"];
+  const availableTags = [
+    "CV",
+    "NLP",
+    "Robotics",
+    "ML",
+    "Theory",
+    "LLM",
+    "Explainable AI",
+    "Safety",
+  ];
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const handleAddTag = () => {

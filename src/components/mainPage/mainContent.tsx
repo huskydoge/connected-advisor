@@ -20,7 +20,7 @@ const GraphRender = dynamic(() => import("./dataRender/graphRender"), {
   ssr: false,
 });
 
-import { fetchAdvisorDetails } from "../fetches/fetchAdvisor";
+import { fetchAdvisorDetails } from "../wrapped_api/fetchAdvisor";
 
 import { useRouter } from "next/router";
 

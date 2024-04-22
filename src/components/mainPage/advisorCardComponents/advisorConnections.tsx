@@ -20,7 +20,7 @@ import {
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { styled } from "@mui/material/styles";
 import AvatarLoader from "@/components/AvatarLoader";
-import { fetchAdvisorDetails } from "@/components/fetches/fetchAdvisor";
+import { fetchAdvisorDetails } from "@/components/wrapped_api/fetchAdvisor";
 import { Connection, AdvisorDetails, Relation } from "@/components/interface";
 import { useRouter } from "next/router";
 import { scholarImg } from "@/components/const";
