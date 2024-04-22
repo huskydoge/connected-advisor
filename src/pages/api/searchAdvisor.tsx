@@ -1,7 +1,7 @@
 import { MongoClient, ObjectId } from "mongodb";
 
 // MongoDB URL and database name
-const MONGO_URL = process.env.MONGO_URL;
+const MONGO_URL = process.env.MONGO_URL || "";
 const DB_NAME = "ConnectedAdvisor";
 const COLLECTION_NAME = "AdvisorTable";
 
@@ -42,10 +42,12 @@ export default async function handler(req, res) {
         .collection(COLLECTION_NAME)
         .findOne({ _id: new ObjectId(oid) });
     } else if (name) {
+      let words = name.split(/\s+/); // 拆分输入的name为单词数组
+      let regexPattern = words.map((word) => `(?=.*${word})`).join("");
       result = await db
         .collection(COLLECTION_NAME)
         .find({
-          name: { $regex: new RegExp(name, "i") },
+          name: { $regex: new RegExp(regexPattern, "i") },
         })
         .toArray();
     }

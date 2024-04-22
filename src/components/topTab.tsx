@@ -6,6 +6,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import Button from "@mui/material/Button";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import Link from "next/link";
+import { lightBlue } from "@mui/material/colors";
 import {
   AppBar,
   Toolbar,
@@ -19,6 +20,10 @@ import {
   ListItemText,
 } from "@mui/material";
 
+import { searchAdvisorDetailsByName } from "./fetches/fetchAdvisor";
+import { useRouter } from "next/router";
+import { AdvisorDetails } from "./interface";
+
 // 假设这是你的搜索结果类型
 interface SearchResult {
   id: string;
@@ -27,9 +32,9 @@ interface SearchResult {
 
 function TopMenu() {
   const [searchFocused, setSearchFocused] = useState(false);
-
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
+  const [searchResults, setSearchResults] = useState<AdvisorDetails[]>([]);
   const theme = useTheme();
 
   // 即时搜索逻辑
@@ -40,7 +45,7 @@ function TopMenu() {
     setSearchQuery(query);
 
     // 假设这是调用搜索 API 的函数，返回搜索结果
-    if (query.length > 2) {
+    if (query.length > 1) {
       // 可以设置触发搜索的最小字符数限制
       const results = await searchAPI(query);
       setSearchResults(results);
@@ -50,14 +55,26 @@ function TopMenu() {
   };
 
   // 假设的搜索 API 函数
-  const searchAPI = async (query: string): Promise<SearchResult[]> => {
+  const searchAPI = async (query: string): Promise<AdvisorDetails[]> => {
     // 这里应该是调用实际的搜索 API
     // 返回模拟的搜索结果
-    return [
-      { id: "1", title: "Result 1" },
-      { id: "2", title: "Result 2" },
-      // 根据实际查询动态生成
-    ];
+    const results = await searchAdvisorDetailsByName(query);
+    console.log("from API", results);
+    return results;
+  };
+
+  const handleClick = (id: string) => {
+    router.push(`${id}?view=graph`, undefined, {
+      shallow: true,
+    });
+    // clear query and results
+    setSearchQuery("");
+    setSearchResults([]);
+  };
+
+  const showMoreResults = () => {
+    // 假设有一个特殊的ID或处理逻辑
+    console.log("show");
   };
 
   return (
@@ -116,11 +133,30 @@ function TopMenu() {
             >
               <List>
                 {searchResults.map((result) => (
-                  <ListItem button key={result.id}>
-                    <ListItemText primary={result.title} />
+                  <ListItem
+                    key={result._id}
+                    sx={{
+                      "&:hover": {
+                        backgroundColor: lightBlue[200], // 鼠标悬浮时背景色变蓝
+                        color: "white", // 可选：同时改变文字颜色以提高对比度
+                      },
+                      cursor: "pointer", // 更改鼠标指针为点击手势
+                    }}
+                    onClick={() => handleClick(result._id)} // 点击时触发handleClick函数
+                  >
+                    <ListItemText primary={result.name} />
                   </ListItem>
                 ))}
-                <ListItem button>
+                <ListItem
+                  sx={{
+                    "&:hover": {
+                      backgroundColor: lightBlue[200],
+                      color: "white",
+                    },
+                    cursor: "pointer",
+                  }}
+                  onClick={() => showMoreResults} // 假设有一个特殊的ID或处理逻辑
+                >
                   <ListItemText primary="Show more results" />
                 </ListItem>
               </List>

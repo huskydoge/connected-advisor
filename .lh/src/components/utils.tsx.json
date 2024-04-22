@@ -1,0 +1,22 @@
+{
+    "sourceFile": "src/components/utils.tsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1713796903450,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1713796916716,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,8 @@\n+import { useRouter } from \"next/router\";\n+\n+const router = useRouter();\n+\n export const handleClickOnAdvisor = (id: string) => {\n   router.push(`${id}?view=graph`, undefined, {\n     shallow: true,\n   });\n"
+                }
+            ],
+            "date": 1713796903450,
+            "name": "Commit-0",
+            "content": "export const handleClickOnAdvisor = (id: string) => {\n  router.push(`${id}?view=graph`, undefined, {\n    shallow: true,\n  });\n};\n"
+        }
+    ]
+}

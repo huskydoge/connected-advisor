@@ -17,7 +17,7 @@ import { AdvisorDetails } from "@/components/interface";
 // @ts-ignore
 const TableView = ({ onClickConnection, advisors }) => {
   const router = useRouter();
-  const handleClick = (id: string) => {
+  const handleClickOnAdvisor = (id: string) => {
     router.push(`${id}?view=graph`, undefined, {
       shallow: true,
     });
@@ -42,7 +42,7 @@ const TableView = ({ onClickConnection, advisors }) => {
           {advisors?.map((advisor: AdvisorDetails) => (
             <TableRow sx={{ border: "none" }} key={advisor?._id} hover>
               <TableCell align="center">
-                <Button onClick={() => handleClick(advisor._id)}>
+                <Button onClick={() => handleClickOnAdvisor(advisor._id)}>
                   {advisor?.name}
                 </Button>
               </TableCell>

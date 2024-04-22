@@ -81,7 +81,34 @@ const fetchAdvisorDetails = async (advisorId: string) => {
   }
 };
 
+const searchAdvisorDetailsById = async (id: string) => {
+  const response = await fetch("/api/searchAdvisor", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ oid: id }),
+  });
+  const data = await response.json();
+  console.log("Search details by id:", data);
+  return data;
+};
+
+const searchAdvisorDetailsByName = async (searchText: string) => {
+  if (!searchText.trim()) return [];
+
+  const response = await fetch("/api/searchAdvisor", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name: searchText }),
+  });
+  const data = await response.json();
+
+  const res = Array.isArray(data) ? data : [];
+  return res;
+};
+
 export {
+  searchAdvisorDetailsById,
+  searchAdvisorDetailsByName,
   fetchSearchDetailsById,
   updateAdvisor,
   fetchAdvisorByIdLst,

@@ -43,7 +43,6 @@ const ListView = ({ onClose, mainAdvisor }) => {
     const advisor = advisors.find(
       (advisor: Advisor) => advisor?._id === advisorId
     );
-    console.log(advisor);
     setSelectedAdvisor(advisor || null);
     setShowTableView(false);
   };

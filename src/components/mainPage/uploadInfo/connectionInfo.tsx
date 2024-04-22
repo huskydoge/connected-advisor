@@ -22,6 +22,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
 import Relation from "./relation";
 import { Paper } from "@/components/interface";
+import { integer } from "@elastic/elasticsearch/lib/api/types";
+import { searchAdvisorDetailsById } from "@/components/fetches/fetchAdvisor";
 
 const ConnectionInfo = () => {
   const [relations, setRelations] = useState([]);
@@ -53,7 +55,10 @@ const ConnectionInfo = () => {
     setPaperSearchResult(Array.isArray(data) ? data : []);
   };
 
-  const fetchSearchDetailsByName = async (searchText, ord) => {
+  const searchAdvisorDetailsByName = async (
+    searchText: string,
+    ord: integer
+  ) => {
     if (!searchText.trim()) return [];
 
     const response = await fetch("/api/searchAdvisor", {
@@ -74,16 +79,6 @@ const ConnectionInfo = () => {
     }
   };
 
-  const fetchSearchDetailsById = async (id) => {
-    const response = await fetch("/api/searchAdvisor", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ oid: id }),
-    });
-    const data = await response.json();
-    console.log("Search details by id:", data);
-    return data;
-  };
   const updateAdvisor = async (formattedData) => {
     try {
       const response = await fetch("/api/updateAdvisor", {
@@ -507,8 +502,8 @@ const ConnectionInfo = () => {
 
     // after get the id of the connection, we can add it to corresponding advisor's connection list
 
-    const advisor_1 = await fetchSearchDetailsById(selectedNameOne._id);
-    const advisor_2 = await fetchSearchDetailsById(selectedNameTwo._id);
+    const advisor_1 = await searchAdvisorDetailsById(selectedNameOne._id);
+    const advisor_2 = await searchAdvisorDetailsById(selectedNameTwo._id);
 
     advisor_1.connections.push(connection_id);
     advisor_2.connections.push(connection_id);
@@ -551,7 +546,7 @@ const ConnectionInfo = () => {
                   `${option.name} - ${option.position} - ${option.affiliation}`
                 }
                 onInputChange={(event, newValue) => {
-                  fetchSearchDetailsByName(newValue, 1);
+                  searchAdvisorDetailsByName(newValue, 1);
                 }}
                 onChange={(event, newValue) => {
                   if (selectedNameTwo?._id === newValue?._id) {
@@ -591,7 +586,7 @@ const ConnectionInfo = () => {
                   `${option.name} - ${option.position} - ${option.affiliation}`
                 }
                 onInputChange={(event, newValue) => {
-                  fetchSearchDetailsByName(newValue, 2);
+                  searchAdvisorDetailsByName(newValue, 2);
                 }}
                 onChange={(event, newValue) => {
                   console.log(newValue);

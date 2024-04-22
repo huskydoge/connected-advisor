@@ -30,7 +30,6 @@ export interface Advisor {
 
 export interface AdvisorDetails {
   _id: string;
-  _id: string;
   name: string;
   position: string;
   affiliation: string;

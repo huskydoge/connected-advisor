@@ -15,13 +15,14 @@ import {
   IconButton,
   Collapse,
   Button,
+  Box,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { styled } from "@mui/material/styles";
 import AvatarLoader from "@/components/AvatarLoader";
 import { fetchAdvisorDetails } from "@/components/fetches/fetchAdvisor";
 import { Connection, AdvisorDetails, Relation } from "@/components/interface";
-
+import { useRouter } from "next/router";
 import { scholarImg } from "@/components/const";
 
 const ExpandMore = styled(({ expand, ...other }) => <IconButton {...other} />)(
@@ -114,6 +115,12 @@ const Collaborations = memo(({ collaborations }) => (
 const AdvisorConnection = ({ connection }: { connection: Connection }) => {
   const [expanded, setExpanded] = useState(false);
   const [advisor, setAdvisor] = useState(null);
+  const router = useRouter();
+  const handleClickOnAdvisor = (id: string) => {
+    router.push(`${id}?view=graph`, undefined, {
+      shallow: true,
+    });
+  };
 
   // set the type of advisor to AdvisorDetails
 
@@ -123,63 +130,110 @@ const AdvisorConnection = ({ connection }: { connection: Connection }) => {
       setAdvisor(advisorData);
     };
     fetchAdvisor();
-    console.log(advisor);
   }, [connection._id]);
 
   return (
     <Card sx={{ marginBottom: 2, width: "100%" }}>
       {advisor && (
-        <CardHeader
-          avatar={
-            <AvatarLoader
-              src={advisor["avatar"] ? advisor["avatar"] : scholarImg}
-              alt={advisor["name"]}
-            />
-          }
-          action={
-            //@ts-ignore
-            <ExpandMore
-              expand={expanded}
-              onClick={() => setExpanded(!expanded)}
-              aria-expanded={expanded}
-              aria-label="show more"
-            >
-              <ExpandMoreIcon />
-            </ExpandMore>
-          }
-          title={advisor["name"]}
-          subheader={advisor["position"]}
-        />
+        <>
+          <CardHeader
+            avatar={
+              <AvatarLoader
+                src={advisor["avatar"] ? advisor["avatar"] : scholarImg}
+                alt={advisor["name"]}
+              />
+            }
+            action={
+              <Box
+                display="flex"
+                alignItems="center" // 确保内容在垂直方向上居中对齐
+                justifyContent="space-between" // 元素之间均匀分布空间
+                sx={{
+                  width: "100%", // 宽度设置为100%以填满可用空间
+                  paddingX: 2, // 在左右两侧添加一些内边距
+                }}
+              >
+                <Typography
+                  variant="body1" // 使用更大的字体变种
+                  color="purple" // 使用主题的主色调
+                  sx={{ marginRight: 10 }} // 增加与右侧元素的间隙
+                >
+                  {advisor["position"]}
+                </Typography>
+                <Box display="flex" alignItems="center">
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{ marginRight: 2 }} // 调整内部元素间隙
+                  >
+                    {`Relations: ${connection.relation.length} `}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{ marginRight: 2 }}
+                  >
+                    |
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{ marginRight: 2 }} // 调整内部元素间隙
+                  >
+                    {`Collaborated Papers: ${connection.collaborations.length}`}
+                  </Typography>
+                </Box>
+                {/* @ts-ignore */}
+                <ExpandMore
+                  expand={expanded}
+                  onClick={() => setExpanded(!expanded)}
+                  aria-expanded={expanded}
+                  aria-label="show more"
+                >
+                  <ExpandMoreIcon />
+                </ExpandMore>
+              </Box>
+            }
+            title={
+              <Button
+                sx={{ color: "black", textTransform: "none", paddingLeft: 1 }}
+                variant="text"
+                onClick={() => handleClickOnAdvisor(advisor["_id"])}
+              >
+                {advisor["name"]}
+              </Button>
+            }
+          />
+          <Collapse in={expanded} timeout="auto" unmountOnExit>
+            <CardContent>
+              <Typography
+                variant="h6"
+                component="div"
+                gutterBottom
+                sx={{ fontWeight: "bold", fontSize: "1.25rem" }}
+              >
+                Experience:
+              </Typography>
+              {advisor && (
+                <Experience
+                  relation={connection.relation}
+                  advisorName={advisor.name}
+                />
+              )}
+              <Divider sx={{ mb: 2 }} />
+              <Typography
+                variant="h6"
+                component="div"
+                gutterBottom
+                sx={{ fontWeight: "bold", fontSize: "1.25rem" }}
+              >
+                Collaborations:
+              </Typography>
+              <Collaborations collaborations={connection.collaborations} />
+            </CardContent>
+          </Collapse>
+        </>
       )}
-
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Typography
-            variant="h6"
-            component="div"
-            gutterBottom
-            sx={{ fontWeight: "bold", fontSize: "1.25rem" }}
-          >
-            Experience:
-          </Typography>
-          {advisor && (
-            <Experience
-              relation={connection.relation}
-              advisorName={advisor.name}
-            />
-          )}
-          <Divider sx={{ mb: 2 }} />
-          <Typography
-            variant="h6"
-            component="div"
-            gutterBottom
-            sx={{ fontWeight: "bold", fontSize: "1.25rem" }}
-          >
-            Collaborations:
-          </Typography>
-          <Collaborations collaborations={connection.collaborations} />
-        </CardContent>
-      </Collapse>
     </Card>
   );
 };
