@@ -15,13 +15,11 @@ import CloseIcon from "@mui/icons-material/Close";
 
 // Finds the connected advisors based on main advisor id
 const findConnectedAdvisors = async (mainAdvisor: Advisor) => {
-  console.log("main advisor", mainAdvisor.connections);
   if (mainAdvisor) {
     const connectedIds = mainAdvisor.connections?.map(
       (conn: Connection) => conn.advisor_id
     );
     const res = await fetchAdvisorByIdLst(connectedIds);
-    console.log("connected advisors", res);
     return res;
   } else {
     return [];

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 4,
+            "activePatchIndex": 5,
             "patches": [
                 {
                     "date": 1711789758410,
@@ -24,6 +24,10 @@
                 {
                     "date": 1711812290062,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,10 +6,10 @@\n  * @FilePath: /connected-advisor/src/data/mongodb_client.tsx\n  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE\n  */\n \n-// pages/api/addData.tsx\n \n+\n import type { NextApiRequest, NextApiResponse } from \"next\";\n import { MongoClient } from \"mongodb\";\n \n // MongoDB URL and database name\n"
+                },
+                {
+                    "date": 1713765896049,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,10 +6,8 @@\n  * @FilePath: /connected-advisor/src/data/mongodb_client.tsx\n  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE\n  */\n \n-\n-\n import type { NextApiRequest, NextApiResponse } from \"next\";\n import { MongoClient } from \"mongodb\";\n \n // MongoDB URL and database name\n"
                 }
             ],
             "date": 1711789758410,

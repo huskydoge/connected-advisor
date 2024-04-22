@@ -15,6 +15,7 @@ import { AdvisorDetails } from "@/components/interface";
 
 // @ts-ignore
 const TableView = ({ onClickConnection, advisors }) => {
+  console.log("table", advisors);
   return (
     <TableContainer component={Paper} sx={{ width: "100%" }}>
       <Table stickyHeader>
@@ -32,18 +33,20 @@ const TableView = ({ onClickConnection, advisors }) => {
         </TableHead>
         <TableBody>
           {advisors?.map((advisor: AdvisorDetails) => (
-            <TableRow sx={{ border: "none" }} key={advisor?.advisor_id} hover>
+            <TableRow sx={{ border: "none" }} key={advisor?._id} hover>
               <TableCell align="center">{advisor?.name}</TableCell>
               <TableCell align="center">{advisor?.position}</TableCell>
               <TableCell align="center">{advisor?.affiliation}</TableCell>
               <TableCell align="center">
-                <Link
-                  href={advisor?.homepage}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {advisor?.homepage}
-                </Link>
+                {advisor.homepage ? (
+                  <Link
+                    href={advisor?.homepage}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  ></Link>
+                ) : (
+                  "N/A"
+                )}
               </TableCell>
               <TableCell align="center">
                 <Link href={`mailto:${advisor.contacts.email}`}>
@@ -51,22 +54,24 @@ const TableView = ({ onClickConnection, advisors }) => {
                 </Link>
               </TableCell>
               <TableCell align="center">
-                <Link
-                  href={advisor?.contacts.twitter}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {advisor?.contacts.twitter}
-                </Link>
+                {advisor.contacts.twitter ? (
+                  <Link
+                    href={advisor?.contacts.twitter}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  ></Link>
+                ) : (
+                  "N/A"
+                )}
               </TableCell>
               <TableCell align="center">
                 {advisor.github ? (
                   <Link
-                    href={advisor?.github}
+                    href={advisor.github}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    {" "}
+                    {advisor.github}
                   </Link>
                 ) : (
                   "N/A"

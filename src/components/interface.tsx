@@ -29,6 +29,7 @@ export interface Advisor {
 }
 
 export interface AdvisorDetails {
+  _id: string;
   advisor_id: string;
   name: string;
   position: string;
@@ -44,7 +45,6 @@ export interface AdvisorDetails {
     email: string;
     linkin: string;
   };
-  }
 }
 
 export interface Connection {
