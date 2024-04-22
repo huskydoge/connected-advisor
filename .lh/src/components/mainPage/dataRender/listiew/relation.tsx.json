@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 31,
+            "activePatchIndex": 36,
             "patches": [
                 {
                     "date": 1708519675667,
@@ -132,6 +132,26 @@
                 {
                     "date": 1711874260954,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -52,10 +52,10 @@\n                 ,\n               </Typography>\n             </Box>\n             <Typography variant=\"h6\">\n-              {rel.duration.start.year}/{rel.duration.start.month} to{\" \"}\n-              {rel.duration.end.year}/{rel.duration.end.month}\n+              {rel.duration.start} to{\" \"}\n+              {rel.duration.end}\n             </Typography>\n           </ListItem>\n         ))}\n       </List>\n"
+                },
+                {
+                    "date": 1713761838858,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,8 +12,10 @@\n import ArrowBackIcon from \"@mui/icons-material/ArrowBack\";\n \n // @ts-ignore\n const RelationComponent = ({ main, second, onBack }) => {\n+  console.log(\"main\", main);\n+  console.log(\"second\", second);\n   const connection = main.connections.find(\n     (conn: any) => conn.advisor_id === second.advisor_id\n   );\n \n"
+                },
+                {
+                    "date": 1713761894209,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -54,10 +54,9 @@\n                 ,\n               </Typography>\n             </Box>\n             <Typography variant=\"h6\">\n-              {rel.duration.start} to{\" \"}\n-              {rel.duration.end}\n+              {rel.duration.start} to {rel.duration.end}\n             </Typography>\n           </ListItem>\n         ))}\n       </List>\n"
+                },
+                {
+                    "date": 1713761900644,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n const RelationComponent = ({ main, second, onBack }) => {\n   console.log(\"main\", main);\n   console.log(\"second\", second);\n   const connection = main.connections.find(\n-    (conn: any) => conn.advisor_id === second.advisor_id\n+    (conn: any) => conn.advisor_id === second.advisor_id || conn.advisor_id === main.advisor_id\n   );\n \n   if (!connection) {\n     return (\n"
+                },
+                {
+                    "date": 1713761961996,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n   console.log(\"main\", main);\n   console.log(\"second\", second);\n   const connection = main.connections.find(\n     (conn: any) =>\n-      conn.advisor_id === second.advisor_id || conn._id === main.advisor_id\n+      conn.advisor_id === second.advisor_id || conn.advisor_id === main.advisor_id\n   );\n \n   if (!connection) {\n     return (\n"
+                },
+                {
+                    "date": 1713761975954,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,9 @@\n   console.log(\"second\", second);\n   const connection = main.connections.find(\n     (conn: any) =>\n       conn.advisor_id === second.advisor_id ||\n-      conn.advisor_id === main.advisor_id\n+      conn.advisor_id === second._id\n   );\n \n   if (!connection) {\n     return (\n"
                 }
             ],
             "date": 1708519675667,

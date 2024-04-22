@@ -1,36 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import RelationComponent from "./relation";
-interface Advisor {
-  advisor_id: number;
-  name: string;
-  affiliation: string;
-  website: string;
-  twitter: string;
-  github: string;
-  email: string;
-  position: string;
-  connections: {
-    advisor_id: number;
-
-    relation: Array<{
-      class: string;
-      role: string;
-      duration: {
-        start: number;
-        end: number;
-      };
-    }>;
-    collaborations: Array<{
-      papername: string;
-      year: number;
-      url: string;
-    }>;
-    latestCollaboration: number;
-    relationFactor: number;
-  }[];
-}
-const advisors: Advisor[] = require("../../../../data/advisors.json");
-
+import { Advisor, Connection } from "@/components/interface";
+import { fetchAdvisorByIdLst } from "@/components/fetches/fetchAdvisor";
 import {
   Tooltip,
   Paper,
@@ -39,41 +10,48 @@ import {
   Toolbar,
   Box,
 } from "@mui/material";
-
 import TableView from "./table";
 import CloseIcon from "@mui/icons-material/Close";
 
-// find the connected advisors based on main advisor id
-const findConnectedAdvisors = (mainAdvisorId: number) => {
-  // find in main advisor's connections list
-  const mainAdvisor = advisors.find(
-    (advisor) => advisor?.advisor_id === mainAdvisorId
-  );
-  const connectedAdvisors = mainAdvisor?.connections.map((connection) => {
-    return advisors.find(
-      (advisor) => advisor?.advisor_id === connection.advisor_id
+// Finds the connected advisors based on main advisor id
+const findConnectedAdvisors = async (mainAdvisor: Advisor) => {
+  console.log("main advisor", mainAdvisor.connections);
+  if (mainAdvisor) {
+    const connectedIds = mainAdvisor.connections?.map(
+      (conn: Connection) => conn.advisor_id
     );
-  });
-  return connectedAdvisors;
+    const res = await fetchAdvisorByIdLst(connectedIds);
+    console.log("connected advisors", res);
+    return res;
+  } else {
+    return [];
+  }
 };
 
-// @ts-ignore
 const ListView = ({ onClose, mainAdvisor }) => {
-  const advisors = findConnectedAdvisors(mainAdvisor.advisor_id);
-  const [showTableView, setShowTableView] = useState(true); // 控制显示哪个视图
-  const [selectedAdvisor, setSelectedAdvisor] = useState<Advisor | null>(null); // 存储选中的advisor id
+  const [advisors, setAdvisors] = useState([]);
+  const [showTableView, setShowTableView] = useState(true);
+  const [selectedAdvisor, setSelectedAdvisor] = useState<Advisor | null>(null);
 
-  const handleClickConnection = (advisor_id: number) => {
-    // @ts-ignore
+  useEffect(() => {
+    const loadAdvisors = async () => {
+      const advisors = await findConnectedAdvisors(mainAdvisor);
+      setAdvisors(advisors);
+    };
+    loadAdvisors();
+  }, [mainAdvisor]);
+
+  const handleClickConnection = (advisorId: string) => {
     const advisor = advisors.find(
-      (advisor) => advisor?.advisor_id === advisor_id
+      (advisor: Advisor) => advisor?.advisor_id === advisorId
     );
-    setSelectedAdvisor(advisor || null); // 设置选中的advisor id
-    setShowTableView(false); // 切换到RelationComponent视图
+    console.log(advisor);
+    setSelectedAdvisor(advisor || null);
+    setShowTableView(false);
   };
 
   const returnToListView = () => {
-    setShowTableView(true); // 切换到TableView视图
+    setShowTableView(true);
   };
 
   return (
@@ -88,7 +66,6 @@ const ListView = ({ onClose, mainAdvisor }) => {
         }}
       >
         <Typography variant="h6">Connected to {mainAdvisor.name}</Typography>
-        {/* 使用Box组件作为flex占位符 */}
         <Box sx={{ flexGrow: 1 }} />
         <Tooltip title="Close List View">
           <IconButton onClick={onClose} color="inherit">

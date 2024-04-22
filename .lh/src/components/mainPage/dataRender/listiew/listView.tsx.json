@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 144,
+            "activePatchIndex": 150,
             "patches": [
                 {
                     "date": 1708503665020,
@@ -584,6 +584,30 @@
                 {
                     "date": 1711874353546,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,10 +15,10 @@\n     relation: Array<{\n       class: string;\n       role: string;\n       duration: {\n-        start: { year: number; month: number };\n-        end: { year: number; month: number };\n+        start: number\n+        end: number\n       };\n     }>;\n     collaborations: Array<{\n       papername: string;\n"
+                },
+                {
+                    "date": 1713754554383,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -58,8 +58,9 @@\n };\n \n // @ts-ignore\n const ListView = ({ onClose, mainAdvisor }) => {\n+  console.log(\"mainAdvisor\", mainAdvisor);\n   const advisors = findConnectedAdvisors(mainAdvisor.advisor_id);\n   const [showTableView, setShowTableView] = useState(true); // 控制显示哪个视图\n   const [selectedAdvisor, setSelectedAdvisor] = useState<Advisor | null>(null); // 存储选中的advisor id\n \n"
+                },
+                {
+                    "date": 1713755289043,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,10 +15,10 @@\n     relation: Array<{\n       class: string;\n       role: string;\n       duration: {\n-        start: number\n-        end: number\n+        start: number;\n+        end: number;\n       };\n     }>;\n     collaborations: Array<{\n       papername: string;\n"
+                },
+                {
+                    "date": 1713755317129,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,9 +59,9 @@\n \n // @ts-ignore\n const ListView = ({ onClose, mainAdvisor }) => {\n   console.log(\"mainAdvisor\", mainAdvisor);\n-  const advisors = findConnectedAdvisors(mainAdvisor.advisor_id);\n+  const advisors = findConnectedAdvisors(mainAdvisor);\n   const [showTableView, setShowTableView] = useState(true); // 控制显示哪个视图\n   const [selectedAdvisor, setSelectedAdvisor] = useState<Advisor | null>(null); // 存储选中的advisor id\n \n   const handleClickConnection = (advisor_id: number) => {\n"
+                },
+                {
+                    "date": 1713755364561,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -45,17 +45,9 @@\n \n // find the connected advisors based on main advisor id\n const findConnectedAdvisors = (mainAdvisorId: number) => {\n   // find in main advisor's connections list\n-  const mainAdvisor = advisors.find(\n-    (advisor) => advisor?.advisor_id === mainAdvisorId\n-  );\n-  const connectedAdvisors = mainAdvisor?.connections.map((connection) => {\n-    return advisors.find(\n-      (advisor) => advisor?.advisor_id === connection.advisor_id\n-    );\n-  });\n-  return connectedAdvisors;\n+  const connected_ids = [mainAdvisorId.connections.map((conn) => conn.advisor_id)];\n };\n \n // @ts-ignore\n const ListView = ({ onClose, mainAdvisor }) => {\n"
+                },
+                {
+                    "date": 1713755436414,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,14 +41,35 @@\n } from \"@mui/material\";\n \n import TableView from \"./table\";\n import CloseIcon from \"@mui/icons-material/Close\";\n+import { Interface } from \"readline\";\n \n+interface Connection {\n+  advisor_id: number;\n+  relation: Array<{\n+    class: string;\n+    role: string;\n+    duration: {\n+      start: number;\n+      end: number;\n+    };\n+  }>;\n+  collaborations: Array<{\n+    papername: string;\n+    year: number;\n+    url: string;\n+  }>;\n+  latestCollaboration: number;\n+  relationFactor: number;\n+\n+}\n+\n // find the connected advisors based on main advisor id\n const findConnectedAdvisors = (mainAdvisorId: number) => {\n   // find in main advisor's connections list\n   const connected_ids = [\n-    mainAdvisorId.connections.map((conn) => conn.advisor_id),\n+    mainAdvisorId.connections.map((conn: object) => conn.advisor_id),\n   ];\n };\n \n // @ts-ignore\n"
+                },
+                {
+                    "date": 1713755445226,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -66,9 +66,9 @@\n // find the connected advisors based on main advisor id\n const findConnectedAdvisors = (mainAdvisorId: number) => {\n   // find in main advisor's connections list\n   const connected_ids = [\n-    mainAdvisorId.connections.map((conn: object) => conn.advisor_id),\n+    mainAdvisorId.connections.map((conn: Connection) => conn.advisor_id),\n   ];\n };\n \n // @ts-ignore\n"
                 }
             ],
             "date": 1708503665020,

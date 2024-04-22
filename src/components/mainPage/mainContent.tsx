@@ -50,7 +50,10 @@ function MainContent({ id }: { id: string }) {
       setIsLoading(false);
     };
 
-    if (typeof _id !== "undefined" && _id !== advisorInfo?.advisor) {
+    if (
+      typeof _id !== "undefined" &&
+      (!advisorInfo || (advisorInfo && _id !== advisorInfo["advisor"]))
+    ) {
       fetchAdvisorInfo();
     }
   }, [_id]);
@@ -69,10 +72,6 @@ function MainContent({ id }: { id: string }) {
       </div>
     );
   }
-
-  // const advisorInfo = advisorsData.find(
-  //   (advisor) => advisor.advisor_id === advisor_id
-  // );
 
   const handleUploadClick = () => {
     if (showCard === "uploadCard") {
@@ -116,25 +115,30 @@ function MainContent({ id }: { id: string }) {
 
   const handleListView = () => {
     // 显示ListView
-    if (router.query.view === "list") {
-      setSelectedTab("");
-      router.push(`${advisor?.advisor_id}?view=graph`, undefined, {
+
+    if (selectedNode) {
+      if (router.query.view === "list") {
+        setSelectedTab("");
+        router.push(`${selectedNode["advisor_id"]}?view=graph`, undefined, {
+          shallow: true,
+        });
+        return;
+      }
+
+      router.push(`${selectedNode["advisor_id"]}?view=list`, undefined, {
         shallow: true,
       });
-      return;
+      setSelectedTab("listview"); // Set listview as selected
     }
-
-    router.push(`${advisor?.advisor_id}?view=list`, undefined, {
-      shallow: true,
-    });
-    setSelectedTab("listview"); // Set listview as selected
   };
 
   const closeListView = () => {
-    setSelectedTab("");
-    router.push(`${advisor?.advisor_id}?view=graph`, undefined, {
-      shallow: true,
-    });
+    if (selectedNode) {
+      setSelectedTab("");
+      router.push(`${selectedNode["advisor_id"]}?view=graph`, undefined, {
+        shallow: true,
+      });
+    }
   };
 
   const closeCard = () => {
@@ -236,6 +240,7 @@ function MainContent({ id }: { id: string }) {
                   setSelectedNode(node);
                 }
               }}
+              split={splitPercentage}
             />
           )}
         </Paper>

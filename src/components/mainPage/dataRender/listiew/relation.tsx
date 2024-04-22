@@ -13,8 +13,11 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 // @ts-ignore
 const RelationComponent = ({ main, second, onBack }) => {
+  console.log("main", main);
+  console.log("second", second);
   const connection = main.connections.find(
-    (conn: any) => conn.advisor_id === second.advisor_id
+    (conn: any) =>
+      conn.advisor_id === second.advisor_id || conn.advisor_id === second._id
   );
 
   if (!connection) {

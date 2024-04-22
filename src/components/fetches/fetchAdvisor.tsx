@@ -36,7 +36,7 @@ const updateAdvisor = async (formattedData) => {
   }
 };
 
-const fetchAdvisorByIdLst = async (advisor_id_lst) => {
+const fetchAdvisorByIdLst = async (advisor_id_lst: Array<string>) => {
   console.log("input advisor_id_lst", advisor_id_lst);
 
   const response = await fetch("/api/searchAdvisorByLst", {
@@ -53,7 +53,7 @@ const fetchAdvisorByIdLst = async (advisor_id_lst) => {
   return advisor_lst;
 };
 
-const fetchAdvisorDetails = async (advisorId) => {
+const fetchAdvisorDetails = async (advisorId: string) => {
   // console.log("Fetch advisor details for advisor ID:", advisorId);
   try {
     const response = await fetch("/api/getAdvisorDetails", {

@@ -208,9 +208,10 @@ const advisorsReader = async (
         const connectedAdvisor = await fetchAdvisorDetails(conn_id);
         if (connectedAdvisor) {
           const latestYear = connectedAdvisor.connections?.reduce(
-            (max, connection) => {
+            (max: integer, connection: any) => {
               const year = connection.collaborations.reduce(
-                (maxYear, collab) => Math.max(maxYear, collab.year),
+                (maxYear: integer, collab: any) =>
+                  Math.max(maxYear, collab.year),
                 0
               );
               return Math.max(max, year);

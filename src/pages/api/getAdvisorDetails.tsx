@@ -26,7 +26,9 @@ async function getAdvisorDetails(advisorId: string) {
       return null;
     }
 
-    const connectionIds = advisor[0].connections.map((id) => new ObjectId(id));
+    const connectionIds = advisor[0].connections.map(
+      (id: string) => new ObjectId(id)
+    );
     const connections = await db
       .collection("connections")
       .find({
@@ -57,7 +59,7 @@ async function getAdvisorDetails(advisorId: string) {
 
     // 使用 $in 操作符一次性查询所有papers
     const papers = await db
-      .collection("papers")
+      .collection("tmp-papers")
       .find({
         _id: { $in: paperIds },
       })
@@ -68,7 +70,7 @@ async function getAdvisorDetails(advisorId: string) {
     let finalConnections = [];
 
     for (const conn of connections) {
-      const relationDetails = conn.relations.map((relId) => {
+      const relationDetails = conn.relations.map((relId: string) => {
         // 在已查询的关系数组中找到匹配的关系对象
         const rel = relations.find((relation) => relation._id.equals(relId));
         if (!rel) {
@@ -88,17 +90,19 @@ async function getAdvisorDetails(advisorId: string) {
           };
         }
       });
-      const collaborateDetails = conn["collaborate-papers"].map((paperId) => {
-        if (!paperId) {
-          return null;
+      const collaborateDetails = conn["collaborate-papers"].map(
+        (paperId: string) => {
+          if (!paperId) {
+            return null;
+          }
+          const paper = papers.find((paper) => paper._id.equals(paperId));
+          return {
+            papername: paper?.name,
+            year: paper?.year,
+            url: paper?.url,
+          };
         }
-        const paper = papers.find((paper) => paper._id.equals(paperId));
-        return {
-          papername: paper?.name,
-          year: paper?.year,
-          url: paper?.url,
-        };
-      });
+      );
 
       let connected_advisor_id;
 
@@ -113,9 +117,9 @@ async function getAdvisorDetails(advisorId: string) {
         relation: relationDetails,
         collaborations: collaborateDetails,
         lastestCollaboration: Math.max(
-          ...collaborateDetails.map((collab) => collab.year)
+          ...collaborateDetails.map((collab: any) => collab.year)
         )
-          ? Math.max(...collaborateDetails.map((collab) => collab.year))
+          ? Math.max(...collaborateDetails.map((collab: any) => collab.year))
           : 2024, // TODO
         relationFactor: 1,
       };

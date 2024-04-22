@@ -11,6 +11,8 @@ import {
   Tooltip,
 } from "@mui/material";
 
+import { AdvisorDetails } from "@/components/interface";
+
 // @ts-ignore
 const TableView = ({ onClickConnection, advisors }) => {
   return (
@@ -29,40 +31,46 @@ const TableView = ({ onClickConnection, advisors }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {advisors?.map((advisor: any) => (
+          {advisors?.map((advisor: AdvisorDetails) => (
             <TableRow sx={{ border: "none" }} key={advisor?.advisor_id} hover>
               <TableCell align="center">{advisor?.name}</TableCell>
               <TableCell align="center">{advisor?.position}</TableCell>
               <TableCell align="center">{advisor?.affiliation}</TableCell>
               <TableCell align="center">
                 <Link
-                  href={advisor?.website}
+                  href={advisor?.homepage}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {advisor?.website}
+                  {advisor?.homepage}
                 </Link>
               </TableCell>
               <TableCell align="center">
-                <Link href={`mailto:${advisor?.email}`}>{advisor?.email}</Link>
-              </TableCell>
-              <TableCell align="center">
-                <Link
-                  href={advisor?.twitter}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {advisor?.twitter}
+                <Link href={`mailto:${advisor.contacts.email}`}>
+                  {advisor.contacts.email ? advisor.contacts.email : "N/A"}
                 </Link>
               </TableCell>
               <TableCell align="center">
                 <Link
-                  href={advisor?.github}
+                  href={advisor?.contacts.twitter}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {advisor?.github}
+                  {advisor?.contacts.twitter}
                 </Link>
+              </TableCell>
+              <TableCell align="center">
+                {advisor.github ? (
+                  <Link
+                    href={advisor?.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {" "}
+                  </Link>
+                ) : (
+                  "N/A"
+                )}
               </TableCell>
               <TableCell align="center">
                 {/* Implementation for collaborations and connection cell */}
