@@ -1,6 +1,6 @@
 [
   {
-    "advisor_id": 0,
+    "_id": 0,
     "name": "Zhouzhou Mao",
     "tags": ["Relaxing", "Excellent", "Machine Learning"],
     "avatar": "https://avatars.githubusercontent.com/u/133197322?v=4",
@@ -13,7 +13,7 @@
     "description": "Yizhou Liu is an experienced software engineer with a passion for developing innovative programs that expedite the efficiency and effectiveness of organizational success.",
     "connections": [
       {
-        "advisor_id": 1,
+        "_id": 1,
         "relation": [
           {
             "class": "PhD",
@@ -43,7 +43,7 @@
         "relationFactor": 45
       },
       {
-        "advisor_id": 2,
+        "_id": 2,
         "relation": [
           {
             "class": "PhD",
@@ -65,7 +65,7 @@
         "relationFactor": 30
       },
       {
-        "advisor_id": 3,
+        "_id": 3,
         "relation": [
           {
             "class": "Collaborator",
@@ -89,7 +89,7 @@
     ]
   },
   {
-    "advisor_id": 1,
+    "_id": 1,
     "name": "Husky Doge",
     "tags": ["Innovative", "Data Science"],
     "avatar": "https://huskydoge.github.io/images/android-chrome-512x512.png",
@@ -102,7 +102,7 @@
     "description": "Jane Doe is a dedicated PhD student under the supervision of John Doe, focusing on advancing the field of machine learning with innovative research and applications.",
     "connections": [
       {
-        "advisor_id": 0,
+        "_id": 0,
         "relation": [
           {
             "class": "PhD",
@@ -132,7 +132,7 @@
         "relationFactor": 45
       },
       {
-        "advisor_id": 3,
+        "_id": 3,
         "relation": [
           {
             "class": "Mentee",
@@ -156,7 +156,7 @@
     ]
   },
   {
-    "advisor_id": 2,
+    "_id": 2,
     "name": "Jub Steven",
     "tags": ["Artificial Intelligence", "Deep Learning", "Innovation"],
     "avatar": "https://avatars.githubusercontent.com/u/95260261?v=4",
@@ -169,7 +169,7 @@
     "description": "Alex Smith is a Research Manager at Microsoft Asia, focusing on cutting-edge research in artificial intelligence and deep learning. Alex has a proven track record of leading innovative projects that push the boundaries of technology.",
     "connections": [
       {
-        "advisor_id": 0,
+        "_id": 0,
         "relation": [
           {
             "class": "PhD",
@@ -191,7 +191,7 @@
         "relationFactor": 30
       },
       {
-        "advisor_id": 3,
+        "_id": 3,
         "relation": [
           {
             "class": "Peer",
@@ -215,7 +215,7 @@
     ]
   },
   {
-    "advisor_id": 3,
+    "_id": 3,
     "name": "Ella Fitzgerald",
     "tags": [
       "Natural Language Processing",
@@ -232,7 +232,7 @@
     "description": "Ella Fitzgerald is an Assistant Professor at the School of Computer Science, University of Somewhere, specializing in natural language processing and speech recognition. With a passion for innovative teaching methods, Ella is dedicated to preparing the next generation of AI experts.",
     "connections": [
       {
-        "advisor_id": 0,
+        "_id": 0,
         "relation": [
           {
             "class": "PostDoc",
@@ -254,7 +254,7 @@
         "relationFactor": 40
       },
       {
-        "advisor_id": 1,
+        "_id": 1,
         "relation": [
           {
             "class": "Collaborator",

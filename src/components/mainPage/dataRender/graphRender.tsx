@@ -24,10 +24,10 @@ echarts.use([
   LegendComponent,
 ]);
 interface Advisor {
-  advisor_id: string;
+  _id: string;
   name: string;
   connections: {
-    advisor_id: number;
+    _id: number;
     relation: Array<{
       class: string;
       role: string;
@@ -51,7 +51,7 @@ let currentMain = ""; // 记录主要advisor的ID
 const advisors: Advisor[] = require("../../../data/advisors.json");
 
 const advisorsReader = async (
-  advisor_id: string,
+  _id: string,
   graphDegree: number,
   advisor: any
 ) => {
@@ -60,7 +60,7 @@ const advisorsReader = async (
   let nodeQueue: Advisor[] = [];
   let nodesSet = new Set<string>();
   let linkSet = new Set<string>(); // 其实是冗余的，暂时先不管
-  currentMain = advisor_id; // 更新主要advisor的ID
+  currentMain = _id; // 更新主要advisor的ID
   let minYear = new Date().getFullYear(); // 初始化为当前年份
   let maxYear = 0; // 初始化为0
 
@@ -85,7 +85,7 @@ const advisorsReader = async (
 
   // 找到与currentMain匹配的advisor节点
   // const mainAdvisor = advisors.find(
-  //   (advisor) => advisor.advisor_id === currentMain
+  //   (advisor) => advisor._id === currentMain
   // );
 
   const mainAdvisor = advisor;
@@ -99,13 +99,13 @@ const advisorsReader = async (
     symbolSize: number,
     latestCollaboration: number
   ) => {
-    if (nodesSet.has(advisor.advisor_id)) {
+    if (nodesSet.has(advisor._id)) {
       return nodes;
     }
 
-    if (advisor.advisor_id === mainAdvisor?.advisor_id) {
+    if (advisor._id === mainAdvisor?._id) {
       nodes.push({
-        id: String(mainAdvisor.advisor_id),
+        id: String(mainAdvisor._id),
         symbolSize: 200, // main节点的大小
         itemStyle: { color: "red" }, // main节点为红色
         latestCollaboration: new Date().getFullYear(), // 假设主节点的最近合作时间为当前年
@@ -113,13 +113,13 @@ const advisorsReader = async (
       });
     } else {
       nodes.push({
-        id: String(advisor?.advisor_id),
+        id: String(advisor?._id),
         symbolSize: symbolSize,
         latestCollaboration: latestCollaboration,
         ...advisor,
       });
     }
-    nodesSet.add(advisor.advisor_id);
+    nodesSet.add(advisor._id);
     return nodes;
   };
 
@@ -197,9 +197,7 @@ const advisorsReader = async (
           : currentYear
       );
 
-      let conn_ids = currentAdvisor?.connections?.map(
-        (conn) => conn.advisor_id
-      );
+      let conn_ids = currentAdvisor?.connections?.map((conn) => conn._id);
 
       // get all connected advisors using fetchAdvisorDetails into a list
       for (let i = 0; i < conn_ids?.length; i++) {
@@ -228,8 +226,8 @@ const advisorsReader = async (
           nodes = addNode(nodes, connectedAdvisor, symbolSize, latestYear);
           links = addLink(
             links,
-            currentAdvisor.advisor_id,
-            connectedAdvisor?.advisor_id,
+            currentAdvisor._id,
+            connectedAdvisor?._id,
             connection
           );
           nodeQueue.push(connectedAdvisor);
@@ -240,7 +238,7 @@ const advisorsReader = async (
     }
   }
 
-  return { nodes, links, minYear, maxYear, advisor_id };
+  return { nodes, links, minYear, maxYear, _id };
 };
 
 // @ts-ignore
@@ -278,7 +276,7 @@ const GraphRender = ({
 
       if (myChart) {
         const { nodes, links, minYear, maxYear } = await advisorsReader(
-          advisor?.advisor_id,
+          advisor?._id,
           graphDegree,
           advisor
         );

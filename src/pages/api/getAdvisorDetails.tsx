@@ -113,7 +113,7 @@ async function getAdvisorDetails(advisorId: string) {
       }
 
       let tmp = {
-        advisor_id: connected_advisor_id,
+        _id: connected_advisor_id,
         relation: relationDetails,
         collaborations: collaborateDetails,
         lastestCollaboration: Math.max(
@@ -134,7 +134,7 @@ async function getAdvisorDetails(advisorId: string) {
     }
 
     let finalAdvisor = {
-      advisor_id: advisor[0]._id,
+      _id: advisor[0]._id,
       name: advisor[0].name,
       tags: advisor[0].tags,
       affiliation: advisor[0].affiliation,
@@ -166,14 +166,14 @@ export default async function handler(
     return;
   }
 
-  const { advisor_id } = req.body;
-  console.log("advisor_id", advisor_id);
-  if (!advisor_id) {
+  const { _id } = req.body;
+  console.log("_id", _id);
+  if (!_id) {
     res.status(400).json({ error: "Advisor ID is required" });
     return;
   }
 
-  const advisorDetails = await getAdvisorDetails(advisor_id);
+  const advisorDetails = await getAdvisorDetails(_id);
   if (advisorDetails) {
     res.status(200).json(advisorDetails);
   } else {

@@ -17,7 +17,7 @@ import CloseIcon from "@mui/icons-material/Close";
 const findConnectedAdvisors = async (mainAdvisor: Advisor) => {
   if (mainAdvisor) {
     const connectedIds = mainAdvisor.connections?.map(
-      (conn: Connection) => conn.advisor_id
+      (conn: Connection) => conn._id
     );
     const res = await fetchAdvisorByIdLst(connectedIds);
     return res;
@@ -41,7 +41,7 @@ const ListView = ({ onClose, mainAdvisor }) => {
 
   const handleClickConnection = (advisorId: string) => {
     const advisor = advisors.find(
-      (advisor: Advisor) => advisor?.advisor_id === advisorId
+      (advisor: Advisor) => advisor?._id === advisorId
     );
     console.log(advisor);
     setSelectedAdvisor(advisor || null);

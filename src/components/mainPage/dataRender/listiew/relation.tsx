@@ -16,8 +16,7 @@ const RelationComponent = ({ main, second, onBack }) => {
   console.log("main", main);
   console.log("second", second);
   const connection = main.connections.find(
-    (conn: any) =>
-      conn.advisor_id === second.advisor_id || conn.advisor_id === second._id
+    (conn: any) => conn._id === second._id || conn._id === second._id
   );
 
   if (!connection) {

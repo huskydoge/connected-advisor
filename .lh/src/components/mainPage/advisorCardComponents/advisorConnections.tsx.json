@@ -1,30 +1,30 @@
 {
-    "sourceFile": "src/components/mainPage/advisorCardComponents/advisorConnections.tsx",
-    "activeCommit": 0,
-    "commits": [
+  "sourceFile": "src/components/mainPage/advisorCardComponents/advisorConnections.tsx",
+  "activeCommit": 0,
+  "commits": [
+    {
+      "activePatchIndex": 3,
+      "patches": [
         {
-            "activePatchIndex": 3,
-            "patches": [
-                {
-                    "date": 1708341811058,
-                    "content": "Index: \n===================================================================\n--- \n+++ \n"
-                },
-                {
-                    "date": 1708341834242,
-                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,98 @@\n+import React from \"react\";\n+import {\n+  Link,\n+  Grid,\n+  Stack,\n+  List,\n+  ListItem,\n+  ListItemText,\n+  Divider,\n+} from \"@mui/material\";\n+import { GitHub, Twitter, Email, Language } from \"@mui/icons-material\";\n+import {\n+  Card,\n+  CardContent,\n+  Typography,\n+  Avatar,\n+  CardHeader,\n+  IconButton,\n+  Collapse,\n+  Button,\n+} from \"@mui/material\";\n+import ExpandMoreIcon from \"@mui/icons-material/ExpandMore\";\n+import { styled } from \"@mui/material/styles\";\n+\n+const ExpandMore = styled((props) => {\n+  const { expand, ...other } = props;\n+  return <IconButton {...other} />;\n+})(({ theme, expand }) => ({\n+  transform: !expand ? \"rotate(0deg)\" : \"rotate(180deg)\",\n+  marginLeft: \"auto\",\n+  transition: theme.transitions.create(\"transform\", {\n+    duration: theme.transitions.duration.shortest,\n+  }),\n+}));\n+\n+const AdvisorConnection = ({ connection }) => {\n+    const [expanded, setExpanded] = React.useState(false);\n+    const advisor = getAdvisorById(connection.advisor_id);\n+  \n+    const handleExpandClick = () => {\n+      setExpanded(!expanded);\n+    };\n+  \n+    return (\n+      <Card sx={{ marginBottom: 2 }}>\n+        <CardHeader\n+          avatar={<Avatar src={advisor.avatar} />}\n+          action={\n+            <ExpandMore\n+              expand={expanded}\n+              onClick={handleExpandClick}\n+              aria-expanded={expanded}\n+              aria-label=\"show more\"\n+            >\n+              <ExpandMoreIcon />\n+            </ExpandMore>\n+          }\n+          title={advisor.name}\n+          subheader={advisor.position}\n+        />\n+        <Collapse in={expanded} timeout=\"auto\" unmountOnExit>\n+          <CardContent>\n+            {/* 经历部分 */}\n+            <Typography paragraph>Experience:</Typography>\n+            {connection.relation.map((rel, index) => (\n+              <Typography key={index} paragraph>\n+                {rel.class}, as {advisor.name}'s {rel.role},{\" \"}\n+                {rel.duration.start.year}.{rel.duration.start.month} ~{\" \"}\n+                {rel.duration.end.year}.{rel.duration.end.month}\n+              </Typography>\n+            ))}\n+  \n+            {/* 合作部分 */}\n+            <Typography paragraph>Collaborations:</Typography>\n+            {connection.collaborations.map((collab, index) => (\n+              <React.Fragment key={index}>\n+                <Typography\n+                  paragraph\n+                  sx={{\n+                    display: \"flex\",\n+                    alignItems: \"center\",\n+                    justifyContent: \"space-between\",\n+                  }}\n+                >\n+                  {collab.papername}\n+                  <Button href={collab.url} target=\"_blank\" size=\"small\">\n+                    Link\n+                  </Button>\n+                  {collab.year}\n+                </Typography>\n+                {index < connection.collaborations.length - 1 && <Divider />}\n+              </React.Fragment>\n+            ))}\n+          </CardContent>\n+        </Collapse>\n+      </Card>\n+    );\n+  };\n\\ No newline at end of file\n"
-                },
-                {
-                    "date": 1708341850774,
-                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,8 +32,19 @@\n     duration: theme.transitions.duration.shortest,\n   }),\n }));\n \n+// Mock function to get advisor info by ID\n+const getAdvisorById = (id) => {\n+    // This should be replaced by actual logic to retrieve advisor info\n+    return {\n+      id: id,\n+      name: `Advisor ${id}`,\n+      position: \"Professor\",\n+      avatar: \"https://via.placeholder.com/40\",\n+    };\n+  };\n+\n const AdvisorConnection = ({ connection }) => {\n   const [expanded, setExpanded] = React.useState(false);\n   const advisor = getAdvisorById(connection.advisor_id);\n \n"
-                },
-                {
-                    "date": 1708341886346,
-                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,8 +21,10 @@\n } from \"@mui/material\";\n import ExpandMoreIcon from \"@mui/icons-material/ExpandMore\";\n import { styled } from \"@mui/material/styles\";\n \n+import advisors from \"@src/data/advisors.json\"\n+\n const ExpandMore = styled((props) => {\n   const { expand, ...other } = props;\n   return <IconButton {...other} />;\n })(({ theme, expand }) => ({\n"
-                }
-            ],
-            "date": 1708341811058,
-            "name": "Commit-0",
-            "content": ""
+          "date": 1708341811058,
+          "content": "Index: \n===================================================================\n--- \n+++ \n"
+        },
+        {
+          "date": 1708341834242,
+          "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,98 @@\n+import React from \"react\";\n+import {\n+  Link,\n+  Grid,\n+  Stack,\n+  List,\n+  ListItem,\n+  ListItemText,\n+  Divider,\n+} from \"@mui/material\";\n+import { GitHub, Twitter, Email, Language } from \"@mui/icons-material\";\n+import {\n+  Card,\n+  CardContent,\n+  Typography,\n+  Avatar,\n+  CardHeader,\n+  IconButton,\n+  Collapse,\n+  Button,\n+} from \"@mui/material\";\n+import ExpandMoreIcon from \"@mui/icons-material/ExpandMore\";\n+import { styled } from \"@mui/material/styles\";\n+\n+const ExpandMore = styled((props) => {\n+  const { expand, ...other } = props;\n+  return <IconButton {...other} />;\n+})(({ theme, expand }) => ({\n+  transform: !expand ? \"rotate(0deg)\" : \"rotate(180deg)\",\n+  marginLeft: \"auto\",\n+  transition: theme.transitions.create(\"transform\", {\n+    duration: theme.transitions.duration.shortest,\n+  }),\n+}));\n+\n+const AdvisorConnection = ({ connection }) => {\n+    const [expanded, setExpanded] = React.useState(false);\n+    const advisor = getAdvisorById(connection._id);\n+  \n+    const handleExpandClick = () => {\n+      setExpanded(!expanded);\n+    };\n+  \n+    return (\n+      <Card sx={{ marginBottom: 2 }}>\n+        <CardHeader\n+          avatar={<Avatar src={advisor.avatar} />}\n+          action={\n+            <ExpandMore\n+              expand={expanded}\n+              onClick={handleExpandClick}\n+              aria-expanded={expanded}\n+              aria-label=\"show more\"\n+            >\n+              <ExpandMoreIcon />\n+            </ExpandMore>\n+          }\n+          title={advisor.name}\n+          subheader={advisor.position}\n+        />\n+        <Collapse in={expanded} timeout=\"auto\" unmountOnExit>\n+          <CardContent>\n+            {/* 经历部分 */}\n+            <Typography paragraph>Experience:</Typography>\n+            {connection.relation.map((rel, index) => (\n+              <Typography key={index} paragraph>\n+                {rel.class}, as {advisor.name}'s {rel.role},{\" \"}\n+                {rel.duration.start.year}.{rel.duration.start.month} ~{\" \"}\n+                {rel.duration.end.year}.{rel.duration.end.month}\n+              </Typography>\n+            ))}\n+  \n+            {/* 合作部分 */}\n+            <Typography paragraph>Collaborations:</Typography>\n+            {connection.collaborations.map((collab, index) => (\n+              <React.Fragment key={index}>\n+                <Typography\n+                  paragraph\n+                  sx={{\n+                    display: \"flex\",\n+                    alignItems: \"center\",\n+                    justifyContent: \"space-between\",\n+                  }}\n+                >\n+                  {collab.papername}\n+                  <Button href={collab.url} target=\"_blank\" size=\"small\">\n+                    Link\n+                  </Button>\n+                  {collab.year}\n+                </Typography>\n+                {index < connection.collaborations.length - 1 && <Divider />}\n+              </React.Fragment>\n+            ))}\n+          </CardContent>\n+        </Collapse>\n+      </Card>\n+    );\n+  };\n\\ No newline at end of file\n"
+        },
+        {
+          "date": 1708341850774,
+          "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,8 +32,19 @@\n     duration: theme.transitions.duration.shortest,\n   }),\n }));\n \n+// Mock function to get advisor info by ID\n+const getAdvisorById = (id) => {\n+    // This should be replaced by actual logic to retrieve advisor info\n+    return {\n+      id: id,\n+      name: `Advisor ${id}`,\n+      position: \"Professor\",\n+      avatar: \"https://via.placeholder.com/40\",\n+    };\n+  };\n+\n const AdvisorConnection = ({ connection }) => {\n   const [expanded, setExpanded] = React.useState(false);\n   const advisor = getAdvisorById(connection._id);\n \n"
+        },
+        {
+          "date": 1708341886346,
+          "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,8 +21,10 @@\n } from \"@mui/material\";\n import ExpandMoreIcon from \"@mui/icons-material/ExpandMore\";\n import { styled } from \"@mui/material/styles\";\n \n+import advisors from \"@src/data/advisors.json\"\n+\n const ExpandMore = styled((props) => {\n   const { expand, ...other } = props;\n   return <IconButton {...other} />;\n })(({ theme, expand }) => ({\n"
         }
-    ]
+      ],
+      "date": 1708341811058,
+      "name": "Commit-0",
+      "content": ""
+    }
+  ]
 }

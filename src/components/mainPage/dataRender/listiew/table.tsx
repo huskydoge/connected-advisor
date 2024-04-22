@@ -83,7 +83,7 @@ const TableView = ({ onClickConnection, advisors }) => {
                   <Button
                     variant="contained"
                     color="primary"
-                    onClick={() => onClickConnection(advisor.advisor_id)}
+                    onClick={() => onClickConnection(advisor._id)}
                   >
                     Show Relation
                   </Button>

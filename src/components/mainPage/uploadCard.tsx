@@ -21,7 +21,7 @@ const UploadCard = ({ onClose }) => {
   };
 
   const [formData, setFormData] = useState({
-    advisor_id: "",
+    _id: "",
     name: "",
     tags: [],
     picture: "",

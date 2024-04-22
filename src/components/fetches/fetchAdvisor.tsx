@@ -61,7 +61,7 @@ const fetchAdvisorDetails = async (advisorId: string) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ advisor_id: advisorId }),
+      body: JSON.stringify({ _id: advisorId }),
     });
 
     // if (!response.ok) {

@@ -112,11 +112,11 @@ const AdvisorConnection = ({ connection }) => {
 
   useEffect(() => {
     const fetchAdvisor = async () => {
-      const advisorData = await fetchAdvisorDetails(connection.advisor_id);
+      const advisorData = await fetchAdvisorDetails(connection._id);
       setAdvisor(advisorData);
     };
     fetchAdvisor();
-  }, [connection.advisor_id]);
+  }, [connection._id]);
 
   return (
     <Card sx={{ marginBottom: 2, width: "100%" }}>

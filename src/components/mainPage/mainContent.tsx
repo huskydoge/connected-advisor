@@ -25,7 +25,7 @@ import { fetchAdvisorDetails } from "../fetches/fetchAdvisor";
 import { useRouter } from "next/router";
 
 function MainContent({ id }: { id: string }) {
-  const advisor_id = String(id);
+  const _id = String(id);
   const router = useRouter();
   const [selectedNode, setSelectedNode] = useState(null); // 用于存储选中的节点信息
   const [clickedNode, setClickedNode] = useState(null);
@@ -39,7 +39,6 @@ function MainContent({ id }: { id: string }) {
   // 初始左侧面板flex值为3，右侧面板flex值为1，总flex值为4
   const [splitPercentage, setSplitPercentage] = useState(60);
 
-  let _id = advisor_id;
   useEffect(() => {
     const fetchAdvisorInfo = async () => {
       setIsLoading(true);
@@ -119,13 +118,13 @@ function MainContent({ id }: { id: string }) {
     if (selectedNode) {
       if (router.query.view === "list") {
         setSelectedTab("");
-        router.push(`${selectedNode["advisor_id"]}?view=graph`, undefined, {
+        router.push(`${selectedNode["_id"]}?view=graph`, undefined, {
           shallow: true,
         });
         return;
       }
 
-      router.push(`${selectedNode["advisor_id"]}?view=list`, undefined, {
+      router.push(`${selectedNode["_id"]}?view=list`, undefined, {
         shallow: true,
       });
       setSelectedTab("listview"); // Set listview as selected
@@ -135,7 +134,7 @@ function MainContent({ id }: { id: string }) {
   const closeListView = () => {
     if (selectedNode) {
       setSelectedTab("");
-      router.push(`${selectedNode["advisor_id"]}?view=graph`, undefined, {
+      router.push(`${selectedNode["_id"]}?view=graph`, undefined, {
         shallow: true,
       });
     }

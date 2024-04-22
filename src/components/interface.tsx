@@ -1,5 +1,5 @@
 export interface Advisor {
-  advisor_id: string;
+  _id: string;
   name: string;
   affiliation: string;
   website: string;
@@ -8,7 +8,7 @@ export interface Advisor {
   email: string;
   position: string;
   connections: {
-    advisor_id: string;
+    _id: string;
 
     relation: Array<{
       class: string;
@@ -30,7 +30,7 @@ export interface Advisor {
 
 export interface AdvisorDetails {
   _id: string;
-  advisor_id: string;
+  _id: string;
   name: string;
   position: string;
   affiliation: string;
@@ -48,7 +48,7 @@ export interface AdvisorDetails {
 }
 
 export interface Connection {
-  advisor_id: string;
+  _id: string;
   relation: Array<{
     class: string;
     role: string;

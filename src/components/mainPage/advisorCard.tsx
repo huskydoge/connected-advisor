@@ -43,7 +43,7 @@ const ExpandMore = styled(({ expand, ...other }: ExpandMoreProps) => (
 
 interface Advisor {
   name: string;
-  advisor_id: string;
+  _id: string;
   position: string;
   affiliation: string;
   avatar: string;
@@ -61,7 +61,7 @@ const AdvisorCard = ({ advisor }: { advisor: Advisor }) => {
   const router = useRouter(); // 使用useRouter钩子
   // 点击事件处理函数
   const handleClick = () => {
-    router.push(`/main/${advisor.advisor_id}`); // 使用模板字符串插入变量
+    router.push(`/main/${advisor._id}`); // 使用模板字符串插入变量
   };
   return (
     <Grid
@@ -203,10 +203,7 @@ const AdvisorCard = ({ advisor }: { advisor: Advisor }) => {
           Connections
         </Typography>
         {advisor.connections?.map((connection) => (
-          <AdvisorConnection
-            key={connection.advisor_id}
-            connection={connection}
-          />
+          <AdvisorConnection key={connection._id} connection={connection} />
         ))}
       </Grid>
 
@@ -227,7 +224,7 @@ const AdvisorCard = ({ advisor }: { advisor: Advisor }) => {
       <Grid item xs={12} sx={{ width: "100%" }}>
         <Waline
           serverURL="https://waline-connected-advisor-pud8gagjj-huskydoge.vercel.app"
-          path={advisor.advisor_id}
+          path={advisor._id}
         />
       </Grid> */}
     </Grid>
