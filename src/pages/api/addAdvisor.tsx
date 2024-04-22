@@ -13,7 +13,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { MongoClient } from "mongodb";
 
 // MongoDB URL and database name
-const MONGO_URL = process.env.MONGO_URL; // Use the environment variable
+const MONGO_URL = process.env.MONGO_URL || ""; // Use the environment variable
 const DB_NAME = "ConnectedAdvisor";
 
 // Function to connect to the database

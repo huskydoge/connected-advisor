@@ -136,6 +136,7 @@ async function getAdvisorDetails(advisorId: string) {
     let finalAdvisor = {
       _id: advisor[0]._id,
       name: advisor[0].name,
+      department: advisor[0].department,
       tags: advisor[0].tags,
       affiliation: advisor[0].affiliation,
       position: advisor[0].position,

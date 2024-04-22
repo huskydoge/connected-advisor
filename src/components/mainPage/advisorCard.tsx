@@ -25,6 +25,7 @@ import { styled } from "@mui/material/styles";
 import AdvisorConnection from "./advisorCardComponents/advisorConnections";
 import Tags from "./advisorCardComponents/tags";
 import AvatarLoader from "../AvatarLoader";
+import { Advisor } from "@/components/interface";
 
 import { scholarImg } from "@/components/const";
 
@@ -43,22 +44,6 @@ const ExpandMore = styled(({ expand, ...other }: ExpandMoreProps) => (
     duration: theme.transitions.duration.shortest,
   }),
 }));
-
-interface Advisor {
-  name: string;
-  _id: string;
-  position: string;
-  affiliation: string;
-  avatar: string;
-  github?: string;
-  twitter?: string;
-  email: string;
-  homepage?: string;
-  description?: string;
-  tags?: string[];
-  connections?: any[]; // 根据你的具体需求来调整类型
-  // 这里添加任何其他你需要的属性
-}
 
 const AdvisorCard = ({ advisor }: { advisor: Advisor }) => {
   const router = useRouter(); // 使用useRouter钩子
@@ -112,7 +97,9 @@ const AdvisorCard = ({ advisor }: { advisor: Advisor }) => {
             textAlign: "center",
           }}
         >
-          {advisor.position} @ {advisor.affiliation}
+          {!advisor.department
+            ? `${advisor.position} @ ${advisor.affiliation}`
+            : `${advisor.position} @ ${advisor.department}, ${advisor.affiliation}`}
         </Typography>
         <Stack
           direction="row"

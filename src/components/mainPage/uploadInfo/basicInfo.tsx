@@ -15,6 +15,8 @@ import {
   IconButton,
   TextField,
   Card,
+  Alert,
+  Snackbar,
 } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
 import { FormHelperText } from "@mui/material";
@@ -26,6 +28,7 @@ const BasicInfo = ({ formData, setFormData }) => {
   const inputValueRef = useRef(""); // 用于跟踪最新的输入值
   const [errors, setErrors] = useState({});
   const availableTags = ["CV", "NLP", "Robotics", "ML", "Theory", "LLM"];
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const handleAddTag = () => {
     const newTag = inputValueRef.current;
@@ -54,12 +57,12 @@ const BasicInfo = ({ formData, setFormData }) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const validateEmail = (email) => {
+  const validateEmail = (email: string) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(email);
   };
 
-  const validateURL = (url) => {
+  const validateURL = (url: string) => {
     try {
       new URL(url);
       return true;
@@ -91,6 +94,10 @@ const BasicInfo = ({ formData, setFormData }) => {
     return Object.keys(newErrors).length === 0;
   };
 
+  const handleClose = () => {
+    setOpenSnackbar(false);
+  };
+
   const handleSubmit = async () => {
     if (checkRequiredFields()) {
       // 确保在提交前进行必要字段检查
@@ -119,7 +126,33 @@ const BasicInfo = ({ formData, setFormData }) => {
         }
 
         const result = await response.json();
+        setOpenSnackbar(true);
         console.log("Submit result:", result);
+        // clear form data
+        setFormData({
+          name: "",
+          tags: [],
+          picture: "",
+          github: "",
+          homepage: "",
+          position: "",
+          affiliation: "",
+          department: "",
+          descriptions: "",
+          publications: {
+            googleScholar: "",
+            dblp: "",
+            researchGate: "",
+            semanticScholar: "",
+          },
+          contacts: {
+            email: "",
+            linkedin: "",
+            twitter: "",
+          },
+          connections: [],
+        });
+
         // 根据需要处理结果
       } catch (error) {
         console.error("Submit error:", error);
@@ -260,6 +293,21 @@ const BasicInfo = ({ formData, setFormData }) => {
           <Grid item xs={12} md={6}>
             <TextField
               fullWidth
+              label="Department"
+              name="department"
+              value={formData.department}
+              onChange={handleChange}
+              error={errors.department && !formData.department}
+              helperText={
+                errors.department && !formData.affiliation
+                  ? errors.department
+                  : ""
+              }
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
               label="Homepage"
               name="homepage"
               value={formData.homepage}
@@ -277,6 +325,17 @@ const BasicInfo = ({ formData, setFormData }) => {
               onChange={handleChange}
               error={errors.github}
               helperText={errors.github ? errors.github : ""}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              label="Picture"
+              name="picture"
+              value={formData.picture}
+              onChange={handleChange}
+              error={errors.picture}
+              helperText={errors.picture ? errors.picture : ""}
             />
           </Grid>
           <Grid item xs={12}>
@@ -425,6 +484,18 @@ const BasicInfo = ({ formData, setFormData }) => {
           }}
         ></Grid>
       </CardContent>
+
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        sx={{ size: "large" }}
+      >
+        <Alert onClose={handleClose} severity="success">
+          Successfully Submitted {formData.name} to the database!
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };

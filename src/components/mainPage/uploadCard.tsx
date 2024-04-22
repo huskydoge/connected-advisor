@@ -21,7 +21,6 @@ const UploadCard = ({ onClose }) => {
   };
 
   const [formData, setFormData] = useState({
-    _id: "",
     name: "",
     tags: [],
     picture: "",
@@ -61,7 +60,7 @@ const UploadCard = ({ onClose }) => {
         ) : step === 0 ? (
           <BasicInfo formData={formData} setFormData={setFormData} />
         ) : (
-          <ConnectionInfo formData={formData} setFormData={setFormData} />
+          <ConnectionInfo />
         )}
       </Grid>
     </Grid>

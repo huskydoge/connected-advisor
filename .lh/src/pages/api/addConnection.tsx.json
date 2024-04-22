@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 5,
+            "activePatchIndex": 6,
             "patches": [
                 {
                     "date": 1711789758410,
@@ -28,6 +28,10 @@
                 {
                     "date": 1713765896049,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,10 +6,8 @@\n  * @FilePath: /connected-advisor/src/data/mongodb_client.tsx\n  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE\n  */\n \n-\n-\n import type { NextApiRequest, NextApiResponse } from \"next\";\n import { MongoClient } from \"mongodb\";\n \n // MongoDB URL and database name\n"
+                },
+                {
+                    "date": 1713798816354,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n import type { NextApiRequest, NextApiResponse } from \"next\";\n import { MongoClient } from \"mongodb\";\n \n // MongoDB URL and database name\n-const MONGO_URL = process.env.MONGO_URL; // Use the environment variable\n+const MONGO_URL = process.env.MONGO_URL || \"\"; // Use the environment variable\n const DB_NAME = \"ConnectedAdvisor\";\n \n // Function to connect to the database\n async function connectToDatabase() {\n"
                 }
             ],
             "date": 1711789758410,
