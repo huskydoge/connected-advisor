@@ -111,3 +111,8 @@ a {
     color-scheme: dark;
   }
 }
+
+.markdown-preview a {
+  color: blue; /* 设置链接颜色为蓝色 */
+  text-decoration: underline; /* 下划线 */
+}

@@ -31,11 +31,16 @@ function MainContent({ id }: { id: string }) {
   const [clickedNode, setClickedNode] = useState(null);
   const [showCard, setShowCard] = useState("advisorCard");
   const [selectedTab, setSelectedTab] = useState(""); // 用于存储选中的Tab信息
-  const [graphDegree, setGraphDegree] = useState(1);
-  const [graphType, setGraphType] = useState("undirected");
+
   const [defaultNode, setDefaultNode] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [advisorInfo, setAdvisorInfo] = useState(null);
+  const [config, setConfig] = useState({
+    graphDegree: 1,
+    graphType: "undirected",
+    colorPattern: "pattern1",
+    showAvatars: false,
+  });
   // 初始左侧面板flex值为3，右侧面板flex值为1，总flex值为4
   const [splitPercentage, setSplitPercentage] = useState(60);
 
@@ -103,13 +108,15 @@ function MainContent({ id }: { id: string }) {
   };
 
   const handleGraphDegreeChange = (degree: number) => {
-    // @ts-ignore
-    setGraphDegree(degree);
-    console.log("degree", degree);
+    setConfig({ ...config, graphDegree: degree });
   };
 
   const handleGraphTypeChange = (type: string) => {
-    setGraphType(type);
+    setConfig({ ...config, graphType: type });
+  };
+
+  const handleGraphAvatarDisplayChange = (show: boolean) => {
+    setConfig({ ...config, showAvatars: show });
   };
 
   const handleListView = () => {
@@ -158,8 +165,10 @@ function MainContent({ id }: { id: string }) {
         return (
           <ConfigCard
             onClose={closeCard}
+            onGraphAvatarDisplayChange={handleGraphAvatarDisplayChange}
             onGraphDegreeChange={handleGraphDegreeChange}
             onGraphTypeChange={handleGraphTypeChange}
+            config={config}
           />
         ); // 假设GraphCard接受data作为prop
       case "filterCard":
@@ -172,7 +181,7 @@ function MainContent({ id }: { id: string }) {
   };
 
   // 鼠标拖动事件处理
-  const onMouseDown = (e) => {
+  const onMouseDown = (e: any) => {
     // 添加mousemove和mouseup事件监听
     window.addEventListener("mousemove", onMouseMove);
     window.addEventListener("mouseup", onMouseUp);
@@ -232,8 +241,8 @@ function MainContent({ id }: { id: string }) {
           ) : (
             <GraphRender
               advisor={advisorInfo}
-              graphDegree={graphDegree}
-              graphType={graphType}
+              graphDegree={config.graphDegree}
+              graphType={config.graphType}
               onNodeHover={(node: any) => {
                 if (node) {
                   setSelectedNode(node);

@@ -21,6 +21,9 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
 import Relation from "./relation";
+import ReactMarkdown from "react-markdown";
+import rehypeRaw from "rehype-raw";
+import rehypeSanitize from "rehype-sanitize";
 
 const Papers = ({ papers, setPapers, newPaper, setNewPaper, errors }) => {
   const [paperSearchResult, setPaperSearchResult] = useState([]);
@@ -150,6 +153,14 @@ const Papers = ({ papers, setPapers, newPaper, setNewPaper, errors }) => {
             />
           </Grid>
           <Grid item xs={12}>
+            <div className="markdown-preview">
+              <ReactMarkdown
+                children={newPaper.abstract}
+                rehypePlugins={[rehypeRaw, rehypeSanitize]}
+              />
+            </div>
+          </Grid>
+          {/* <Grid item xs={12}>
             <Autocomplete
               multiple
               options={authorSearchResult}
@@ -171,7 +182,7 @@ const Papers = ({ papers, setPapers, newPaper, setNewPaper, errors }) => {
                 value.map((author, index) => renderAuthorChip(author, index))
               }
             />
-          </Grid>
+          </Grid> */}
         </Grid>
       </DialogContent>
       <DialogActions>

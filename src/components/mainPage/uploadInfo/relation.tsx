@@ -161,6 +161,7 @@ const Relation = ({ relations, setRelations }) => {
                 <MenuItem value="" disabled>
                   Select Type
                 </MenuItem>
+                <MenuItem value="Postdoc">PostDoc</MenuItem>
                 <MenuItem value="PhD">PhD</MenuItem>
                 <MenuItem value="MS">Master</MenuItem>
                 <MenuItem value="Undergrad">Undergrad</MenuItem>

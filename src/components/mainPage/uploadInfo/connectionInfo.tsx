@@ -27,6 +27,10 @@ import { Advisor, Paper } from "@/components/interface";
 import { integer } from "@elastic/elasticsearch/lib/api/types";
 import { searchAdvisorDetailsById } from "@/components/wrapped_api/fetchAdvisor";
 
+import ReactMarkdown from "react-markdown";
+import rehypeRaw from "rehype-raw";
+import rehypeSanitize from "rehype-sanitize";
+
 const ConnectionInfo = () => {
   const [relations, setRelations] = useState([]);
   const [searchResult_1, setsearchResult_1] = useState([]);
@@ -303,6 +307,15 @@ const ConnectionInfo = () => {
                 setNewPaper({ ...newPaper, abstract: e.target.value })
               }
             />
+
+            <div className="markdown-preview">
+              <ReactMarkdown
+                children={
+                  `Abstract Preview in markdown \n \n` + newPaper.abstract
+                }
+                rehypePlugins={[rehypeRaw, rehypeSanitize]}
+              />
+            </div>
 
             <Autocomplete
               multiple

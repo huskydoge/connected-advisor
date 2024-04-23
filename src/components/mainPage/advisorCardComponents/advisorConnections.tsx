@@ -166,7 +166,7 @@ const AdvisorConnection = ({ connection }: { connection: Connection }) => {
                     color="text.secondary"
                     sx={{ marginRight: 2 }} // 调整内部元素间隙
                   >
-                    {`Relations: ${connection.relation.length} `}
+                    {`Relations: ${connection.relations.length} `}
                   </Typography>
                   <Typography
                     variant="body2"
@@ -216,7 +216,7 @@ const AdvisorConnection = ({ connection }: { connection: Connection }) => {
               </Typography>
               {advisor && (
                 <Experience
-                  relation={connection.relation}
+                  relation={connection.relations}
                   advisorName={advisor.name}
                 />
               )}

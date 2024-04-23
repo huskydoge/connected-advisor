@@ -10,6 +10,9 @@ import {
 } from "@mui/material";
 import { GitHub, Twitter, Email, Language } from "@mui/icons-material";
 import { useRouter } from "next/router";
+import ReactMarkdown from "react-markdown";
+import rehypeRaw from "rehype-raw";
+import rehypeSanitize from "rehype-sanitize";
 import {
   Card,
   CardContent,
@@ -151,18 +154,14 @@ const AdvisorCard = ({ advisor }: { advisor: Advisor }) => {
             <Language sx={{ mr: 0.5 }} /> Website
           </Link>
         </Stack>
-        <Typography
-          sx={{
-            mt: 2,
-            fontSize: { xs: "0.875rem", sm: "1rem", md: "1.125rem" },
-            paddingLeft: 5,
-            paddingRight: 5,
-          }}
-          variant="body1"
-          paragraph
-        >
-          {advisor.description}
-        </Typography>
+        <Grid item xs={12} sx={{ padding: 5 }}>
+          <div className="markdown-preview">
+            <ReactMarkdown
+              children={advisor.description}
+              rehypePlugins={[rehypeRaw, rehypeSanitize]}
+            />
+          </div>
+        </Grid>
       </Grid>
 
       {/* Tags */}

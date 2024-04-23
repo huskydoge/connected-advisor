@@ -3,11 +3,35 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 6,
             "patches": [
                 {
                     "date": 1713791539680,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1713884237737,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n } from \"@mui/material\";\n import CloseIcon from \"@mui/icons-material/Close\";\n \n // @ts-ignore\n-const ConfigCard = ({ onClose, onGraphDegreeChange, onGraphTypeChange }) => {\n+const ConfigCard = ({ onClose, onConfigChange, cofig }) => {\n   const [colorPattern, setColorPattern] = React.useState(\"pattern1\");\n   const [graphType, setGraphType] = React.useState(\"undirected\");\n   const [graphDegree, setGraphDegree] = React.useState(1);\n   // @ts-ignore\n"
+                },
+                {
+                    "date": 1713884245395,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n } from \"@mui/material\";\n import CloseIcon from \"@mui/icons-material/Close\";\n \n // @ts-ignore\n-const ConfigCard = ({ onClose, onConfigChange, cofig }) => {\n+const ConfigCard = ({ onClose, onConfigChange, cofig, setConfig }) => {\n   const [colorPattern, setColorPattern] = React.useState(\"pattern1\");\n   const [graphType, setGraphType] = React.useState(\"undirected\");\n   const [graphDegree, setGraphDegree] = React.useState(1);\n   // @ts-ignore\n"
+                },
+                {
+                    "date": 1713884429788,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n } from \"@mui/material\";\n import CloseIcon from \"@mui/icons-material/Close\";\n \n // @ts-ignore\n-const ConfigCard = ({ onClose, onConfigChange, cofig, setConfig }) => {\n+const ConfigCard = ({ onClose, onGraphDegreeChange, onGraphTypeChange }) => {\n   const [colorPattern, setColorPattern] = React.useState(\"pattern1\");\n   const [graphType, setGraphType] = React.useState(\"undirected\");\n   const [graphDegree, setGraphDegree] = React.useState(1);\n   // @ts-ignore\n"
+                },
+                {
+                    "date": 1713884471724,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,11 +14,11 @@\n } from \"@mui/material\";\n import CloseIcon from \"@mui/icons-material/Close\";\n \n // @ts-ignore\n-const ConfigCard = ({ onClose, onGraphDegreeChange, onGraphTypeChange }) => {\n-  const [colorPattern, setColorPattern] = React.useState(\"pattern1\");\n-  const [graphType, setGraphType] = React.useState(\"undirected\");\n+const ConfigCard = ({ onClose, onGraphDegreeChange, onGraphTypeChange, config }) => {\n+  const [colorPattern, setColorPattern] = React.useState(config.colorPattern);\n+  const [graphType, setGraphType] = React.useState(config.graphType);\n   const [graphDegree, setGraphDegree] = React.useState(1);\n   // @ts-ignore\n   const handleDegreeChange = (event) => {\n     onGraphDegreeChange(event.target.value);\n"
+                },
+                {
+                    "date": 1713884477546,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n   config,\n }) => {\n   const [colorPattern, setColorPattern] = React.useState(config.colorPattern);\n   const [graphType, setGraphType] = React.useState(config.graphType);\n-  const [graphDegree, setGraphDegree] = React.useState(1);\n+  const [graphDegree, setGraphDegree] = React.useState(config.graphDegree);\n   // @ts-ignore\n   const handleDegreeChange = (event) => {\n     onGraphDegreeChange(event.target.value);\n     setGraphDegree(event.target.value);\n"
+                },
+                {
+                    "date": 1713884534634,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,15 +13,17 @@\n   ToggleButtonGroup,\n } from \"@mui/material\";\n import CloseIcon from \"@mui/icons-material/Close\";\n \n+import { Config } from \"../interface\";\n+\n // @ts-ignore\n const ConfigCard = ({\n   onClose,\n   onGraphDegreeChange,\n   onGraphTypeChange,\n   config,\n-}) => {\n+}{config: Config}) => {\n   const [colorPattern, setColorPattern] = React.useState(config.colorPattern);\n   const [graphType, setGraphType] = React.useState(config.graphType);\n   const [graphDegree, setGraphDegree] = React.useState(config.graphDegree);\n   // @ts-ignore\n"
                 }
             ],
             "date": 1713791539680,

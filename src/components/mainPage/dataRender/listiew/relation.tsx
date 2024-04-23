@@ -43,7 +43,7 @@ const RelationComponent = ({ main, second, onBack }) => {
         Relations
       </Typography>
       <List>
-        {connection.relation.map((rel: any, index: number) => (
+        {connection.relations.map((rel: any, index: number) => (
           <ListItem
             key={index}
             sx={{ display: "flex", justifyContent: "space-between" }}

@@ -114,7 +114,7 @@ async function getAdvisorDetails(advisorId: string) {
 
       let tmp = {
         _id: connected_advisor_id,
-        relation: relationDetails,
+        relations: relationDetails,
         collaborations: collaborateDetails,
         lastestCollaboration: Math.max(
           ...collaborateDetails.map((collab: any) => collab.year)

@@ -13,6 +13,7 @@ import { SVGRenderer } from "echarts/renderers";
 
 import { fetchAdvisorDetails } from "@/components/wrapped_api/fetchAdvisor";
 import { integer } from "@elastic/elasticsearch/lib/api/types";
+import { Connection, AdvisorDetails } from "@/components/interface";
 
 // 注册必要的组件
 echarts.use([
@@ -23,32 +24,85 @@ echarts.use([
   TitleComponent,
   LegendComponent,
 ]);
-interface Advisor {
-  _id: string;
-  name: string;
-  connections: {
-    _id: number;
-    relation: Array<{
-      class: string;
-      role: string;
-      duration: {
-        start: number;
-        end: number;
-      };
-    }>;
-    collaborations: Array<{
-      papername: string;
-      year: number;
-      url: string;
-    }>;
-    latestCollaboration: number;
-    relationFactor: number;
-  }[];
-}
+
+const get_latest_collaboration = (conn: Connection) => {
+  let latestYear = 0;
+  conn.collaborations.forEach((collab) => {
+    if (collab.year > latestYear) {
+      latestYear = collab.year;
+    }
+  });
+  return latestYear;
+};
+
+const calculate_influence_factor = (advisor: AdvisorDetails, degree = 1) => {
+  // TODO, should take the influence of its connected advisors into account, rather than merely count the number of connections
+  let influenceFactor = 0;
+  for (let i = 0; i < advisor.connections.length; i++) {
+    let conn = advisor.connections[i];
+    let paper_score = conn.collaborations.length;
+    influenceFactor += 1 + paper_score;
+  }
+  return influenceFactor;
+};
+
+const calculate_relation_factor = (
+  advisor1: AdvisorDetails,
+  advisor2: AdvisorDetails,
+  conn: Connection
+) => {
+  const tag_weight = 2;
+  const relation_weight = 10;
+  const paper_weight = 5;
+
+  console.log(advisor1);
+  console.log(advisor2);
+  console.log(conn);
+
+  let tags1 = advisor1.tags;
+  let tags2 = advisor2.tags;
+  let tag_score = 0;
+  tags1.forEach((tag1) => {
+    tags2.forEach((tag2) => {
+      if (tag1 === tag2) {
+        tag_score += 1;
+      }
+    });
+  });
+  let paper_score = conn.collaborations.length;
+  const relation_type_score_map = {
+    PhD: 5,
+    Master: 3,
+    Undergrad: 1,
+    Postdoc: 4,
+    Working: 2,
+    Collaboration: 1,
+  };
+  let relations = conn.relations;
+  let relation_score = 0;
+  for (let i = 0; i < relations.length; i++) {
+    let relation = relations[i];
+
+    let type = relation.class;
+    let start = relation.duration.start;
+    let end = relation.duration.end;
+    relation_score +=
+      relation_type_score_map[type as keyof typeof relation_type_score_map] *
+      (end - start);
+  }
+
+  console.log(relation_score);
+
+  let relationFactor =
+    tag_score * tag_weight +
+    relation_score * relation_weight +
+    paper_score * paper_weight;
+
+  console.log(relationFactor);
+  return relationFactor;
+};
 
 let currentMain = ""; // 记录主要advisor的ID
-
-const advisors: Advisor[] = require("../../../data/advisors.json");
 
 const advisorsReader = async (
   _id: string,
@@ -57,7 +111,7 @@ const advisorsReader = async (
 ) => {
   let nodes: any[] = [];
   let links: any[] = [];
-  let nodeQueue: Advisor[] = [];
+  let nodeQueue: AdvisorDetails[] = [];
   let nodesSet = new Set<string>();
   let linkSet = new Set<string>(); // 其实是冗余的，暂时先不管
   currentMain = _id; // 更新主要advisor的ID
@@ -95,7 +149,7 @@ const advisorsReader = async (
 
   const addNode = (
     nodes: any[],
-    advisor: Advisor,
+    advisor: AdvisorDetails,
     symbolSize: number,
     latestCollaboration: number
   ) => {
@@ -127,16 +181,15 @@ const advisorsReader = async (
     links: any[],
     sourceId: string,
     targetId: string,
-    connection: any
+    connection: any,
+    relationFactor: number
   ) {
     const width =
       1 +
-      (4 * (connection.relationFactor - minRelationFactor)) /
+      (4 * (relationFactor - minRelationFactor)) /
         (maxRelationFactor - minRelationFactor);
 
-    const formatter = `Relation factor: ${
-      connection.relationFactor
-    }<br/>${connection.relation
+    const formatter = `Relation factor: ${relationFactor}<br/>${connection.relations
       ?.map(
         (rel: any) =>
           `${rel.role} in ${rel.class}, from ${rel.duration.start} to ${rel.duration.end}`
@@ -155,7 +208,7 @@ const advisorsReader = async (
     links.push({
       source: String(sourceId),
       target: String(targetId),
-      value: connection.relationFactor,
+      value: relationFactor,
       lineStyle: {
         width: width,
         curveness: 0.1,
@@ -176,6 +229,8 @@ const advisorsReader = async (
     return links;
   }
 
+  // MAIN LOOP
+
   while (nodeQueue.length > 0 && graphDegree > 0) {
     const currentAdvisor = nodeQueue.shift();
 
@@ -187,11 +242,11 @@ const advisorsReader = async (
         currentAdvisor,
         200,
         currentAdvisor?.connections?.reduce(
-          (max, conn) => Math.max(max, conn.latestCollaboration),
+          (max, conn) => Math.max(max, get_latest_collaboration(conn)),
           0
         )
           ? currentAdvisor?.connections.reduce(
-              (max, conn) => Math.max(max, conn.latestCollaboration),
+              (max, conn) => Math.max(max, get_latest_collaboration(conn)),
               0
             )
           : currentYear
@@ -217,18 +272,25 @@ const advisorsReader = async (
             0
           );
 
+          let relationFactor = calculate_relation_factor(
+            currentAdvisor,
+            connectedAdvisor,
+            connection
+          );
           minYear = Math.min(minYear, latestYear);
           maxYear = Math.max(maxYear, latestYear);
 
           // const symbolSize = 20 + connection.relationFactor * 0.5;
-          const symbolSize = 200;
+          const symbolSize =
+            20 + calculate_influence_factor(connectedAdvisor) * 10;
 
           nodes = addNode(nodes, connectedAdvisor, symbolSize, latestYear);
           links = addLink(
             links,
             currentAdvisor._id,
             connectedAdvisor?._id,
-            connection
+            connection,
+            relationFactor
           );
           nodeQueue.push(connectedAdvisor);
         }
@@ -256,7 +318,6 @@ const GraphRender = ({
   split: integer;
 }) => {
   const chartRef = useRef(null);
-  const chartInstance = useRef(null);
   const [option, setOption] = useState({}); // 用于存储图表配置
   const [zoomFactor, setZoomFactor] = useState(1); // 存储当前的缩放因子
   const [selectedNode, setSelectedNode] = useState(null); // 新增状态来跟踪选中的节点
@@ -281,12 +342,12 @@ const GraphRender = ({
           advisor
         );
 
-        myChart.resize();
+        (myChart as any).resize();
 
         // 更新节点样式，为选中节点添加边框
         // @ts-ignore
         const updateNodesStyle = (nodes, selectedNodeId) => {
-          return nodes.map((node) => {
+          return nodes.map((node: any) => {
             if (node.id === selectedNodeId) {
               return {
                 ...node,

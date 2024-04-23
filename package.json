@@ -2,7 +2,6 @@
   "name": "connected-advisor",
   "version": "0.1.0",
   "private": true,
-
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -23,7 +22,10 @@
     "next": "14.1.0",
     "react": "^18",
     "react-dom": "^18",
-    "react-force-graph": "^1.44.3"
+    "react-force-graph": "^1.44.3",
+    "react-markdown": "^9.0.1",
+    "rehype-raw": "^7.0.0",
+    "rehype-sanitize": "^6.0.0"
   },
   "devDependencies": {
     "@types/node": "^20",

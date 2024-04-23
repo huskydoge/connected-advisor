@@ -44,6 +44,13 @@ export interface Advisor {
   connections?: any[];
 }
 
+export interface Config {
+  graphDegree: number;
+  colorPattern: string;
+  graphType: string;
+  showAvatars: boolean;
+}
+
 export interface AdvisorDetails {
   _id: string;
   name: string;
@@ -55,7 +62,7 @@ export interface AdvisorDetails {
   homepage: string;
   description: string;
   tags: string[];
-  connections: any[];
+  connections: Connection[];
   contacts: {
     twitter: string;
     email: string;
@@ -65,7 +72,7 @@ export interface AdvisorDetails {
 
 export interface Connection {
   _id: string;
-  relation: Array<{
+  relations: Array<{
     class: string;
     role: string;
     duration: {
@@ -78,8 +85,6 @@ export interface Connection {
     year: number;
     url: string;
   }>;
-  latestCollaboration: number;
-  relationFactor: number;
 }
 
 export interface Relation {

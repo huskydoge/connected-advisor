@@ -21,6 +21,9 @@ import {
 import Autocomplete from "@mui/material/Autocomplete";
 import { FormHelperText } from "@mui/material";
 import { error } from "console";
+import ReactMarkdown from "react-markdown";
+import rehypeRaw from "rehype-raw";
+import rehypeSanitize from "rehype-sanitize";
 
 // @ts-ignore
 const BasicInfo = ({ formData, setFormData }) => {
@@ -36,6 +39,7 @@ const BasicInfo = ({ formData, setFormData }) => {
     "LLM",
     "Explainable AI",
     "Safety",
+    "Embodied AI",
   ];
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
@@ -87,7 +91,7 @@ const BasicInfo = ({ formData, setFormData }) => {
       "position",
       "affiliation",
       "descriptions",
-      "email",
+      // "email",
     ];
     requiredFields.forEach((field) => {
       if (field == "email") {
@@ -362,6 +366,13 @@ const BasicInfo = ({ formData, setFormData }) => {
               }
               multiline
               rows={15}
+            />
+          </Grid>
+          <Grid item xs={12} className="markdown-preview">
+            Preview in Markdown:
+            <ReactMarkdown
+              children={formData.descriptions}
+              rehypePlugins={[rehypeRaw, rehypeSanitize]}
             />
           </Grid>
         </Grid>
