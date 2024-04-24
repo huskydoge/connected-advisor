@@ -1,8 +1,24 @@
+/*
+ * @Author: huskydoge hbh001098hbh@sjtu.edu.cn
+ * @Date: 2024-04-24 10:38:45
+ * @LastEditors: huskydoge hbh001098hbh@sjtu.edu.cn
+ * @LastEditTime: 2024-04-24 10:49:09
+ * @FilePath: /connected-advisor/src/pages/api/searchPaperByList.tsx
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
+/*
+ * @Author: huskydoge hbh001098hbh@sjtu.edu.cn
+ * @Date: 2024-04-24 10:38:45
+ * @LastEditors: huskydoge hbh001098hbh@sjtu.edu.cn
+ * @LastEditTime: 2024-04-24 10:38:54
+ * @FilePath: /connected-advisor/src/pages/api/searchPaperByList.tsx
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 import { MongoClient, ObjectId } from "mongodb";
 
 const MONGO_URL = process.env.MONGO_URL || "";
 const DB_NAME = "ConnectedAdvisor";
-const COLLECTION_NAME = "connections";
+const COLLECTION_NAME = "tmp-papers";
 
 async function connectToDatabase() {
   const client = new MongoClient(MONGO_URL);

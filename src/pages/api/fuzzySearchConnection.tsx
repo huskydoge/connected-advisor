@@ -1,7 +1,15 @@
+/*
+ * @Author: huskydoge hbh001098hbh@sjtu.edu.cn
+ * @Date: 2024-03-30 21:06:00
+ * @LastEditors: huskydoge hbh001098hbh@sjtu.edu.cn
+ * @LastEditTime: 2024-04-24 10:17:07
+ * @FilePath: /connected-advisor/src/pages/api/fuzySearchConnection.tsx
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 import { MongoClient, ObjectId } from "mongodb";
 
 // MongoDB URL and database name
-const MONGO_URL = process.env.MONGO_URL;
+const MONGO_URL = process.env.MONGO_URL || "";
 const DB_NAME = "ConnectedAdvisor";
 const COLLECTION_NAME = "connections";
 
@@ -27,6 +35,9 @@ export default async function handler(req, res) {
 
   const id_1 = req.body["id-1"];
   const id_2 = req.body["id-2"];
+
+  console.log("id-1", id_1);
+  console.log("id-2", id_2);
 
   if (!id_1 || !id_2) {
     res.status(400).json({ message: "Missing required parameters" });

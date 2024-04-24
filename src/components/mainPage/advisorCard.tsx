@@ -72,7 +72,7 @@ const AdvisorCard = ({ advisor }: { advisor: Advisor }) => {
       <Grid item xs={12} sx={{ display: "flex", justifyContent: "center" }}>
         <AvatarLoader
           alt={advisor.name}
-          src={advisor.avatar ? advisor.avatar : scholarImg}
+          src={advisor.picture ? advisor.picture : scholarImg}
           sx={{
             width: { xs: "8rem", sm: "10rem", md: "12rem" },
             height: { xs: "8rem", sm: "10rem", md: "12rem" },

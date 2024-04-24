@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 3,
+            "activePatchIndex": 4,
             "patches": [
                 {
                     "date": 1713804837751,
@@ -20,6 +20,10 @@
                 {
                     "date": 1713892621321,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,5 +7,9 @@\n 去重检查还没做\n \n 添加更新信息的接口，而不是添加\n \n-每次submit了connection之后要刷新\n\\ No newline at end of file\n+每次submit了connection之后要刷新\n+\n+节点的颜色应该是合作的时候它的身份\n+\n+链接的颜色可以是最后一次合作的时间\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1713932013184,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,5 +11,7 @@\n 每次submit了connection之后要刷新\n \n 节点的颜色应该是合作的时候它的身份\n \n-链接的颜色可以是最后一次合作的时间\n\\ No newline at end of file\n+链接的颜色可以是最后一次合作的时间\n+\n+charts link 的链接逻辑还有问题，\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1713804837751,

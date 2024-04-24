@@ -58,7 +58,7 @@ const Experience = memo(
             }}
           >
             <span>
-              {rel.class}, the {rel.role} of {advisorName},
+              {rel.type}, the {rel.role} of {advisorName},
             </span>
             <span>
               {rel.duration.start} - {rel.duration.end}
@@ -137,9 +137,9 @@ const AdvisorConnection = ({ connection }: { connection: Connection }) => {
       {advisor && (
         <>
           <CardHeader
-            avatar={
+            picture={
               <AvatarLoader
-                src={advisor["avatar"] ? advisor["avatar"] : scholarImg}
+                src={advisor["picture"] ? advisor["picture"] : scholarImg}
                 alt={advisor["name"]}
               />
             }

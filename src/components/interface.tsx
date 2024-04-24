@@ -11,7 +11,7 @@
 //     _id: string;
 
 //     relation: Array<{
-//       class: string;
+//       type: string;
 //       role: string;
 //       duration: {
 //         start: number;
@@ -34,7 +34,7 @@ export interface Advisor {
   position: string;
   affiliation: string;
   department: string;
-  avatar: string;
+  picture: string;
   github?: string;
   twitter?: string;
   email: string;
@@ -57,7 +57,7 @@ export interface AdvisorDetails {
   position: string;
   department: string;
   affiliation: string;
-  avatar: string;
+  picture: string;
   github: string;
   homepage: string;
   description: string;
@@ -73,7 +73,7 @@ export interface AdvisorDetails {
 export interface Connection {
   _id: string;
   relations: Array<{
-    class: string;
+    type: string;
     role: string;
     duration: {
       start: number;
@@ -88,8 +88,11 @@ export interface Connection {
 }
 
 export interface Relation {
-  class: string;
-  role: string;
+  type: string;
+  "role-1": string;
+  "role-2": string;
+  "id-1": string;
+  "id-2": string;
   duration: {
     start: number;
     end: number;

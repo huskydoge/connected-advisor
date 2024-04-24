@@ -50,8 +50,7 @@ const RelationComponent = ({ main, second, onBack }) => {
           >
             <Box>
               <Typography variant="body1">
-                {main.name} is {rel.role} of {second.name} during/in {rel.class}
-                ,
+                {main.name} is {rel.role} of {second.name} during/in {rel.type},
               </Typography>
             </Box>
             <Typography variant="h6">

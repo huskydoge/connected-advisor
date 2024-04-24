@@ -3,7 +3,7 @@
     "_id": 0,
     "name": "Zhouzhou Mao",
     "tags": ["Relaxing", "Excellent", "Machine Learning"],
-    "avatar": "https://avatars.githubusercontent.com/u/133197322?v=4",
+    "picture": "https://avatars.githubusercontent.com/u/133197322?v=4",
     "github": "https://github.com/johndoe",
     "twitter": "https://twitter.com/johndoe",
     "email": "john@example.com",
@@ -16,7 +16,7 @@
         "_id": 1,
         "relation": [
           {
-            "class": "PhD",
+            "type": "PhD",
             "role": "supervisor",
             "duration": {
               "start": 2018,
@@ -24,7 +24,7 @@
             }
           },
           {
-            "class": "Master",
+            "type": "Master",
             "role": "supervisor",
             "duration": {
               "start": 2018,
@@ -46,7 +46,7 @@
         "_id": 2,
         "relation": [
           {
-            "class": "PhD",
+            "type": "PhD",
             "role": "supervisor",
             "duration": {
               "start": 2010,
@@ -68,7 +68,7 @@
         "_id": 3,
         "relation": [
           {
-            "class": "Collaborator",
+            "type": "Collaborator",
             "role": "co-author",
             "duration": {
               "start": 2022,
@@ -92,7 +92,7 @@
     "_id": 1,
     "name": "Husky Doge",
     "tags": ["Innovative", "Data Science"],
-    "avatar": "https://huskydoge.github.io/images/android-chrome-512x512.png",
+    "picture": "https://huskydoge.github.io/images/android-chrome-512x512.png",
     "github": "https://github.com/janedoe",
     "twitter": "https://twitter.com/janedoe",
     "email": "jane@example.com",
@@ -105,7 +105,7 @@
         "_id": 0,
         "relation": [
           {
-            "class": "PhD",
+            "type": "PhD",
             "role": "student",
             "duration": {
               "start": 2018,
@@ -113,7 +113,7 @@
             }
           },
           {
-            "class": "Master",
+            "type": "Master",
             "role": "student",
             "duration": {
               "start": 2016,
@@ -135,7 +135,7 @@
         "_id": 3,
         "relation": [
           {
-            "class": "Mentee",
+            "type": "Mentee",
             "role": "mentored by",
             "duration": {
               "start": 2021,
@@ -159,7 +159,7 @@
     "_id": 2,
     "name": "Jub Steven",
     "tags": ["Artificial Intelligence", "Deep Learning", "Innovation"],
-    "avatar": "https://avatars.githubusercontent.com/u/95260261?v=4",
+    "picture": "https://avatars.githubusercontent.com/u/95260261?v=4",
     "github": "https://github.com/alexsmith",
     "twitter": "https://twitter.com/alexsmith",
     "email": "alex@example.com",
@@ -172,7 +172,7 @@
         "_id": 0,
         "relation": [
           {
-            "class": "PhD",
+            "type": "PhD",
             "role": "student",
             "duration": {
               "start": 2010,
@@ -194,7 +194,7 @@
         "_id": 3,
         "relation": [
           {
-            "class": "Peer",
+            "type": "Peer",
             "role": "research collaborator",
             "duration": {
               "start": 2020,
@@ -222,7 +222,7 @@
       "Speech Recognition",
       "Innovative Teaching"
     ],
-    "avatar": "https://example.com/avatar/ella.png",
+    "picture": "https://example.com/picture/ella.png",
     "github": "https://github.com/ella",
     "twitter": "https://twitter.com/ella",
     "email": "ella@example.com",
@@ -235,7 +235,7 @@
         "_id": 0,
         "relation": [
           {
-            "class": "PostDoc",
+            "type": "PostDoc",
             "role": "mentor",
             "duration": {
               "start": 2021,
@@ -257,7 +257,7 @@
         "_id": 1,
         "relation": [
           {
-            "class": "Collaborator",
+            "type": "Collaborator",
             "role": "co-author",
             "duration": {
               "start": 2020,

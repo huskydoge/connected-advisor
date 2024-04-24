@@ -16,20 +16,42 @@ import {
   IconButton,
   Snackbar,
 } from "@mui/material";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import GroupIcon from "@mui/icons-material/Group";
 import DeleteIcon from "@mui/icons-material/Delete";
 import MuiAlert from "@mui/material/Alert";
+import { Relation } from "@/components/interface";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-const Relation = ({ relations, setRelations }) => {
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#6a1b9a",
+    },
+    secondary: {
+      main: "#f48fb1",
+    },
+  },
+  typography: {
+    fontFamily: ['"Helvetica Neue"', "Arial", "sans-serif"].join(","),
+  },
+});
+
+const RelationProcesser = ({ relations, setRelations, existingRelations }) => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [newRelation, setNewRelation] = useState({
     type: "",
-    role1: "",
-    role2: "",
-    start: "",
-    end: "",
+    "role-1": "",
+    "role-2": "",
+    duration: {
+      start: "",
+      end: "",
+    },
   });
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
+
+  console.log("existingRelations", existingRelations);
 
   const handleDialogOpen = () => {
     setDialogOpen(true);
@@ -51,20 +73,26 @@ const Relation = ({ relations, setRelations }) => {
     const currentYear = new Date().getFullYear();
 
     if (!newRelation.type) errors.type = "Type is required";
-    if (!newRelation.role1) errors.role1 = "Person 1's role is required";
-    if (newRelation.start < 1900 || newRelation.start > currentYear)
+    if (!newRelation["role-1"]) errors.role1 = "Person 1's role is required";
+    if (
+      Number(newRelation.duration.start) < 1900 ||
+      Number(newRelation.duration.start) > currentYear
+    )
       errors.start = "Start year is out of range";
-    if (newRelation.end < 1900 || newRelation.end > currentYear)
+    if (
+      Number(newRelation.duration.end) < 1900 ||
+      Number(newRelation.duration.end) > currentYear
+    )
       errors.end = "End year is out of range";
-    if (newRelation.start >= newRelation.end)
-      errors.yearRange = "End year must be greater than start year";
+    if (newRelation.duration.start > newRelation.duration.end)
+      errors.yearRange = "End year must be greater or equal to start year";
 
     const isDuplicate = relations.some(
       (r) =>
         r.type === newRelation.type &&
-        r.role1 === newRelation.role1 &&
-        r.start === newRelation.start &&
-        r.end === newRelation.end
+        r["role-1"] === newRelation["role-1"] &&
+        r.duration.start === newRelation.duration.start &&
+        r.duration.end === newRelation.duration.end
     );
 
     if (isDuplicate) errors.duplicate = "Duplicate relation";
@@ -84,10 +112,12 @@ const Relation = ({ relations, setRelations }) => {
     setRelations([...relations, newRelation]);
     setNewRelation({
       type: "",
-      role1: "",
-      role2: "",
-      start: "",
-      end: "",
+      "role-1": "",
+      "role-2": "",
+      duration: {
+        start: "",
+        end: "",
+      },
     });
     handleDialogClose();
   };
@@ -108,39 +138,126 @@ const Relation = ({ relations, setRelations }) => {
     const role1 = event.target.value;
     setNewRelation({
       ...newRelation,
-      role1: role1,
-      role2: roleMapping[role1] || "",
+      "role-1": role1,
+      "role-2": roleMapping[role1] || "",
     });
   };
 
   return (
     <Box>
       <Typography variant="h6" sx={{ mt: 2, mb: 2 }}>
-        Relations
+        New Relations
       </Typography>
-      <Button variant="outlined" onClick={handleDialogOpen}>
+      <Button sx={{ mb: 2 }} variant="outlined" onClick={handleDialogOpen}>
         Add Relation
       </Button>
-
-      {relations.map((relation, index) => (
-        <Card key={index} sx={{ my: 1 }}>
+      {relations.map((relation: Relation, index) => (
+        <Card
+          key={index}
+          sx={{
+            my: 1,
+            boxShadow: 3,
+            border: "1px solid #ddd",
+            borderRadius: 2,
+          }}
+        >
           <CardHeader
             title={`Relation ${index + 1}`}
-            sx={{ backgroundColor: "#f0f0f0" }}
+            sx={{
+              backgroundColor: "#1a1b9e",
+              color: "#fff",
+              fontFamily: "Arial",
+              fontWeight: "bold",
+            }}
           />
           <CardContent>
-            <Typography>{`Type: ${relation.type}`}</Typography>
-            <Grid sx={{ display: "flex", justifyContent: "space-between" }}>
-              <Box>
-                <Typography>{`Person 1's Role: ${relation.role1}`}</Typography>
-                <Typography>{`Person 2's Role: ${
-                  roleMapping[relation.role1]
-                }`}</Typography>
-                <Typography>{`Years: ${relation.start} - ${relation.end}`}</Typography>
-              </Box>
+            <Grid
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Typography
+                sx={{ color: "#333", fontWeight: "medium" }}
+              >{`Type: ${relation?.type}`}</Typography>
               <IconButton onClick={() => deleteRelation(index)}>
                 <DeleteIcon />
               </IconButton>
+            </Grid>
+            <Grid container spacing={2} sx={{ marginTop: 2 }}>
+              <Grid item xs={12} sm={6}>
+                <Typography>
+                  <GroupIcon
+                    sx={{ verticalAlign: "middle", color: "primary.main" }}
+                  />{" "}
+                  {`Person 1's Role: ${relation["role-1"]}`}
+                </Typography>
+                <Typography>
+                  <GroupIcon
+                    sx={{ verticalAlign: "middle", color: "secondary.main" }}
+                  />{" "}
+                  {`Person 2's Role: ${roleMapping[relation["role-1"]]}`}
+                </Typography>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Typography>
+                  <AccessTimeIcon sx={{ verticalAlign: "middle" }} />{" "}
+                  {`Years: ${relation?.duration?.start} - ${relation?.duration?.end}`}
+                </Typography>
+              </Grid>
+            </Grid>
+          </CardContent>
+        </Card>
+      ))}
+
+      <Typography variant="h6" sx={{ mt: 2, mb: 2 }}>
+        Existing Relations
+      </Typography>
+      {existingRelations.map((relation: Relation, index) => (
+        <Card
+          key={index}
+          sx={{
+            my: 1,
+            boxShadow: 3,
+            border: "1px solid #ddd",
+            borderRadius: 2,
+          }}
+        >
+          <CardHeader
+            title={`Relation ${index + 1}`}
+            sx={{
+              backgroundColor: "#6a1b9a",
+              color: "#fff",
+              fontFamily: "Arial",
+              fontWeight: "bold",
+            }}
+          />
+          <CardContent>
+            <Typography
+              sx={{ color: "#333", fontWeight: "medium" }}
+            >{`Type: ${relation?.type}`}</Typography>
+            <Grid container spacing={2} sx={{ marginTop: 2 }}>
+              <Grid item xs={12} sm={6}>
+                <Typography>
+                  <GroupIcon
+                    sx={{ verticalAlign: "middle", color: "primary.main" }}
+                  />{" "}
+                  {`Person 1's Role: ${relation["role-1"]}`}
+                </Typography>
+                <Typography>
+                  <GroupIcon
+                    sx={{ verticalAlign: "middle", color: "secondary.main" }}
+                  />{" "}
+                  {`Person 2's Role: ${roleMapping[relation["role-1"]]}`}
+                </Typography>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Typography>
+                  <AccessTimeIcon sx={{ verticalAlign: "middle" }} />{" "}
+                  {`Years: ${relation?.duration?.start} - ${relation?.duration?.end}`}
+                </Typography>
+              </Grid>
             </Grid>
           </CardContent>
         </Card>
@@ -172,7 +289,7 @@ const Relation = ({ relations, setRelations }) => {
             <Grid item xs={12}>
               <Select
                 fullWidth
-                value={newRelation.role1}
+                value={newRelation["role-1"]}
                 onChange={handleRole1Change}
                 displayEmpty
               >
@@ -190,7 +307,7 @@ const Relation = ({ relations, setRelations }) => {
               <TextField
                 fullWidth
                 disabled
-                value={newRelation.role2}
+                value={newRelation["role-2"]}
                 label="Person 2's Role"
                 variant="outlined"
               />
@@ -200,9 +317,15 @@ const Relation = ({ relations, setRelations }) => {
                 fullWidth
                 type="number"
                 label="Start Year"
-                value={newRelation.start}
+                value={newRelation.duration.start}
                 onChange={(e) =>
-                  setNewRelation({ ...newRelation, start: e.target.value })
+                  setNewRelation({
+                    ...newRelation,
+                    duration: {
+                      ...newRelation.duration,
+                      start: e.target.value,
+                    },
+                  })
                 }
               />
             </Grid>
@@ -211,9 +334,12 @@ const Relation = ({ relations, setRelations }) => {
                 fullWidth
                 type="number"
                 label="End Year"
-                value={newRelation.end}
+                value={newRelation.duration.end}
                 onChange={(e) =>
-                  setNewRelation({ ...newRelation, end: e.target.value })
+                  setNewRelation({
+                    ...newRelation,
+                    duration: { ...newRelation.duration, end: e.target.value },
+                  })
                 }
               />
             </Grid>
@@ -243,4 +369,4 @@ const Relation = ({ relations, setRelations }) => {
   );
 };
 
-export default Relation;
+export default RelationProcesser;

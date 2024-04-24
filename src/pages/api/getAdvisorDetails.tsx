@@ -78,13 +78,13 @@ async function getAdvisorDetails(advisorId: string) {
         }
         if (rel["id-1"] === advisorId) {
           return {
-            class: rel.type,
+            type: rel.type,
             role: rel["role-1"],
             duration: rel.duration,
           };
         } else {
           return {
-            class: rel.type,
+            type: rel.type,
             role: rel["role-2"],
             duration: rel.duration,
           };
@@ -141,7 +141,7 @@ async function getAdvisorDetails(advisorId: string) {
       affiliation: advisor[0].affiliation,
       position: advisor[0].position,
       connections: finalConnections,
-      avatar: advisor[0].picture,
+      picture: advisor[0].picture,
       twitter: advisor[0].contacts.twitter,
       email: advisor[0].contacts.email,
       homepage: advisor[0].homepage,

@@ -1,5 +1,13 @@
+/*
+ * @Author: huskydoge hbh001098hbh@sjtu.edu.cn
+ * @Date: 2024-03-31 08:40:39
+ * @LastEditors: huskydoge hbh001098hbh@sjtu.edu.cn
+ * @LastEditTime: 2024-04-24 10:14:28
+ * @FilePath: /connected-advisor/src/components/wrapped_api/fetchConnection.tsx
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 const fetchConnection = async (selectedNameOne, selectedNameTwo) => {
-  // console.log(selectedNameOne?._id, selectedNameTwo?._id);
+  console.log(selectedNameOne?._id, selectedNameTwo?._id);
   const response = await fetch("/api/fuzzySearchConnection", {
     method: "POST",
     headers: { "Content-Type": "application/json" },

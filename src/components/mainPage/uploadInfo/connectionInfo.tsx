@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -22,11 +22,16 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
-import Relation from "./relation";
-import { Advisor, Paper } from "@/components/interface";
+import RelationProcesser from "./relation";
+import { Advisor, Paper, Relation } from "@/components/interface";
 import { integer } from "@elastic/elasticsearch/lib/api/types";
 import { searchAdvisorDetailsById } from "@/components/wrapped_api/fetchAdvisor";
-
+import { fetchConnection } from "@/components/wrapped_api/fetchConnection";
+import { fetchRelations } from "@/components/wrapped_api/fetchRelation";
+import {
+  fetchPaperById,
+  fetchPaperByLst,
+} from "@/components/wrapped_api/fetchPaper";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import rehypeSanitize from "rehype-sanitize";
@@ -46,16 +51,10 @@ const ConnectionInfo = () => {
   const [infoDialogOpen, setInfoDialogOpen] = useState(false);
   const [infoDialogMessage, setInfoDialogMessage] = useState("");
   const [authorSearchResult, setAuthorSearchResult] = useState([]);
+  const [existingRelations, setExistingRelations] = useState<Relation[]>([]);
+  const [existingConnection, setExistingConnection] = useState<Relation>();
+  const [existingPapers, setExistingPapers] = useState<Paper>();
   const [openSnackbar, setOpenSnackbar] = useState(false);
-
-  // submitted by user
-  const [newPaper, setNewPaper] = useState({
-    name: "",
-    year: "",
-    url: "",
-    abstract: "",
-    authors: [],
-  });
 
   const fetchPaperDetails = async (searchText: string) => {
     if (!searchText.trim()) return;
@@ -67,6 +66,16 @@ const ConnectionInfo = () => {
     const data = await response.json();
     setPaperSearchResult(Array.isArray(data) ? data : []);
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (selectedNameOne && selectedNameTwo) {
+        await tryGetExistingInfo();
+      }
+    };
+
+    fetchData();
+  }, [selectedNameOne, selectedNameTwo]);
 
   const searchAdvisorDetailsByName = async (
     searchText: string,
@@ -89,6 +98,30 @@ const ConnectionInfo = () => {
       setsearchResult_2(res);
     } else {
       alert("Invalid ord");
+    }
+  };
+
+  const tryGetExistingInfo = async () => {
+    if (!selectedNameOne || !selectedNameTwo) {
+      return;
+    }
+    console.log("in try get existing info");
+    let conn = await fetchConnection(selectedNameOne, selectedNameTwo);
+    let rels = await fetchRelations(selectedNameOne, selectedNameTwo);
+    // get the object at index 0
+    if (!conn) {
+      console.log("No connection found");
+      return;
+    } else {
+      conn = conn[0];
+      let existing_papers = await fetchPaperByLst(conn["collaborate-papers"]);
+      console.log("existing papers", existing_papers);
+      console.log("rels", rels);
+
+      setExistingPapers(() => existing_papers);
+      setExistingRelations(() => rels);
+      setExistingConnection(() => conn);
+      return;
     }
   };
 
@@ -395,46 +428,6 @@ const ConnectionInfo = () => {
     </Dialog>
   );
 
-  const fetchRelations = async () => {
-    if (!selectedNameOne || !selectedNameTwo) {
-      alert("Both persons must be selected to form a connection.");
-      return;
-    }
-    const response = await fetch("/api/searchRelation", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        "id-1": selectedNameOne?._id,
-        "id-2": selectedNameTwo?._id,
-      }),
-    });
-    const existingRelations = await response.json();
-    if (!response.ok) {
-      return [];
-    } else {
-      return existingRelations;
-    }
-  };
-
-  const fetchConnection = async () => {
-    console.log(selectedNameOne?._id, selectedNameTwo?._id);
-    const response = await fetch("/api/searchConnection", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        "id-1": selectedNameOne?._id,
-        "id-2": selectedNameTwo?._id,
-      }),
-    });
-    const existingConnection = await response.json();
-    if (!response.ok) {
-      console.error("Failed to fetch connection");
-      return null;
-    } else {
-      return existingConnection;
-    }
-  };
-
   const addOrUpdateConnection = async (connectionData) => {
     // TODO make sure it return correct id. If existing, then return existing id
     const response = await fetch("/api/addConnection", {
@@ -497,9 +490,6 @@ const ConnectionInfo = () => {
     // Assuming the API endpoint '/api/searchRelation' accepts POST requests
     // and returns relations in the form [{ type, personOneId, personTwoId }]
 
-    const existingRelations = await fetchRelations();
-    const existingConnection = await fetchConnection();
-
     console.log("Existing relations:", existingRelations);
     console.log("new relations:", relations);
 
@@ -531,8 +521,6 @@ const ConnectionInfo = () => {
     // if no duplicate, then we can add all the relation in relation list to relation table first, and get the relation id
 
     const relation_ids = await addRelations();
-
-    console.log(relation_ids);
 
     let connectionData = {
       "id-1": selectedNameOne._id,
@@ -619,13 +607,14 @@ const ConnectionInfo = () => {
               <Autocomplete
                 freeSolo
                 options={searchResult_1}
-                getOptionLabel={(option) =>
+                getOptionLabel={(option: any) =>
                   `${option.name} - ${option.position} - ${option.affiliation}`
                 }
                 onInputChange={(event, newValue) => {
                   searchAdvisorDetailsByName(newValue, 1);
                 }}
                 onChange={(event, newValue) => {
+                  console.log("new", newValue);
                   if (selectedNameTwo?._id === newValue?._id) {
                     setsearchResult_1([]);
                     setSelectedNameOne(null);
@@ -665,7 +654,7 @@ const ConnectionInfo = () => {
                 onInputChange={(event, newValue) => {
                   searchAdvisorDetailsByName(newValue, 2);
                 }}
-                onChange={(event, newValue) => {
+                onChange={async (event, newValue) => {
                   console.log(newValue);
                   console.log(selectedNameOne);
                   if (newValue?._id === selectedNameOne?._id) {
@@ -695,6 +684,9 @@ const ConnectionInfo = () => {
         <Typography variant="h6" sx={{ mt: 2, mb: 2 }}>
           Collaborated Papers
         </Typography>
+        <Typography variant="body1" sx={{ mt: 2, mb: 2 }}>
+          New Papers
+        </Typography>
         <Button startIcon={<AddIcon />} onClick={handlePaperDialogOpen}>
           Add Paper
         </Button>
@@ -712,9 +704,23 @@ const ConnectionInfo = () => {
             </ListItem>
           ))}
         </List>
+        <Typography variant="body1" sx={{ mt: 2, mb: 2 }}>
+          Existing Papers
+        </Typography>
+        <List>
+          {(existingPapers ?? []).map((paper, index) => (
+            <ListItem key={index}>
+              <ListItemText primary={paper?.name} secondary={paper?.year} />
+            </ListItem>
+          ))}
+        </List>
 
         {renderPaperDialog()}
-        <Relation relations={relations} setRelations={setRelations} />
+        <RelationProcesser
+          relations={relations}
+          setRelations={setRelations}
+          existingRelations={existingRelations ? existingRelations : []}
+        />
       </CardContent>
       <Dialog
         open={infoDialogOpen}
