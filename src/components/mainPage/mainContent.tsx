@@ -249,6 +249,7 @@ function MainContent({ id }: { id: string }) {
                 }
               }}
               split={splitPercentage}
+              showAvatar={config.showAvatars}
             />
           )}
         </Paper>

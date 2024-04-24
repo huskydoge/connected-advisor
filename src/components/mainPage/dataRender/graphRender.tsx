@@ -17,6 +17,8 @@ import { Connection, AdvisorDetails } from "@/components/interface";
 
 import CircularProgress from "@mui/material/CircularProgress";
 
+import { scholarImg } from "@/components/const";
+
 // 注册必要的组件
 echarts.use([
   TooltipComponent,
@@ -146,7 +148,6 @@ const advisorsReader = async (_id, graphDegree, advisor) => {
         id: String(advisor?._id),
         symbolSize: symbolSize,
         latestCollaboration: latestCollaboration,
-        symbol: "circle", //`image://${advisor.picture}`, // Add this line
         ...advisor,
         draggable: true,
       });
@@ -267,18 +268,67 @@ const advisorsReader = async (_id, graphDegree, advisor) => {
   return { nodes, links, minYear, maxYear };
 };
 
+const getCircularImage = async (imageUrl: string, diameter: number) => {
+  return new Promise<string>((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = "Anonymous"; // 确保处理跨域图像
+    img.onload = () => {
+      const canvas = document.createElement("canvas");
+      canvas.width = diameter;
+      canvas.height = diameter;
+      const ctx = canvas.getContext("2d");
+
+      if (ctx) {
+        // 绘制圆形裁剪区域
+        ctx.beginPath();
+        ctx.arc(diameter / 2, diameter / 2, diameter / 2, 0, Math.PI * 2, true);
+        ctx.closePath();
+        ctx.clip();
+
+        // 绘制图像到画布上
+        ctx.drawImage(img, 0, 0, diameter, diameter);
+
+        resolve(canvas.toDataURL());
+      }
+    };
+    img.onerror = reject;
+    img.src = imageUrl;
+  });
+};
+
+const prepareNodes = async (nodesData) => {
+  const processedNodes = await Promise.all(
+    nodesData.map(async (node) => {
+      if (node.picture) {
+        const circularImage = await getCircularImage(node.picture, 100); // 假设节点图像直径为100px
+        node.symbol = `image://${circularImage}`;
+      } else {
+        const circularImage = await getCircularImage(scholarImg, 100);
+        // node.symbol = "circle";
+        node.symbol = `image://${circularImage}`;
+      }
+
+      return node;
+    })
+  );
+
+  return processedNodes;
+};
+
 // @ts-ignore
 const GraphRender = ({
   onNodeHover,
   advisor,
   graphDegree,
   graphType,
+  showAvatar,
   split, // 屏幕占比
 }: {
   onNodeHover: Function;
   advisor: Advisor;
   graphDegree: number;
   graphType: string;
+  showAvatar: boolean;
   split: integer;
 }) => {
   const chartRef = useRef(null);
@@ -289,6 +339,8 @@ const GraphRender = ({
   const [myChart, setMyChart] = useState(null); // 用于存储 echarts 实例
   const router = useRouter();
   const [loading, setLoading] = useState(true);
+  const [nodesWOImg, setNodesWOImg] = useState([]);
+  const [nodesWithImg, setNodesWithImg] = useState([]);
 
   useEffect(() => {
     if (chartRef.current && !myChart) {
@@ -326,8 +378,9 @@ const GraphRender = ({
       const updateNodesStyle = (nodes, selectedNodeId) => {
         return nodes.map((node: any) => {
           if (node.id === selectedNodeId) {
+            // 如果节点是被选中的节点，修改其样式
             return {
-              ...node,
+              ...node, // 浅拷贝
               itemStyle: {
                 ...node.itemStyle,
                 borderColor: "blue",
@@ -335,8 +388,10 @@ const GraphRender = ({
                 borderType: "solid",
               },
             };
+          } else {
+            // 否则，只进行浅拷贝，确保不直接修改原始对象
+            return { ...node };
           }
-          return node;
         });
       };
 
@@ -358,6 +413,14 @@ const GraphRender = ({
         }
         return node;
       });
+
+      let final_nodes = updateNodesStyle(updatedNodes, selectedNodeId);
+      let copy_nodes = updateNodesStyle(updatedNodes, selectedNodeId);
+      setNodesWOImg(() => final_nodes);
+      console.log(final_nodes);
+      const nodesWithImages = await prepareNodes(copy_nodes);
+      console.log(final_nodes);
+      setNodesWithImg(() => nodesWithImages);
 
       const initialOption = {
         title: {
@@ -403,7 +466,7 @@ const GraphRender = ({
             type: "graph",
             layout: "force",
             layoutAnimation: false,
-            data: updateNodesStyle(updatedNodes, selectedNodeId),
+            data: final_nodes,
             links: links,
 
             categories: [{ name: "Main Node" }, { name: "Other" }],
@@ -433,6 +496,7 @@ const GraphRender = ({
                 shadowBlur: 10, // 阴影的模糊大小
                 shadowColor: "rgba(0, 0, 0, 0.3)", // 阴影颜色
               },
+              scale: 2,
             },
             // 设置选中状态（如果需要）的样式
           },
@@ -448,8 +512,11 @@ const GraphRender = ({
       }
 
       setOption(initialOption); // 设置图表配置
+
       setLoading(false); // 开始加载图表时设置 loading 为 true
     };
+
+    const showAvatarOnNode = async () => {};
 
     fetchData();
   }, [selectedNodeId, advisor, graphDegree]);
@@ -531,6 +598,36 @@ const GraphRender = ({
       });
     }
   }, [graphType]);
+
+  useEffect(() => {
+    if (showAvatar) {
+      if (nodesWithImg.length !== 0) {
+        console.log("with", nodesWithImg);
+        setOption((prevOption) => ({
+          ...prevOption,
+          series: [
+            {
+              ...prevOption.series[0],
+              data: nodesWithImg,
+            },
+          ],
+        }));
+      }
+    } else {
+      if (nodesWOImg.length !== 0) {
+        console.log("WO", nodesWOImg);
+        setOption((prevOption) => ({
+          ...prevOption,
+          series: [
+            {
+              ...prevOption.series[0],
+              data: nodesWOImg,
+            },
+          ],
+        }));
+      }
+    }
+  }, [showAvatar]);
 
   return (
     <div
