@@ -137,7 +137,7 @@ const AdvisorConnection = ({ connection }: { connection: Connection }) => {
       {advisor && (
         <>
           <CardHeader
-            picture={
+            avatar={
               <AvatarLoader
                 src={advisor["picture"] ? advisor["picture"] : scholarImg}
                 alt={advisor["name"]}

@@ -122,6 +122,8 @@ const advisorsReader = async (_id, graphDegree, advisor) => {
   let minYear = new Date().getFullYear();
   let maxYear = 0;
 
+  const mainAdvisor = advisor;
+
   const addNode = (
     nodes: any[],
     advisor: AdvisorDetails,
@@ -163,7 +165,7 @@ const advisorsReader = async (_id, graphDegree, advisor) => {
     connection: any,
     relationFactor: number
   ) {
-    const width = 1 + 4 * relationFactor;
+    const width = 1;
 
     const formatter = `Relation factor: ${relationFactor}<br/>${connection.relations
       ?.map(
@@ -359,7 +361,8 @@ const GraphRender = ({
       // 构造用于缓存的键
       const cacheKey = `graphData-${advisor?._id}-${graphDegree}`;
       // 尝试从 localStorage 获取缓存的图表配置
-      const cachedData = localStorage.getItem(cacheKey);
+      // const cachedData = localStorage.getItem(cacheKey);
+      const cachedData = null;
 
       let data;
       if (cachedData) {
@@ -368,7 +371,7 @@ const GraphRender = ({
         // 如果没有缓存，则从服务器获取数据
         data = await advisorsReader(advisor?._id, graphDegree, advisor);
         // 将获取的数据存储到 localStorage
-        localStorage.setItem(cacheKey, JSON.stringify(data));
+        // localStorage.setItem(cacheKey, JSON.stringify(data));
       }
 
       const { nodes, links, minYear, maxYear } = data;
@@ -496,7 +499,6 @@ const GraphRender = ({
                 shadowBlur: 10, // 阴影的模糊大小
                 shadowColor: "rgba(0, 0, 0, 0.3)", // 阴影颜色
               },
-              scale: 2,
             },
             // 设置选中状态（如果需要）的样式
           },
@@ -602,7 +604,6 @@ const GraphRender = ({
   useEffect(() => {
     if (showAvatar) {
       if (nodesWithImg.length !== 0) {
-        console.log("with", nodesWithImg);
         setOption((prevOption) => ({
           ...prevOption,
           series: [
@@ -615,19 +616,18 @@ const GraphRender = ({
       }
     } else {
       if (nodesWOImg.length !== 0) {
-        console.log("WO", nodesWOImg);
         setOption((prevOption) => ({
           ...prevOption,
           series: [
             {
-              ...prevOption.series[0],
+              ...prevOption?.series[0],
               data: nodesWOImg,
             },
           ],
         }));
       }
     }
-  }, [showAvatar]);
+  }, [showAvatar, nodesWithImg]);
 
   return (
     <div

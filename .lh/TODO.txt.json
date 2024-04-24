@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 4,
+            "activePatchIndex": 5,
             "patches": [
                 {
                     "date": 1713804837751,
@@ -24,6 +24,10 @@
                 {
                     "date": 1713932013184,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,5 +11,7 @@\n 每次submit了connection之后要刷新\n \n 节点的颜色应该是合作的时候它的身份\n \n-链接的颜色可以是最后一次合作的时间\n\\ No newline at end of file\n+链接的颜色可以是最后一次合作的时间\n+\n+charts link 的链接逻辑还有问题，\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1713953527878,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,11 +1,9 @@\n echarts的节点选择以头像展示 完善echarts的configuration\n-echarts中节点大小公式\n 加入更多的datapoints\n 完善listview\n 增加整体可视化\n \n-去重检查还没做\n \n 添加更新信息的接口，而不是添加\n \n 每次submit了connection之后要刷新\n@@ -13,5 +11,4 @@\n 节点的颜色应该是合作的时候它的身份\n \n 链接的颜色可以是最后一次合作的时间\n \n-charts link 的链接逻辑还有问题，\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1713804837751,

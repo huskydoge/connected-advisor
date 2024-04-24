@@ -1,10 +1,8 @@
 echarts的节点选择以头像展示 完善echarts的configuration
-echarts中节点大小公式
 加入更多的datapoints
 完善listview
 增加整体可视化
 
-去重检查还没做
 
 添加更新信息的接口，而不是添加
 
@@ -14,4 +12,3 @@ echarts中节点大小公式
 
 链接的颜色可以是最后一次合作的时间
 
-charts link 的链接逻辑还有问题，
