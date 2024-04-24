@@ -71,78 +71,81 @@ const ConfigCard = ({
         <Typography variant="h6" gutterBottom sx={{ mt: 4, mb: 2 }}>
           Graph Configuration
         </Typography>
-        <Box
-          sx={{
-            display: "flex",
-            direction: "column",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Box>
-            <FormControl component="fieldset" sx={{ mb: 3 }}>
-              <FormLabel component="legend">Graph Degree</FormLabel>
-              <RadioGroup
-                value={graphDegree}
-                row
-                name="graph-degree"
-                onChange={handleDegreeChange}
-              >
-                <FormControlLabel value="1" control={<Radio />} label="1" />
-                <FormControlLabel value="2" control={<Radio />} label="2" />
-                <FormControlLabel value="3" control={<Radio />} label="3" />
-              </RadioGroup>
-            </FormControl>
-            <FormControl component="fieldset" sx={{ mb: 3 }}>
-              <FormLabel component="legend">Graph Color</FormLabel>
-              <ToggleButtonGroup
-                color="primary"
-                value={colorPattern}
-                exclusive
-                onChange={handleColorChange}
-                aria-label="Graph color pattern"
-              >
-                <ToggleButton value="pattern1">Pattern 1</ToggleButton>
-                <ToggleButton value="pattern2">Pattern 2</ToggleButton>
-                <ToggleButton value="pattern3">Pattern 3</ToggleButton>
-              </ToggleButtonGroup>
-            </FormControl>
-          </Box>
-          <Box>
-            <FormControl component="fieldset" sx={{ mb: 3 }}>
-              <FormLabel component="legend">Graph Type</FormLabel>
-              <RadioGroup
-                row
-                name="graph-type"
-                value={graphType}
-                onChange={handleGraphTypeChange}
-              >
-                <FormControlLabel
-                  value="undirected"
-                  control={<Radio />}
-                  label="Undirected"
-                />
-                <FormControlLabel
-                  value="directed"
-                  control={<Radio />}
-                  label="Directed"
-                />
-              </RadioGroup>
-            </FormControl>
-            <FormControl component="fieldset" sx={{ mb: 3 }}>
-              <FormGroup>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={showAvatars}
-                      onChange={handleAvatarDisplayChange}
-                    />
-                  }
-                  label="Display Avatars on Nodes"
-                />
-              </FormGroup>
-            </FormControl>
-          </Box>
+        <Box sx={{ width: "100%" }}>
+          <FormControl component="fieldset" sx={{ mb: 3, width: "100%" }}>
+            <FormLabel component="legend" sx={{ mb: 1 }}>
+              Graph Degree
+            </FormLabel>
+
+            <RadioGroup
+              value={graphDegree}
+              row
+              name="graph-degree"
+              onChange={handleDegreeChange}
+            >
+              <FormControlLabel value="1" control={<Radio />} label="1" />
+              <FormControlLabel value="2" control={<Radio />} label="2" />
+              <FormControlLabel value="3" control={<Radio />} label="3" />
+            </RadioGroup>
+          </FormControl>
+
+          <FormControl component="fieldset" sx={{ mb: 2, width: "100%" }}>
+            <FormLabel component="legend" sx={{ mb: 2 }}>
+              Graph Color
+            </FormLabel>
+            <ToggleButtonGroup
+              color="primary"
+              value={colorPattern}
+              exclusive
+              onChange={(e, newColor) =>
+                newColor !== null && setColorPattern(newColor)
+              }
+              fullWidth
+            >
+              <ToggleButton value="pattern1">Pattern 1</ToggleButton>
+              <ToggleButton value="pattern2">Pattern 2</ToggleButton>
+              <ToggleButton value="pattern3">Pattern 3</ToggleButton>
+            </ToggleButtonGroup>
+          </FormControl>
+
+          <FormControl component="fieldset" sx={{ mb: 3, width: "100%" }}>
+            <FormLabel component="legend" sx={{ mb: 1 }}>
+              Graph Type
+            </FormLabel>
+            <RadioGroup
+              row
+              name="graph-type"
+              value={graphType}
+              onChange={handleGraphTypeChange}
+            >
+              <FormControlLabel
+                value="undirected"
+                control={<Radio />}
+                label="Undirected"
+              />
+              <FormControlLabel
+                value="directed"
+                control={<Radio />}
+                label="Directed"
+              />
+            </RadioGroup>
+          </FormControl>
+          <FormControl component="fieldset" sx={{ mb: 3, width: "100%" }}>
+            <FormLabel component="legend" sx={{ mb: 1 }}>
+              Show Avatar
+            </FormLabel>
+            <FormGroup>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={showAvatars}
+                    onChange={handleAvatarDisplayChange}
+                  />
+                }
+                label="Display Avatars on Nodes"
+              />
+            </FormGroup>
+          </FormControl>
         </Box>
       </CardContent>
     </Box>

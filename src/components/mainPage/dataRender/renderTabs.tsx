@@ -1,19 +1,30 @@
+/*
+ * @Author: huskydoge hbh001098hbh@sjtu.edu.cn
+ * @Date: 2024-02-21 15:05:00
+ * @LastEditors: huskydoge hbh001098hbh@sjtu.edu.cn
+ * @LastEditTime: 2024-04-24 19:43:42
+ * @FilePath: /connected-advisor/src/components/mainPage/dataRender/renderTabs.tsx
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 import React from "react";
 import { Toolbar, Button, Typography, Box } from "@mui/material";
+import { Advisor } from "@/components/interface";
 
 //@ts-ignore
 const RenderTabs = ({
-  onFilter,
+  onStatistics,
   onUpload,
   onListView,
   onGraphMode,
   selected,
+  mainAdvisor,
 }: {
-  onFilter: () => void;
+  onStatistics: () => void;
   onUpload: () => void;
   onListView: () => void;
   onGraphMode: () => void;
   selected: string;
+  mainAdvisor: Advisor;
 }) => {
   return (
     <Toolbar
@@ -26,7 +37,7 @@ const RenderTabs = ({
       }}
     >
       <Typography variant="h6" component="div">
-        Render Tab
+        {mainAdvisor.name}
       </Typography>
       <Box sx={{ display: "flex", gap: 5 }}>
         <Button
@@ -41,15 +52,15 @@ const RenderTabs = ({
           Upload
         </Button>
         <Button
-          onClick={onFilter}
+          onClick={onStatistics}
           color="inherit"
           sx={{
             textTransform: "none",
-            backgroundColor: selected === "filter" ? "#e0e0e0" : "inherit",
+            backgroundColor: selected === "Statistics" ? "#e0e0e0" : "inherit",
             fontSize: "1rem",
           }}
         >
-          Filter
+          Statistics
         </Button>
         <Button
           onClick={onListView}

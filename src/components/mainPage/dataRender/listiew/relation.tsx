@@ -8,15 +8,20 @@ import {
   Box,
   Tooltip,
   IconButton,
+  Card,
+  CardContent,
+  Divider,
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import GroupIcon from "@mui/icons-material/Group"; // 角色图标
+import BookIcon from "@mui/icons-material/Book"; // 合作图标
 
 // @ts-ignore
 const RelationComponent = ({ main, second, onBack }) => {
   console.log("main", main);
   console.log("second", second);
   const connection = main.connections.find(
-    (conn: any) => conn._id === second._id || conn._id === second._id
+    (conn: any) => conn._id === second._id
   );
 
   if (!connection) {
@@ -33,58 +38,95 @@ const RelationComponent = ({ main, second, onBack }) => {
   }
 
   return (
-    <Paper elevation={1} sx={{ p: 2, position: "relative" }}>
+    <Paper
+      elevation={3}
+      sx={{ p: 2, position: "relative", margin: "auto", width: "100%" }}
+    >
       <Typography
         variant="h4"
         gutterBottom
         component="div"
-        sx={{ textAlign: "center" }}
+        sx={{ textAlign: "center", fontWeight: "bold" }}
       >
-        Relations
+        Relationship Details
       </Typography>
+      <Divider sx={{ mb: 2 }} />
       <List>
         {connection.relations.map((rel: any, index: number) => (
-          <ListItem
-            key={index}
-            sx={{ display: "flex", justifyContent: "space-between" }}
-          >
-            <Box>
-              <Typography variant="body1">
-                {main.name} is {rel.role} of {second.name} during/in {rel.type},
-              </Typography>
-            </Box>
-            <Typography variant="h6">
-              {rel.duration.start} to {rel.duration.end}
-            </Typography>
-          </ListItem>
+          <Card key={index} variant="outlined" sx={{ mb: 2 }}>
+            <CardContent>
+              <ListItem
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                  <GroupIcon sx={{ mr: 1, color: "primary.main" }} />
+                  <Typography variant="body1">
+                    <strong>{main.name}</strong> is the{" "}
+                    <strong style={{ color: "#3f51b5" }}>{rel.role}</strong> of{" "}
+                    <strong>{second.name}</strong> in his/her/its/{" "}
+                    <strong style={{ fontWeight: "bold", color: "#ff5722" }}>
+                      {rel.type}
+                    </strong>
+                    ,
+                  </Typography>
+                </Box>
+
+                <Typography variant="h6">
+                  {rel.duration.start} to {rel.duration.end}
+                </Typography>
+              </ListItem>
+            </CardContent>
+          </Card>
         ))}
       </List>
       <Typography
         variant="h4"
         gutterBottom
         component="div"
-        sx={{ textAlign: "center" }}
+        sx={{ textAlign: "center", fontWeight: "bold" }}
       >
-        Collaborations
+        Collaborative Works
       </Typography>
+      <Divider sx={{ mb: 2 }} />
       <List>
         {connection.collaborations.map((collab: any, index: number) => (
-          <ListItem key={index}>
-            <Link
-              href={collab.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              underline="hover"
-            >
-              <Typography variant="body1">
-                {collab.papername}, published in {collab.year}.
-              </Typography>
-            </Link>
-          </ListItem>
+          <Card key={index} variant="outlined" sx={{ mb: 2, boxShadow: 1 }}>
+            <CardContent>
+              <ListItem>
+                <Link
+                  href={collab.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  underline="hover"
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    width: "100%",
+                  }}
+                >
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <BookIcon sx={{ mr: 1, color: "secondary.main" }} />
+                    <Typography variant="body1" sx={{ fontWeight: "bold" }}>
+                      {collab.papername}
+                    </Typography>
+                  </Box>
+                  <Typography variant="body1" sx={{ color: "text.secondary" }}>
+                    published in {collab.year}
+                  </Typography>
+                </Link>
+              </ListItem>
+            </CardContent>
+          </Card>
         ))}
       </List>
+
       <Box sx={{ position: "absolute", right: 8, bottom: 8 }}>
-        <Tooltip title="return to list view">
+        <Tooltip title="Return to previous view" arrow>
           <IconButton onClick={onBack} color="primary">
             <ArrowBackIcon />
           </IconButton>

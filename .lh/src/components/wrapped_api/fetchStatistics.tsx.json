@@ -1,0 +1,22 @@
+{
+    "sourceFile": "src/components/wrapped_api/fetchStatistics.tsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1713961652222,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1713961663304,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,16 +16,7 @@\n   // console.log(\"Search paper by id:\", data);\n   return data;\n };\n \n-const fetchPaperByLst = async (id_lst) => {\n-  const response = await fetch(\"/api/searchPaperByList\", {\n-    method: \"POST\",\n-    headers: { \"Content-Type\": \"application/json\" },\n-    body: JSON.stringify({ ids: id_lst }),\n-  });\n-  const data = await response.json();\n-  // console.log(\"Search paper by id:\", data);\n-  return data;\n-};\n \n-export { fetchPaperById, fetchPaperByLst };\n+\n+export { fetchStatistics}\n"
+                }
+            ],
+            "date": 1713961652221,
+            "name": "Commit-0",
+            "content": "\nconst fetchStatistics = async (id: string) => {\n    const response = await fetch(\"/api/getStatistic\", {\n      method: \"POST\",\n      headers: { \"Content-Type\": \"application/json\" },\n      body: JSON.stringify({ }),\n    });\n    const data = await response.json();\n    // console.log(\"Search paper by id:\", data);\n    return data;\n  };\n  \n  const fetchPaperByLst = async (id_lst) => {\n    const response = await fetch(\"/api/searchPaperByList\", {\n      method: \"POST\",\n      headers: { \"Content-Type\": \"application/json\" },\n      body: JSON.stringify({ ids: id_lst }),\n    });\n    const data = await response.json();\n    // console.log(\"Search paper by id:\", data);\n    return data;\n  };\n  \n  export { fetchPaperById, fetchPaperByLst };\n  "
+        }
+    ]
+}

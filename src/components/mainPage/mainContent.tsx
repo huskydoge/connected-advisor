@@ -6,7 +6,9 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 import advisorsData from "../../data/advisors.json"; // 假设你的数据文件路径
 // 动态导入组件，实现懒加载
-const FilterCard = dynamic(() => import("./filterCard"), { ssr: false });
+const StatisticsCard = dynamic(() => import("./statisticCard"), {
+  ssr: false,
+});
 const ConfigCard = dynamic(() => import("./configCard"), { ssr: false });
 const UploadCard = dynamic(() => import("./uploadCard"), { ssr: false });
 const AdvisorCard = dynamic(() => import("./advisorCard"), { ssr: false });
@@ -83,18 +85,18 @@ function MainContent({ id }: { id: string }) {
       setSelectedTab("");
       return;
     }
-    setShowCard("uploadCard"); // 显示FilterCard
-    setSelectedTab("upload"); // Set filter as selected
+    setShowCard("uploadCard"); //
+    setSelectedTab("upload"); //
   };
 
-  const handleFilterClick = () => {
-    if (showCard === "filterCard") {
+  const handleStatisticClick = () => {
+    if (showCard === "statisticsCard") {
       setShowCard("advisorCard");
       setSelectedTab("");
       return;
     }
-    setShowCard("filterCard"); // 显示FilterCard
-    setSelectedTab("filter"); // Set filter as selected
+    setShowCard("statisticsCard"); //
+    setSelectedTab("statistic"); // Set statistic as selected
   };
 
   const handleGraphMode = () => {
@@ -171,8 +173,8 @@ function MainContent({ id }: { id: string }) {
             config={config}
           />
         ); // 假设GraphCard接受data作为prop
-      case "filterCard":
-        return <FilterCard onClose={closeCard} />;
+      case "statisticsCard":
+        return <StatisticsCard onClose={closeCard} />;
       case "uploadCard":
         return <UploadCard onClose={closeCard} />;
       default:
@@ -223,10 +225,11 @@ function MainContent({ id }: { id: string }) {
       >
         <RenderTabs
           onUpload={handleUploadClick}
-          onFilter={handleFilterClick}
+          onStatistics={handleStatisticClick}
           onGraphMode={handleGraphMode}
           onListView={handleListView}
           selected={selectedTab}
+          mainAdvisor={advisorInfo}
         />
         <Paper
           style={{

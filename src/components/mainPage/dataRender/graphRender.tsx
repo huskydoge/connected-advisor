@@ -411,7 +411,7 @@ const GraphRender = ({
         console.log("get data");
         data = await advisorsReader(advisor?._id, graphDegree, advisor);
         // 将获取的数据存储到 localStorage
-        // localStorage.setItem(cacheKey, JSON.stringify(data));
+        localStorage.setItem(cacheKey, JSON.stringify(data));
       }
 
       const { nodes, links, minYear, maxYear } = data;

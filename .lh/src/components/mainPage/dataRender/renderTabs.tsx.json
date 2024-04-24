@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 35,
+            "activePatchIndex": 38,
             "patches": [
                 {
                     "date": 1708501683876,
@@ -148,6 +148,18 @@
                 {
                     "date": 1713791643491,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -70,9 +70,9 @@\n             backgroundColor: selected === \"graphmode\" ? \"#e0e0e0\" : \"inherit\",\n             fontSize: \"1rem\",\n           }}\n         >\n-          Graph Mode\n+          Configuration\n         </Button>\n       </Box>\n     </Toolbar>\n   );\n"
+                },
+                {
+                    "date": 1713958436729,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,8 +7,9 @@\n   onUpload,\n   onListView,\n   onGraphMode,\n   selected,\n+  mainAdvisor,\n }: {\n   onFilter: () => void;\n   onUpload: () => void;\n   onListView: () => void;\n@@ -25,9 +26,9 @@\n           \"0px 2px 3px -2px rgba(0,0,0,0.12), 0px -2px 6px -2px rgba(0,0,0,0.11)\", // 上下阴影\n       }}\n     >\n       <Typography variant=\"h6\" component=\"div\">\n-        Render Tab\n+        {mainAdvisor.name}\n       </Typography>\n       <Box sx={{ display: \"flex\", gap: 5 }}>\n         <Button\n           onClick={onUpload}\n"
+                },
+                {
+                    "date": 1713958472974,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,8 +7,9 @@\n  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE\n  */\n import React from \"react\";\n import { Toolbar, Button, Typography, Box } from \"@mui/material\";\n+import { Advisor } from \"@/components/interface\";\n \n //@ts-ignore\n const RenderTabs = ({\n   onFilter,\n@@ -22,8 +23,9 @@\n   onUpload: () => void;\n   onListView: () => void;\n   onGraphMode: () => void;\n   selected: string;\n+  mainAdvisor: Advisor\n }) => {\n   return (\n     <Toolbar\n       sx={{\n"
+                },
+                {
+                    "date": 1713959022288,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n /*\n  * @Author: huskydoge hbh001098hbh@sjtu.edu.cn\n  * @Date: 2024-02-21 15:05:00\n  * @LastEditors: huskydoge hbh001098hbh@sjtu.edu.cn\n- * @LastEditTime: 2024-04-24 19:33:57\n+ * @LastEditTime: 2024-04-24 19:43:42\n  * @FilePath: /connected-advisor/src/components/mainPage/dataRender/renderTabs.tsx\n  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE\n  */\n import React from \"react\";\n@@ -11,16 +11,16 @@\n import { Advisor } from \"@/components/interface\";\n \n //@ts-ignore\n const RenderTabs = ({\n-  onFilter,\n+  onStatistics,\n   onUpload,\n   onListView,\n   onGraphMode,\n   selected,\n   mainAdvisor,\n }: {\n-  onFilter: () => void;\n+  onStatistics: () => void;\n   onUpload: () => void;\n   onListView: () => void;\n   onGraphMode: () => void;\n   selected: string;\n@@ -51,17 +51,17 @@\n         >\n           Upload\n         </Button>\n         <Button\n-          onClick={onFilter}\n+          onClick={onStatistics}\n           color=\"inherit\"\n           sx={{\n             textTransform: \"none\",\n-            backgroundColor: selected === \"filter\" ? \"#e0e0e0\" : \"inherit\",\n+            backgroundColor: selected === \"Statistics\" ? \"#e0e0e0\" : \"inherit\",\n             fontSize: \"1rem\",\n           }}\n         >\n-          Filter\n+          Statistics\n         </Button>\n         <Button\n           onClick={onListView}\n           color=\"inherit\"\n"
                 }
             ],
             "date": 1708501683876,
