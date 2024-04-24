@@ -228,25 +228,33 @@ const ListView = ({
         </Toolbar>
       </AppBar>
       <div style={{ marginTop: 20 }}>
-        {filterAdvisors()?.length > 0 ? (
-          <TableView
-            advisors={filterAdvisors()}
-            onClickConnection={(advisorId) => {
-              const advisor = advisors.find(
-                (advisor) => advisor?._id === advisorId
-              );
-              setSelectedAdvisor(advisor || null);
-              setShowTableView(false);
-            }}
-          />
+        {showTableView ? (
+          filterAdvisors().length > 0 ? (
+            <TableView
+              advisors={filterAdvisors()}
+              onClickConnection={(advisorId) => {
+                const advisor = advisors.find(
+                  (advisor) => advisor._id === advisorId
+                );
+                setSelectedAdvisor(advisor || null);
+                setShowTableView(false);
+              }}
+            />
+          ) : (
+            <Card>
+              <CardContent>
+                <Typography variant="h6" align="center">
+                  No results
+                </Typography>
+              </CardContent>
+            </Card>
+          )
         ) : (
-          <Card>
-            <CardContent>
-              <Typography variant="h6" align="center">
-                No results
-              </Typography>
-            </CardContent>
-          </Card>
+          <RelationComponent
+            main={mainAdvisor}
+            second={selectedAdvisor}
+            onBack={returnToListView}
+          />
         )}
       </div>
     </Paper>
