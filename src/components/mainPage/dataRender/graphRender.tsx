@@ -113,16 +113,33 @@ const fetchAdvisorDetailsBatch = async (connectionIds) => {
   return Promise.all(fetchPromises);
 };
 
-const advisorsReader = async (_id, graphDegree, advisor) => {
-  let nodes = [];
-  let links = [];
-  let nodeQueue = [advisor];
-  let nodesSet = new Set();
-  let linkSet = new Set();
-  let minYear = new Date().getFullYear();
+const advisorsReader = async (
+  _id: string,
+  graphDegree: number,
+  advisor: any
+) => {
+  let nodes: any[] = [];
+  let links: any[] = [];
+  let nodeQueue: AdvisorDetails[] = [];
+  let nodeQueueBackUp: AdvisorDetails[] = [];
+  let nodesSet = new Set<string>();
+  let linkSet = new Set<string>(); // 其实是冗余的，暂时先不管
+  currentMain = _id; // 更新主要advisor的ID
+  let minYear = new Date().getFullYear(); // 初始化为当前年份
   let maxYear = 0;
+  if (!graphDegree || graphDegree < 1) {
+    graphDegree = 1;
+  }
+  const currentYear = new Date().getFullYear();
+
+  const maxRelationFactor = 100;
+
+  const minRelationFactor = 0;
 
   const mainAdvisor = advisor;
+
+  // @ts-ignore
+  nodeQueue.push(mainAdvisor);
 
   const addNode = (
     nodes: any[],
@@ -150,6 +167,7 @@ const advisorsReader = async (_id, graphDegree, advisor) => {
         id: String(advisor?._id),
         symbolSize: symbolSize,
         latestCollaboration: latestCollaboration,
+        symbol: "circle", //`image://${advisor.picture}`, // Add this line
         ...advisor,
         draggable: true,
       });
@@ -165,7 +183,10 @@ const advisorsReader = async (_id, graphDegree, advisor) => {
     connection: any,
     relationFactor: number
   ) {
-    const width = 1;
+    const width =
+      1 +
+      (4 * (relationFactor - minRelationFactor)) /
+        (maxRelationFactor - minRelationFactor);
 
     const formatter = `Relation factor: ${relationFactor}<br/>${connection.relations
       ?.map(
@@ -207,17 +228,32 @@ const advisorsReader = async (_id, graphDegree, advisor) => {
     return links;
   }
 
-  while (nodeQueue.length > 0 && graphDegree > 0) {
-    const nextQueue = [];
-    for (const currentAdvisor of nodeQueue) {
-      if (nodesSet.has(currentAdvisor._id)) continue; // Avoid re-adding already processed nodes
+  // MAIN LOOP
 
-      const latestCollaboration = currentAdvisor.connections?.reduce(
-        (max, conn) => Math.max(max, get_latest_collaboration(conn)),
-        new Date().getFullYear()
+  while (
+    (nodeQueue.length > 0 || nodeQueueBackUp.length > 0) &&
+    graphDegree > 0
+  ) {
+    const currentAdvisor = nodeQueue.shift();
+
+    // get all connected id of currentAdvisor
+    if (currentAdvisor) {
+      nodes = addNode(
+        nodes,
+        currentAdvisor,
+        200,
+        currentAdvisor?.connections?.reduce(
+          (max, conn) => Math.max(max, get_latest_collaboration(conn)),
+          0
+        )
+          ? currentAdvisor?.connections.reduce(
+              (max, conn) => Math.max(max, get_latest_collaboration(conn)),
+              0
+            )
+          : currentYear
       );
-      nodes = addNode(nodes, currentAdvisor, 200, latestCollaboration);
-      nodesSet.add(currentAdvisor._id);
+
+      // get all connected advisors using fetchAdvisorDetails into a list
 
       if (currentAdvisor.connections?.length) {
         const connectionIds = currentAdvisor.connections.map(
@@ -257,17 +293,20 @@ const advisorsReader = async (_id, graphDegree, advisor) => {
               connection,
               relationFactor
             );
-            nextQueue.push(connectedAdvisor);
+            nodeQueueBackUp.push(connectedAdvisor);
           }
         });
       }
-    }
 
-    nodeQueue = nextQueue;
-    graphDegree--;
+      if (nodeQueue.length === 0) {
+        nodeQueue = nodeQueueBackUp;
+        nodeQueueBackUp = [];
+        graphDegree--;
+      }
+    }
   }
 
-  return { nodes, links, minYear, maxYear };
+  return { nodes, links, minYear, maxYear, _id };
 };
 
 const getCircularImage = async (imageUrl: string, diameter: number) => {
@@ -361,14 +400,15 @@ const GraphRender = ({
       // 构造用于缓存的键
       const cacheKey = `graphData-${advisor?._id}-${graphDegree}`;
       // 尝试从 localStorage 获取缓存的图表配置
-      // const cachedData = localStorage.getItem(cacheKey);
-      const cachedData = null;
+      const cachedData = localStorage.getItem(cacheKey);
+      // const cachedData = null;
 
       let data;
       if (cachedData) {
         data = JSON.parse(cachedData);
       } else {
         // 如果没有缓存，则从服务器获取数据
+        console.log("get data");
         data = await advisorsReader(advisor?._id, graphDegree, advisor);
         // 将获取的数据存储到 localStorage
         // localStorage.setItem(cacheKey, JSON.stringify(data));
