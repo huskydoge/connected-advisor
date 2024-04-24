@@ -24,23 +24,14 @@ import { error } from "console";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import rehypeSanitize from "rehype-sanitize";
+import { availableTags } from "@/components/const";
 
 // @ts-ignore
 const BasicInfo = ({ formData, setFormData }) => {
   const [inputValue, setInputValue] = useState("");
   const inputValueRef = useRef(""); // 用于跟踪最新的输入值
   const [errors, setErrors] = useState({});
-  const availableTags = [
-    "CV",
-    "NLP",
-    "Robotics",
-    "ML",
-    "Theory",
-    "LLM",
-    "Explainable AI",
-    "Safety",
-    "Embodied AI",
-  ];
+
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const handleAddTag = () => {

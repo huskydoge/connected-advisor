@@ -2,7 +2,7 @@
  * @Author: huskydoge hbh001098hbh@sjtu.edu.cn
  * @Date: 2024-04-24 19:47:21
  * @LastEditors: huskydoge hbh001098hbh@sjtu.edu.cn
- * @LastEditTime: 2024-04-24 20:25:40
+ * @LastEditTime: 2024-04-24 22:02:32
  * @FilePath: /connected-advisor/src/pages/api/getStatistic.tsx
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -69,8 +69,8 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.method !== "GET") {
-    res.setHeader("Allow", ["GET"]);
+  if (req.method !== "POST") {
+    res.setHeader("Allow", ["POST"]);
     res.status(405).end(`Method ${req.method} Not Allowed`);
     return;
   }

@@ -1,14 +1,11 @@
 
 加入更多的datapoints
-完善listview
-增加整体可视化
-
-
-添加更新信息的接口，而不是添加
 
 每次submit了connection之后要刷新
 
 节点的颜色应该是合作的时候它的身份
 
 链接的颜色可以是最后一次合作的时间
+
+排序sort还没做，按照influence Factor / relationFactor
 

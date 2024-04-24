@@ -107,3 +107,9 @@ export interface Paper {
   abstract: string;
   authors: string[];
 }
+
+export interface StatisticsData {
+  affiliationCounts: object;
+  positionCounts: object;
+  tagCounts: object;
+}

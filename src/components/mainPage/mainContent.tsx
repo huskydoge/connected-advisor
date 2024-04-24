@@ -174,7 +174,7 @@ function MainContent({ id }: { id: string }) {
           />
         ); // 假设GraphCard接受data作为prop
       case "statisticsCard":
-        return <StatisticsCard onClose={closeCard} />;
+        return <StatisticsCard onClose={closeCard} split={splitPercentage} />;
       case "uploadCard":
         return <UploadCard onClose={closeCard} />;
       default:
