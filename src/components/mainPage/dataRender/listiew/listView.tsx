@@ -229,7 +229,7 @@ const ListView = ({
       </AppBar>
       <div style={{ marginTop: 20 }}>
         {showTableView ? (
-          filterAdvisors().length > 0 ? (
+          filterAdvisors()?.length > 0 ? (
             <TableView
               advisors={filterAdvisors()}
               onClickConnection={(advisorId) => {
