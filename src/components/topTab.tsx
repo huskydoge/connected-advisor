@@ -144,7 +144,9 @@ function TopMenu() {
                     }}
                     onClick={() => handleClick(result._id)} // 点击时触发handleClick函数
                   >
-                    <ListItemText primary={result.name} />
+                    <ListItemText
+                      primary={`${result.name}-${result.affiliation}-${result.position}`}
+                    />
                   </ListItem>
                 ))}
                 <ListItem
