@@ -2,7 +2,7 @@
  * @Author: huskydoge hbh001098hbh@sjtu.edu.cn
  * @Date: 2024-02-21 15:59:56
  * @LastEditors: huskydoge hbh001098hbh@sjtu.edu.cn
- * @LastEditTime: 2024-04-25 22:57:21
+ * @LastEditTime: 2024-04-25 23:08:31
  * @FilePath: /connected-advisor/src/components/mainPage/statisticCard.tsx
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -142,8 +142,8 @@ const StatisticCard = ({ onClose, split }) => {
       // 构造用于缓存的键
       const cacheKey = `statistics`;
       // 尝试从 localStorage 获取缓存的图表配置
-      // const cachedData = localStorage.getItem(cacheKey);
-      const cachedData = null; // 由于数据可能会更新，所以暂时不使用缓存
+      const cachedData = localStorage.getItem(cacheKey);
+      // const cachedData = null; // 由于数据可能会更新，所以暂时不使用缓存
 
       let data;
       if (cachedData) {
