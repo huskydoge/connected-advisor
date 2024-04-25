@@ -522,7 +522,7 @@ const GraphRender = ({
               formatter: "{b}", // 使用节点的name作为标签文本
             },
             force: {
-              repulsion: 10000,
+              repulsion: 1000,
               edgeLength: 500,
             },
             lineStyle: {
@@ -630,6 +630,15 @@ const GraphRender = ({
 
   useEffect(() => {
     if (myChart) {
+      setOption((prevOption) => ({
+        ...prevOption,
+        series: [
+          {
+            edgeSymbol:
+              graphType === "directed" ? ["none", "arrow"] : ["none", "none"],
+          },
+        ],
+      }));
       myChart.setOption({
         series: [
           {
@@ -648,6 +657,8 @@ const GraphRender = ({
           ...prevOption,
           series: [
             {
+              edgeSymbol:
+                graphType === "directed" ? ["none", "arrow"] : ["none", "none"],
               ...prevOption.series[0],
               data: nodesWithImg,
             },
@@ -660,6 +671,8 @@ const GraphRender = ({
           ...prevOption,
           series: [
             {
+              edgeSymbol:
+                graphType === "directed" ? ["none", "arrow"] : ["none", "none"],
               ...prevOption?.series[0],
               data: nodesWOImg,
             },
