@@ -53,8 +53,15 @@ const ConnectionInfo = () => {
   const [authorSearchResult, setAuthorSearchResult] = useState([]);
   const [existingRelations, setExistingRelations] = useState<Relation[]>([]);
   const [existingConnection, setExistingConnection] = useState<Relation>();
-  const [existingPapers, setExistingPapers] = useState<Paper>();
+  const [existingPapers, setExistingPapers] = useState<Array<Paper>>([]);
   const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [newPaper, setNewPaper] = useState({
+    name: "",
+    year: "",
+    url: "",
+    abstract: "",
+    authors: [],
+  });
 
   const fetchPaperDetails = async (searchText: string) => {
     if (!searchText.trim()) return;
@@ -114,6 +121,7 @@ const ConnectionInfo = () => {
       return;
     } else {
       conn = conn[0];
+      console.log("Connection found", conn);
       let existing_papers = await fetchPaperByLst(conn["collaborate-papers"]);
       console.log("existing papers", existing_papers);
       console.log("rels", rels);
@@ -205,13 +213,15 @@ const ConnectionInfo = () => {
     process_paper["authors"] = newPaper.authors.map(
       (author: Advisor) => author._id
     );
+
+    console.log(process_paper);
     try {
       const response = await fetch("/api/addPaper", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(newPaper),
+        body: JSON.stringify(process_paper),
       });
 
       if (!response.ok) {
@@ -452,11 +462,11 @@ const ConnectionInfo = () => {
         type: relation.type,
         "id-1": selectedNameOne._id,
         "id-2": selectedNameTwo._id,
-        "role-1": relation.role1,
-        "role-2": relation.role2,
+        "role-1": relation["role-1"],
+        "role-2": relation["role-2"],
         duration: {
-          start: relation.start,
-          end: relation.end,
+          start: relation.duration.start,
+          end: relation.duration.end,
         },
       };
     });

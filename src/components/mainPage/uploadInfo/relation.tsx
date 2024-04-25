@@ -139,7 +139,7 @@ const RelationProcesser = ({ relations, setRelations, existingRelations }) => {
     setNewRelation({
       ...newRelation,
       "role-1": role1,
-      "role-2": roleMapping[role1] || "",
+      "role-2": roleMapping[role1],
     });
   };
 
