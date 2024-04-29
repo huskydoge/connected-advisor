@@ -9,4 +9,4 @@
 
 排序sort还没做，按照influence Factor / relationFactor
 
-图像跨域问题还没解决
+图像的configuration里要加入repulse

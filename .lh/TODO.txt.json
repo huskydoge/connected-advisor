@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 9,
+            "activePatchIndex": 10,
             "patches": [
                 {
                     "date": 1713804837751,
@@ -44,6 +44,10 @@
                 {
                     "date": 1714063771459,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,4 +8,5 @@\n 链接的颜色可以是最后一次合作的时间\n \n 排序sort还没做，按照influence Factor / relationFactor\n \n+图像跨域问题还没解决\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1714365016995,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,12 @@\n+\n+加入更多的datapoints\n+\n+每次submit了connection之后要刷新\n+\n+节点的颜色应该是合作的时候它的身份\n+\n+链接的颜色可以是最后一次合作的时间\n+\n+排序sort还没做，按照influence Factor / relationFactor\n+\n+图像的configuration里要加入repulse\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1713804837751,

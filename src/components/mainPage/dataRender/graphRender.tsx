@@ -312,28 +312,24 @@ const advisorsReader = async (
 const getCircularImage = async (imageUrl: string, diameter: number) => {
   return new Promise<string>((resolve, reject) => {
     const img = new Image();
-    img.crossOrigin = "Anonymous"; // 确保处理跨域图像
+    img.crossOrigin = "Anonymous";
     img.onload = () => {
       const canvas = document.createElement("canvas");
       canvas.width = diameter;
       canvas.height = diameter;
       const ctx = canvas.getContext("2d");
-
       if (ctx) {
-        // 绘制圆形裁剪区域
         ctx.beginPath();
         ctx.arc(diameter / 2, diameter / 2, diameter / 2, 0, Math.PI * 2, true);
         ctx.closePath();
         ctx.clip();
-
-        // 绘制图像到画布上
         ctx.drawImage(img, 0, 0, diameter, diameter);
-
         resolve(canvas.toDataURL());
       }
     };
     img.onerror = reject;
-    img.src = imageUrl;
+    // 更新 imageUrl 为 API 代理的 URL
+    img.src = `/api/image?imageUrl=${encodeURIComponent(imageUrl)}`;
   });
 };
 
@@ -400,8 +396,8 @@ const GraphRender = ({
       // 构造用于缓存的键
       const cacheKey = `graphData-${advisor?._id}-${graphDegree}`;
       // 尝试从 localStorage 获取缓存的图表配置
-      // const cachedData = localStorage.getItem(cacheKey);
-      const cachedData = null; // 数据可能会更新
+      const cachedData = localStorage.getItem(cacheKey);
+      // const cachedData = null; // 数据可能会更新
 
       let data;
       if (cachedData) {
@@ -411,7 +407,7 @@ const GraphRender = ({
         console.log("get data");
         data = await advisorsReader(advisor?._id, graphDegree, advisor);
         // 将获取的数据存储到 localStorage
-        // localStorage.setItem(cacheKey, JSON.stringify(data));
+        localStorage.setItem(cacheKey, JSON.stringify(data));
       }
 
       const { nodes, links, minYear, maxYear } = data;
