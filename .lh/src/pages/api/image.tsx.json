@@ -3,11 +3,15 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 1,
             "patches": [
                 {
                     "date": 1714364697776,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1714385075531,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,15 +1,14 @@\n-// pages/api/image.js\n+// pages/api/image.tsx\n \n export default async function handler(req, res) {\n-    const { imageUrl } = req.query;\n-    try {\n-      const imageResponse = await fetch(imageUrl);\n-      const imageBuffer = await imageResponse.arrayBuffer();\n-      res.setHeader('Content-Type', 'image/jpeg'); // 根据实际内容类型设置\n-      res.setHeader('Access-Control-Allow-Origin', '*'); // 或者指定具体的域名\n-      res.send(Buffer.from(imageBuffer));\n-    } catch (error) {\n-      res.status(500).json({ message: 'Failed to fetch image' });\n-    }\n+  const { imageUrl } = req.query;\n\\ No newline at end of file\n+  try {\n+    const imageResponse = await fetch(imageUrl);\n+    const imageBuffer = await imageResponse.arrayBuffer();\n+    res.setHeader(\"Content-Type\", \"image/jpeg\"); // 根据实际内容类型设置\n+    res.setHeader(\"Access-Control-Allow-Origin\", \"*\"); // 或者指定具体的域名\n+    res.send(Buffer.from(imageBuffer));\n+  } catch (error) {\n+    res.status(500).json({ message: \"Failed to fetch image\" });\n   }\n-  \n+}\n"
                 }
             ],
             "date": 1714364697776,
