@@ -4,7 +4,10 @@ import { AppProps } from "next/app";
 import "../styles/globals.css"; // 全局样式
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import TopMenu from "@/components/topTab";
+import "@/styles/globals.css";
+import "@/styles/tailwind.css";
+
+import { ToastProvider } from "@apideck/components";
 
 const theme = createTheme({
   palette: {
@@ -33,11 +36,11 @@ const theme = createTheme({
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <TopMenu />
-      <Component {...pageProps} />
-    </ThemeProvider>
+    <ToastProvider>
+      <ThemeProvider theme={theme}>
+        <Component {...pageProps} />
+      </ThemeProvider>
+    </ToastProvider>
   );
 }
 

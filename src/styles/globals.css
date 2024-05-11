@@ -116,3 +116,55 @@ a {
   color: blue; /* 设置链接颜色为蓝色 */
   text-decoration: underline; /* 下划线 */
 }
+/* MessagesList.css */
+.message-container {
+  max-width: 768px;
+  margin: auto;
+  padding-top: 32px;
+}
+
+.message-item {
+  margin-bottom: 16px;
+  display: flex;
+}
+
+.message-avatar {
+  height: 36px;
+  width: 36px;
+  border-radius: 50%;
+}
+
+.message-content {
+  border-radius: 12px;
+  padding: 6px 12px;
+  position: relative;
+}
+
+.user-message {
+  background-image: linear-gradient(to bottom right, #007bff, #0056b3);
+  color: white;
+  margin-right: 8px;
+}
+
+.ai-message {
+  background-color: #e2e8f0;
+  color: #2d3748;
+  margin-left: 8px;
+}
+
+.loader {
+  margin-left: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  border-radius: 9999px;
+  background-color: #e2e8f0;
+}
+
+.loader-dot {
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+  background-color: #4a5568;
+}

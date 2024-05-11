@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 11,
+            "activePatchIndex": 13,
             "patches": [
                 {
                     "date": 1708268270508,
@@ -52,6 +52,14 @@
                 {
                     "date": 1713891643890,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -110,4 +110,10 @@\n   html {\n     color-scheme: dark;\n   }\n }\n+\n+\n+.markdown-preview a {\n+  color: blue;         /* 设置链接颜色为蓝色 */\n+  text-decoration: underline; /* 下划线 */\n+}\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1715437019164,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -115,4 +115,18 @@\n .markdown-preview a {\n   color: blue; /* 设置链接颜色为蓝色 */\n   text-decoration: underline; /* 下划线 */\n }\n+\n+\n+.loader span {\n+  animation-name: bounce;\n+  animation-duration: 1.5s;\n+  animation-iteration-count: infinite;\n+  animation-timing-function: ease-in-out;\n+}\n+.loader span:nth-child(2) {\n+  animation-delay: 50ms;\n+}\n+.loader span:nth-child(3) {\n+  animation-delay: 150ms;\n+}\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1715440487152,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -115,17 +115,56 @@\n .markdown-preview a {\n   color: blue; /* 设置链接颜色为蓝色 */\n   text-decoration: underline; /* 下划线 */\n }\n+/* MessagesList.css */\n+.message-container {\n+  max-width: 768px;\n+  margin: auto;\n+  padding-top: 32px;\n+}\n \n-.loader span {\n-  animation-name: bounce;\n-  animation-duration: 1.5s;\n-  animation-iteration-count: infinite;\n-  animation-timing-function: ease-in-out;\n+.message-item {\n+  margin-bottom: 16px;\n+  display: flex;\n }\n-.loader span:nth-child(2) {\n-  animation-delay: 50ms;\n+\n+.message-avatar {\n+  height: 36px;\n+  width: 36px;\n+  border-radius: 50%;\n }\n-.loader span:nth-child(3) {\n-  animation-delay: 150ms;\n+\n+.message-content {\n+  border-radius: 12px;\n+  padding: 6px 12px;\n+  position: relative;\n }\n+\n+.user-message {\n+  background-image: linear-gradient(to bottom right, #007bff, #0056b3);\n+  color: white;\n+  margin-right: 8px;\n+}\n+\n+.ai-message {\n+  background-color: #e2e8f0;\n+  color: #2d3748;\n+  margin-left: 8px;\n+}\n+\n+.loader {\n+  margin-left: 8px;\n+  display: flex;\n+  align-items: center;\n+  justify-content: space-between;\n+  padding: 10px;\n+  border-radius: 9999px;\n+  background-color: #e2e8f0;\n+}\n+\n+.loader-dot {\n+  height: 12px;\n+  width: 12px;\n+  border-radius: 50%;\n+  background-color: #4a5568;\n+}\n"
                 }
             ],
             "date": 1708268270508,

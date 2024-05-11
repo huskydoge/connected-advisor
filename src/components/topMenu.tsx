@@ -106,7 +106,7 @@ function TopMenu() {
   };
 
   const handleClick = (id: string) => {
-    router.push(`${id}?view=graph`, undefined, {
+    router.replace(`/main/${id}?view=graph`, undefined, {
       shallow: true,
     });
     // clear query and results
@@ -267,7 +267,7 @@ function TopMenu() {
             }}
             onClick={handleShareClick}
           >
-            Upload Your CV
+            Chat
           </Button>
 
           <Button

@@ -1,0 +1,26 @@
+{
+    "sourceFile": "src/components/utils/useMessages.tsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1715436777502,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1715438186212,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n import { useToast } from \"@apideck/components\";\n-import { ChatCompletionRequestMessage } from \"openai\";\n+import ChatCompletionRequestMessage from \"openai\";\n import {\n   ReactNode,\n   createContext,\n   useContext,\n"
+                },
+                {
+                    "date": 1715447097787,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,8 +7,9 @@\n   useEffect,\n   useState,\n } from \"react\";\n import { sendMessage } from \"./sendMessage\";\n+import { Height } from \"@mui/icons-material\";\n \n interface ContextProps {\n   messages: ChatCompletionRequestMessage[];\n   addMessage: (content: string) => Promise<void>;\n@@ -67,9 +68,9 @@\n     }\n   };\n \n   return (\n-    <ChatsContext.Provider value={{ messages, addMessage, isLoadingAnswer }}>\n+    <ChatsContext.Provider value={{ messages, addMessage, isLoadingAnswer }} sx={{Height:\"100%\"}}>\n       {children}\n     </ChatsContext.Provider>\n   );\n }\n"
+                }
+            ],
+            "date": 1715436777502,
+            "name": "Commit-0",
+            "content": "import { useToast } from \"@apideck/components\";\nimport { ChatCompletionRequestMessage } from \"openai\";\nimport {\n  ReactNode,\n  createContext,\n  useContext,\n  useEffect,\n  useState,\n} from \"react\";\nimport { sendMessage } from \"./sendMessage\";\n\ninterface ContextProps {\n  messages: ChatCompletionRequestMessage[];\n  addMessage: (content: string) => Promise<void>;\n  isLoadingAnswer: boolean;\n}\n\nconst ChatsContext = createContext<Partial<ContextProps>>({});\n\nexport function MessagesProvider({ children }: { children: ReactNode }) {\n  const { addToast } = useToast();\n  const [messages, setMessages] = useState<ChatCompletionRequestMessage[]>([]);\n  const [isLoadingAnswer, setIsLoadingAnswer] = useState(false);\n\n  useEffect(() => {\n    const initializeChat = () => {\n      const systemMessage: ChatCompletionRequestMessage = {\n        role: \"system\",\n        content: \"You are ChatGPT, a large language model trained by OpenAI.\",\n      };\n      const welcomeMessage: ChatCompletionRequestMessage = {\n        role: \"assistant\",\n        content: \"Hi, How can I help you today?\",\n      };\n      setMessages([systemMessage, welcomeMessage]);\n    };\n\n    // When no messages are present, we initialize the chat the system message and the welcome message\n    // We hide the system message from the user in the UI\n    if (!messages?.length) {\n      initializeChat();\n    }\n  }, [messages?.length, setMessages]);\n\n  const addMessage = async (content: string) => {\n    setIsLoadingAnswer(true);\n    try {\n      const newMessage: ChatCompletionRequestMessage = {\n        role: \"user\",\n        content,\n      };\n      const newMessages = [...messages, newMessage];\n\n      // Add the user message to the state so we can see it immediately\n      setMessages(newMessages);\n\n      const { data } = await sendMessage(newMessages);\n      const reply = data.choices[0].message;\n\n      // Add the assistant message to the state\n      setMessages([...newMessages, reply]);\n    } catch (error) {\n      // Show error when something goes wrong\n      addToast({ title: \"An error occurred\", type: \"error\" });\n    } finally {\n      setIsLoadingAnswer(false);\n    }\n  };\n\n  return (\n    <ChatsContext.Provider value={{ messages, addMessage, isLoadingAnswer }}>\n      {children}\n    </ChatsContext.Provider>\n  );\n}\n\nexport const useMessages = () => {\n  return useContext(ChatsContext) as ContextProps;\n};\n"
+        }
+    ]
+}

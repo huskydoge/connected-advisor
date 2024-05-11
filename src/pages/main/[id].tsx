@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import TopMenu from "@/components/topTab";
+import TopMenu from "@/components/topMenu";
 import MainContent from "@/components/mainPage/mainContent";
 
 const Post = () => {
@@ -8,6 +8,7 @@ const Post = () => {
 
   return (
     <div>
+      <TopMenu />
       <MainContent id={String(id)} />
     </div>
   );

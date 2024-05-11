@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 7,
+            "activePatchIndex": 9,
             "patches": [
                 {
                     "date": 1708352713912,
@@ -36,6 +36,14 @@
                 {
                     "date": 1711721275982,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,10 +1,9 @@\n {\n   \"name\": \"connected-advisor\",\n   \"version\": \"0.1.0\",\n   \"private\": true,\n-  \"proxy\": \"https://waline-connected-advisor-pud8gagjj-huskydoge.vercel.app\",\n-  \"scripts\": {\n+\n     \"dev\": \"next dev\",\n     \"build\": \"next build\",\n     \"start\": \"next start\",\n     \"lint\": \"next lint\"\n"
+                },
+                {
+                    "date": 1715439406098,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,8 +29,9 @@\n     \"react-markdown\": \"^9.0.1\",\n     \"rehype-raw\": \"^7.0.0\",\n     \"rehype-sanitize\": \"^6.0.0\",\n     \"tailwindcss\": \"^3.4.3\"\n+    \"postcss\": \"^8.4.20\",\n   },\n   \"devDependencies\": {\n     \"@types/node\": \"^20\",\n     \"@types/react\": \"^18\",\n"
+                },
+                {
+                    "date": 1715439411125,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,9 +29,9 @@\n     \"react-markdown\": \"^9.0.1\",\n     \"rehype-raw\": \"^7.0.0\",\n     \"rehype-sanitize\": \"^6.0.0\",\n     \"tailwindcss\": \"^3.4.3\",\n-    \"postcss\": \"^8.4.20\",\n+    \"postcss\": \"^8.4.20\"\n   },\n   \"devDependencies\": {\n     \"@types/node\": \"^20\",\n     \"@types/react\": \"^18\",\n"
                 }
             ],
             "date": 1708352713912,

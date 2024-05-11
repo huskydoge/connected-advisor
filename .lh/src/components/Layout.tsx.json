@@ -1,0 +1,26 @@
+{
+    "sourceFile": "src/components/Layout.tsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1715437965396,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1715441302432,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n };\n \n const Layout = ({\n   children,\n-  title = \"Apideck - Next Starter Kit\",\n+  title = \"Chat with Connected Advisors\",\n   description = \"A Next.js starter kit with TypeScript, Tailwind, Jest, Prettier, and Eslint\",\n   favicon = \"/img/logo.png\",\n }: Props) => (\n   <div className=\"font-basier-circle\">\n"
+                },
+                {
+                    "date": 1715441312568,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n };\n \n const Layout = ({\n   children,\n-  title = \"Chat with Connected Advisors\",\n+  title = \"Chat\",\n   description = \"A Next.js starter kit with TypeScript, Tailwind, Jest, Prettier, and Eslint\",\n   favicon = \"/img/logo.png\",\n }: Props) => (\n   <div className=\"font-basier-circle\">\n"
+                }
+            ],
+            "date": 1715437965396,
+            "name": "Commit-0",
+            "content": "import Head from 'next/head'\nimport React, { ReactNode } from 'react'\n\ntype Props = {\n  children: ReactNode\n  title?: string\n  description?: string\n  favicon?: string\n}\n\nconst Layout = ({\n  children,\n  title = 'Apideck - Next Starter Kit',\n  description = 'A Next.js starter kit with TypeScript, Tailwind, Jest, Prettier, and Eslint',\n  favicon = '/img/logo.png'\n}: Props) => (\n  <div className=\"font-basier-circle\">\n    <Head>\n      <title>{title}</title>\n      <meta name=\"description\" content={description}></meta>\n      <meta charSet=\"utf-8\" />\n      <meta name=\"viewport\" content=\"initial-scale=1.0, width=device-width\" />\n      <link rel=\"icon\" href={favicon} />\n    </Head>\n    <div className=\"min-h-screen bg-gray-50\">{children}</div>\n  </div>\n)\n\nexport default Layout\n"
+        }
+    ]
+}
