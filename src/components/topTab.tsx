@@ -18,11 +18,38 @@ import {
   List,
   ListItem,
   ListItemText,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  Grid,
 } from "@mui/material";
-
+import TwitterIcon from "@mui/icons-material/Twitter";
+import LinkIcon from "@mui/icons-material/Link";
+import SvgIcon from "@mui/material/SvgIcon";
 import { searchAdvisorDetailsByName } from "./wrapped_api/fetchAdvisor";
 import { useRouter } from "next/router";
 import { AdvisorDetails } from "./interface";
+import Iframe from "react-iframe";
+import AboutPage from "./about";
+
+function WeChatIcon(props) {
+  return (
+    <SvgIcon {...props}>
+      <path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M17,14H15V9H17V14M11,14H9V9H11V14Z" />
+    </SvgIcon>
+  );
+}
+
+function QQIcon(props) {
+  return (
+    <SvgIcon {...props}>
+      {/* SVG path for QQ icon */}
+      <path d="M12,2C6.48,2 2,6.48 2,12C2,17.52 6.48,22 12,22C17.52,22 22,17.52 22,12C22,6.48 17.52,2 12,2ZM12,4C15.31,4 18,6.69 18,10C18,13.31 15.31,16 12,16C8.69,16 6,13.31 6,10C6,6.69 8.69,4 12,4ZM16.5,18.25C16.5,18.25 14.5,20 12,20C9.5,20 7.5,18.25 7.5,18.25C5.91,17.53 5,15.85 5,14C5,12.21 6.07,10.67 7.64,10.16C8.18,10 8.59,10.33 8.76,10.87C8.93,11.4 8.73,11.99 8.25,12.25C7.95,12.41 7.91,12.85 8.18,13.06C8.64,13.42 9.3,13.58 10,13.58C10.7,13.58 11.36,13.42 11.82,13.06C12.09,12.85 12.05,12.41 11.75,12.25C11.27,11.99 11.07,11.4 11.24,10.87C11.41,10.33 11.82,10 12.36,10.16C13.93,10.67 15,12.21 15,14C15,15.85 14.09,17.53 12.5,18.25H16.5Z" />
+    </SvgIcon>
+  );
+}
 
 // 假设这是你的搜索结果类型
 interface SearchResult {
@@ -36,6 +63,9 @@ function TopMenu() {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<AdvisorDetails[]>([]);
   const theme = useTheme();
+  const [openShare, setOpenShare] = useState(false);
+  const [openFollow, setOpenFollow] = useState(false);
+  const [openAbout, setOpenAbout] = useState(false);
 
   // 即时搜索逻辑
   const updateSearchQuery = async (
@@ -75,6 +105,21 @@ function TopMenu() {
   const showMoreResults = () => {
     // 假设有一个特殊的ID或处理逻辑
     console.log("show");
+  };
+
+  const handleShareClick = () => {
+    setOpenShare(true);
+  };
+  const handleFollowClick = () => {
+    setOpenFollow(true);
+  };
+  const handleAboutClick = () => {
+    setOpenAbout(true);
+  };
+  const handleClose = () => {
+    setOpenShare(false);
+    setOpenFollow(false);
+    setOpenAbout(false);
   };
 
   return (
@@ -167,21 +212,61 @@ function TopMenu() {
         </Paper>
         {/* 导航按钮 */}
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          {["Share", "Follow", "About", "Pricing", "Sponsors"].map((text) => (
-            <Button
-              key={text}
-              sx={{
-                color: "blue",
-                textTransform: "none",
-                marginRight: 2,
-                fontSize: theme.typography.h6.fontSize,
-                fontFamily: theme.typography.fontFamily,
-                fontWeight: theme.typography.fontWeightRegular,
-              }}
-            >
-              {text}
-            </Button>
-          ))}
+          <Button
+            sx={{
+              color: "blue",
+              textTransform: "none",
+              marginRight: 2,
+              fontSize: theme.typography.h6.fontSize,
+              fontFamily: theme.typography.fontFamily,
+              fontWeight: theme.typography.fontWeightRegular,
+            }}
+            onClick={handleShareClick}
+          >
+            Upload Your CV
+          </Button>
+
+          <Button
+            sx={{
+              color: "blue",
+              textTransform: "none",
+              marginRight: 2,
+              fontSize: theme.typography.h6.fontSize,
+              fontFamily: theme.typography.fontFamily,
+              fontWeight: theme.typography.fontWeightRegular,
+            }}
+            onClick={handleShareClick}
+          >
+            Share
+          </Button>
+
+          <Button
+            sx={{
+              color: "blue",
+              textTransform: "none",
+              marginRight: 2,
+              fontSize: theme.typography.h6.fontSize,
+              fontFamily: theme.typography.fontFamily,
+              fontWeight: theme.typography.fontWeightRegular,
+            }}
+            onClick={handleFollowClick}
+          >
+            Follow
+          </Button>
+
+          <Button
+            sx={{
+              color: "blue",
+              textTransform: "none",
+              marginRight: 2,
+              fontSize: theme.typography.h6.fontSize,
+              fontFamily: theme.typography.fontFamily,
+              fontWeight: theme.typography.fontWeightRegular,
+            }}
+            onClick={handleAboutClick}
+          >
+            About
+          </Button>
         </Box>
 
         {/* 用户图标 */}
@@ -194,6 +279,104 @@ function TopMenu() {
           <AccountCircle />
         </IconButton>
       </Toolbar>
+      {/* 弹窗组件 */}
+      <Dialog
+        fullWidth
+        maxWidth="md"
+        open={openShare}
+        onClose={handleClose}
+        aria-labelledby="share-dialog-title"
+      >
+        <DialogTitle id="share-dialog-title" sx={{ fontSize: "1.5rem" }}>
+          Share Connected Advisors to your friends!
+        </DialogTitle>
+        <DialogContent>
+          <Grid
+            container
+            spacing={2}
+            justifyContent="center"
+            sx={{ mx: "auto", width: "100%" }} // 确保Grid填满Dialog
+          >
+            <Grid item>
+              <Button
+                startIcon={<WeChatIcon style={{ fontSize: 40 }} />}
+                size="large"
+              >
+                WeChat
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button
+                startIcon={<QQIcon style={{ fontSize: 40 }} />}
+                size="large"
+              >
+                QQ
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button
+                startIcon={<TwitterIcon style={{ fontSize: 40 }} />}
+                size="large"
+              >
+                Twitter
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button
+                startIcon={<LinkIcon style={{ fontSize: 40 }} />}
+                size="large"
+              >
+                Copy Link
+              </Button>
+            </Grid>
+          </Grid>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Close</Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog open={openFollow} onClose={handleClose} fullWidth maxWidth="sm">
+        <DialogTitle id="follow-dialog-title">Follow Us!</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Please follow us at our GitHub to stay updated with the latest news
+            and updates:
+          </DialogContentText>
+          <DialogContentText sx={{ display: "flex", justifyContent: "center" }}>
+            <a
+              href="https://github.com/huskydoge/connected-advisor"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                color: "blue",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              https://github.com/huskydoge/connected-advisor
+            </a>
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            color="primary"
+            href="https://github.com/huskydoge/connected-advisor"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Visit GitHub
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog
+        fullWidth
+        maxWidth="xl"
+        open={openAbout}
+        onClose={handleClose}
+        aria-labelledby="share-dialog-title"
+      >
+        <AboutPage />
+      </Dialog>
     </AppBar>
   );
 }

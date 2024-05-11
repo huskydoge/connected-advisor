@@ -1,7 +1,15 @@
 import React, { useEffect, useState } from "react";
 import RelationComponent from "./relation";
-import { Advisor, Connection, AdvisorDetails } from "@/components/interface";
-import { fetchAdvisorByIdLst } from "@/components/wrapped_api/fetchAdvisor";
+import {
+  Advisor,
+  Connection,
+  AdvisorDetails,
+  AdvisorDetailsWithRelationFactor,
+} from "@/components/interface";
+import {
+  fetchAdvisorByIdLst,
+  fetchAdvisorDetails,
+} from "@/components/wrapped_api/fetchAdvisor";
 import SortIcon from "@mui/icons-material/Sort";
 import RefreshIcon from "@mui/icons-material/Refresh";
 
@@ -45,6 +53,94 @@ const findConnectedAdvisors = async (mainAdvisor: Advisor) => {
   }
 };
 
+const calculate_relation_factor = (
+  advisor1: AdvisorDetails,
+  advisor2: AdvisorDetails,
+  conn: Connection
+) => {
+  const tag_weight = 2;
+  const relation_weight = 10;
+  const paper_weight = 5;
+
+  let tags1 = advisor1.tags;
+  let tags2 = advisor2.tags;
+  let tag_score = 0;
+  tags1.forEach((tag1) => {
+    tags2.forEach((tag2) => {
+      if (tag1 === tag2) {
+        tag_score += 1;
+      }
+    });
+  });
+  let paper_score = conn.collaborations.length;
+  const relation_type_score_map = {
+    PhD: 5,
+    Master: 3,
+    Undergrad: 1,
+    Postdoc: 4,
+    Working: 2,
+    Collaboration: 1,
+  };
+  let relations = conn.relations;
+  let relation_score = 0;
+  for (let i = 0; i < relations.length; i++) {
+    let relation = relations[i];
+
+    let type = relation.type;
+    // console.log("type", type);
+    let start = relation.duration.start;
+    let end = relation.duration.end;
+    // console.log("start", start);
+    // console.log("end", end);
+    relation_score +=
+      relation_type_score_map[type as keyof typeof relation_type_score_map] *
+      (end - start);
+  }
+
+  // console.log("tag_score", tag_score);
+  // console.log("relation_score", relation_score);
+  // console.log("paper_score", paper_score);
+
+  let relationFactor =
+    tag_score * tag_weight +
+    relation_score * relation_weight +
+    paper_score * paper_weight;
+
+  return relationFactor;
+};
+
+const get_advisors_with_relation_factor = (
+  mainAdvisor: AdvisorDetails,
+  advisors: Array<AdvisorDetails>
+) => {
+  let finalAdvisors = [];
+  for (let i = 0; i < advisors.length; i++) {
+    let advisor = advisors[i];
+    let connections = advisor.connections;
+    let relationFactor = 0;
+    for (let j = 0; j < connections.length; j++) {
+      let conn = connections[j];
+      let relationFactor_ = calculate_relation_factor(
+        mainAdvisor,
+        advisor,
+        conn
+      );
+      relationFactor += relationFactor_;
+    }
+    const advisor_ = {
+      ...advisor,
+      relationFactor: relationFactor,
+    };
+    finalAdvisors.push(advisor_);
+  }
+  return finalAdvisors;
+};
+
+const fetchConnectedAdvisorDetailsBatch = async (connectionIds) => {
+  const fetchPromises = connectionIds?.map((id) => fetchAdvisorDetails(id));
+  return Promise.all(fetchPromises);
+};
+
 const ListView = ({
   onClose,
   mainAdvisor,
@@ -59,8 +155,8 @@ const ListView = ({
   const [tags, setTags] = useState([]);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
-  const filterAdvisors = () => {
-    return advisors?.filter((advisor) => {
+  const processAdvisors = () => {
+    let filteredAdvisors = advisors?.filter((advisor) => {
       const hasAffiliation =
         affiliations.length === 0 ||
         affiliations.some((aff) => advisor.affiliation?.includes(aff));
@@ -71,12 +167,26 @@ const ListView = ({
         tags.length === 0 || tags.some((tag) => advisor.tags?.includes(tag));
       return hasAffiliation && hasPosition && hasTag;
     });
+    const withRelationFactorAdvisor = get_advisors_with_relation_factor(
+      mainAdvisor,
+      filteredAdvisors
+    );
+    return withRelationFactorAdvisor;
   };
 
   useEffect(() => {
     const loadAdvisors = async () => {
-      const advisors = await findConnectedAdvisors(mainAdvisor);
-      setAdvisors(advisors);
+      console.log(mainAdvisor);
+      const connected_ids = mainAdvisor.connections?.map(
+        (conn: Connection) => conn._id
+      );
+      if (!connected_ids) {
+        return;
+      }
+      console.log("coon_ids", connected_ids);
+      const advisors_ = await fetchConnectedAdvisorDetailsBatch(connected_ids);
+      console.log("fetched", advisors_);
+      setAdvisors(advisors_);
     };
     loadAdvisors();
   }, [mainAdvisor]);
@@ -229,9 +339,9 @@ const ListView = ({
       </AppBar>
       <div style={{ marginTop: 20 }}>
         {showTableView ? (
-          filterAdvisors()?.length > 0 ? (
+          processAdvisors()?.length > 0 ? (
             <TableView
-              advisors={filterAdvisors()}
+              advisors={processAdvisors()}
               onClickConnection={(advisorId) => {
                 const advisor = advisors.find(
                   (advisor) => advisor._id === advisorId

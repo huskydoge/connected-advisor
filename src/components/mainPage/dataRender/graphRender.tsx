@@ -145,7 +145,8 @@ const advisorsReader = async (
     nodes: any[],
     advisor: AdvisorDetails,
     symbolSize: number,
-    latestCollaboration: number
+    latestCollaboration: number,
+    influenceFactor: number
   ) => {
     // if exists, return
     if (nodesSet.has(advisor._id)) {
@@ -158,6 +159,7 @@ const advisorsReader = async (
         symbolSize: 200, // main节点的大小
         itemStyle: { color: "red" }, // main节点为红色
         latestCollaboration: new Date().getFullYear(), // 假设主节点的最近合作时间为当前年
+        influenceFactor: influenceFactor,
         ...mainAdvisor,
         // symbol: "image://" + getImgData(mainAdvisor.picture, mainAdvisor), // Add this line
         draggable: true,
@@ -168,6 +170,7 @@ const advisorsReader = async (
         symbolSize: symbolSize,
         latestCollaboration: latestCollaboration,
         symbol: "circle", //`image://${advisor.picture}`, // Add this line
+        influenceFactor: influenceFactor,
         ...advisor,
         draggable: true,
       });
@@ -238,6 +241,7 @@ const advisorsReader = async (
 
     // get all connected id of currentAdvisor
     if (currentAdvisor) {
+      const curr_influence_factor = calculate_influence_factor(currentAdvisor);
       nodes = addNode(
         nodes,
         currentAdvisor,
@@ -250,7 +254,8 @@ const advisorsReader = async (
               (max, conn) => Math.max(max, get_latest_collaboration(conn)),
               0
             )
-          : currentYear
+          : currentYear,
+        curr_influence_factor
       );
 
       // get all connected advisors using fetchAdvisorDetails into a list
@@ -283,9 +288,16 @@ const advisorsReader = async (
             minYear = Math.min(minYear, latestYear);
             maxYear = Math.max(maxYear, latestYear);
 
-            const symbolSize =
-              20 + calculate_influence_factor(connectedAdvisor) * 10;
-            nodes = addNode(nodes, connectedAdvisor, symbolSize, latestYear);
+            const influenceFactor =
+              calculate_influence_factor(connectedAdvisor);
+            const symbolSize = 20 + influenceFactor * 10;
+            nodes = addNode(
+              nodes,
+              connectedAdvisor,
+              symbolSize,
+              latestYear,
+              influenceFactor
+            );
             links = addLink(
               links,
               currentAdvisor._id,
@@ -329,6 +341,7 @@ const getCircularImage = async (imageUrl: string, diameter: number) => {
     };
     img.onerror = reject;
     // 更新 imageUrl 为 API 代理的 URL
+    // img.src = `/api/image?imageUrl=${imageUrl}`;
     img.src = `/api/image?imageUrl=${encodeURIComponent(imageUrl)}`;
   });
 };
@@ -491,7 +504,7 @@ const GraphRender = ({
             if (params.dataType === "edge") {
               return params.data.tooltip;
             }
-            return `${params.data.name} <br/> influence factor: ${params.data.symbolSize}`;
+            return `${params.data.name} <br/> influence factor: ${params.data.influenceFactor}`;
           },
         },
         legend: {
@@ -508,7 +521,7 @@ const GraphRender = ({
             links: links,
 
             categories: [{ name: "Main Node" }, { name: "Other" }],
-            roam: true,
+            roam: false,
             edgeSymbol: ["none", "none"],
             edgeSymbolSize: [10, 20],
             label: {

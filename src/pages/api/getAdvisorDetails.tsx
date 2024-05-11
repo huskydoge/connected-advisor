@@ -145,7 +145,7 @@ async function getAdvisorDetails(advisorId: string) {
       twitter: advisor[0].contacts.twitter,
       email: advisor[0].contacts.email,
       homepage: advisor[0].homepage,
-      github: advisor[0].contacts.github,
+      github: advisor[0].github,
       description: advisor[0].descriptions,
     };
     return finalAdvisor;

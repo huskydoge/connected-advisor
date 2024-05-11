@@ -70,6 +70,26 @@ export interface AdvisorDetails {
   };
 }
 
+export interface AdvisorDetailsWithRelationFactor {
+  _id: string;
+  name: string;
+  position: string;
+  department: string;
+  affiliation: string;
+  picture: string;
+  github: string;
+  homepage: string;
+  description: string;
+  tags: string[];
+  connections: Connection[];
+  contacts: {
+    twitter: string;
+    email: string;
+    linkedin: string;
+  };
+  relationFactor: number;
+}
+
 export interface Connection {
   _id: string;
   relations: Array<{

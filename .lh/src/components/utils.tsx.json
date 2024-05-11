@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 1,
+            "activePatchIndex": 2,
             "patches": [
                 {
                     "date": 1713796903450,
@@ -12,6 +12,10 @@
                 {
                     "date": 1713796916716,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,8 @@\n+import { useRouter } from \"next/router\";\n+\n+const router = useRouter();\n+\n export const handleClickOnAdvisor = (id: string) => {\n   router.push(`${id}?view=graph`, undefined, {\n     shallow: true,\n   });\n"
+                },
+                {
+                    "date": 1715390731594,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,78 @@\n import { useRouter } from \"next/router\";\n+import { Connection, AdvisorDetails } from \"@/components/interface\";\n \n const router = useRouter();\n \n export const handleClickOnAdvisor = (id: string) => {\n   router.push(`${id}?view=graph`, undefined, {\n     shallow: true,\n   });\n };\n+\n+\n+export const calculate_influence_factor = (advisor: AdvisorDetails, degree = 1) => {\n+  // TODO, should take the influence of its connected advisors into account, rather than merely count the number of connections\n+  let influenceFactor = 0;\n+  for (let i = 0; i < advisor.connections.length; i++) {\n+    let conn = advisor.connections[i];\n+    let paper_score = conn.collaborations.length;\n+    influenceFactor += 1 + paper_score;\n+  }\n+  return influenceFactor;\n+};\n+\n+export const calculate_relation_factor = (\n+  advisor1: AdvisorDetails,\n+  advisor2: AdvisorDetails,\n+  conn: Connection\n+) => {\n+  const tag_weight = 2;\n+  const relation_weight = 10;\n+  const paper_weight = 5;\n+\n+  let tags1 = advisor1.tags;\n+  let tags2 = advisor2.tags;\n+  let tag_score = 0;\n+  tags1.forEach((tag1) => {\n+    tags2.forEach((tag2) => {\n+      if (tag1 === tag2) {\n+        tag_score += 1;\n+      }\n+    });\n+  });\n+  let paper_score = conn.collaborations.length;\n+  const relation_type_score_map = {\n+    PhD: 5,\n+    Master: 3,\n+    Undergrad: 1,\n+    Postdoc: 4,\n+    Working: 2,\n+    Collaboration: 1,\n+  };\n+  let relations = conn.relations;\n+  let relation_score = 0;\n+  for (let i = 0; i < relations.length; i++) {\n+    let relation = relations[i];\n+\n+    let type = relation.type;\n+    // console.log(\"type\", type);\n+    let start = relation.duration.start;\n+    let end = relation.duration.end;\n+    // console.log(\"start\", start);\n+    // console.log(\"end\", end);\n+    relation_score +=\n+      relation_type_score_map[type as keyof typeof relation_type_score_map] *\n+      (end - start);\n+  }\n+\n+  // console.log(\"tag_score\", tag_score);\n+  // console.log(\"relation_score\", relation_score);\n+  // console.log(\"paper_score\", paper_score);\n+\n+  let relationFactor =\n+    tag_score * tag_weight +\n+    relation_score * relation_weight +\n+    paper_score * paper_weight;\n+\n+  return relationFactor;\n+};\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1713796903450,

@@ -12,7 +12,10 @@ import {
 } from "@mui/material";
 
 import { useRouter } from "next/router";
-import { AdvisorDetails } from "@/components/interface";
+import {
+  AdvisorDetails,
+  AdvisorDetailsWithRelationFactor,
+} from "@/components/interface";
 
 // @ts-ignore
 const TableView = ({ onClickConnection, advisors }) => {
@@ -22,6 +25,22 @@ const TableView = ({ onClickConnection, advisors }) => {
       shallow: true,
     });
   };
+
+  const calculate_influence_factor = (
+    advisor: AdvisorDetailsWithRelationFactor,
+    degree = 1
+  ) => {
+    // TODO, should take the influence of its connected advisors into account, rather than merely count the number of connections
+    let influenceFactor = 0;
+    console.log(advisor);
+    for (let i = 0; i < advisor.connections.length; i++) {
+      let conn = advisor.connections[i];
+      let paper_score = conn.collaborations?.length;
+      influenceFactor += 1 + paper_score;
+    }
+    return influenceFactor;
+  };
+
   console.log("table", advisors);
   return (
     <TableContainer component={Paper} sx={{ width: "100%" }}>
@@ -29,6 +48,7 @@ const TableView = ({ onClickConnection, advisors }) => {
         <TableHead>
           <TableRow>
             <TableCell align="center">Advisor Name</TableCell>
+            <TableCell align="center">Influence Factor</TableCell>
             <TableCell align="center">Position</TableCell>
             <TableCell align="center">Affliation</TableCell>
             <TableCell align="center">HomePage</TableCell>
@@ -36,15 +56,19 @@ const TableView = ({ onClickConnection, advisors }) => {
             <TableCell align="center">Twitter</TableCell>
             <TableCell align="center">GitHub</TableCell>
             <TableCell align="center">Connections</TableCell>
+            <TableCell align="center">Relation Factor</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {advisors?.map((advisor: AdvisorDetails) => (
+          {advisors?.map((advisor: AdvisorDetailsWithRelationFactor) => (
             <TableRow sx={{ border: "none" }} key={advisor?._id} hover>
               <TableCell align="center">
                 <Button onClick={() => handleClickOnAdvisor(advisor._id)}>
                   {advisor?.name}
                 </Button>
+              </TableCell>
+              <TableCell align="center">
+                {calculate_influence_factor(advisor)}
               </TableCell>
               <TableCell align="center">{advisor?.position}</TableCell>
               <TableCell align="center">{advisor?.affiliation}</TableCell>
@@ -62,18 +86,18 @@ const TableView = ({ onClickConnection, advisors }) => {
                 )}
               </TableCell>
               <TableCell align="center">
-                <Link href={`mailto:${advisor.contacts.email}`}>
-                  {advisor.contacts.email ? advisor.contacts.email : "N/A"}
+                <Link href={`mailto:${advisor.email}`}>
+                  {advisor.email ? advisor.email : "N/A"}
                 </Link>
               </TableCell>
               <TableCell align="center">
-                {advisor.contacts.twitter ? (
+                {advisor.twitter ? (
                   <Link
-                    href={advisor?.contacts.twitter}
+                    href={advisor?.twitter}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    {advisor.contacts.twitter}
+                    {advisor.twitter}
                   </Link>
                 ) : (
                   "N/A"
@@ -104,6 +128,7 @@ const TableView = ({ onClickConnection, advisors }) => {
                   </Button>
                 </Tooltip>
               </TableCell>
+              <TableCell align="center">{advisor.relationFactor}</TableCell>
             </TableRow>
           ))}
         </TableBody>
