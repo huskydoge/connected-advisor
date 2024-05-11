@@ -1,5 +1,5 @@
 const fetchSearchDetailsById = async (id) => {
-  const response = await fetch("/api/searchAdvisor", {
+  const response = await fetch("/api/searchAdvisorByName", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ oid: id }),
@@ -82,7 +82,7 @@ const fetchAdvisorDetails = async (advisorId: string) => {
 };
 
 const searchAdvisorDetailsById = async (id: string) => {
-  const response = await fetch("/api/searchAdvisor", {
+  const response = await fetch("/api/searchAdvisorByName", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ oid: id }),
@@ -95,7 +95,21 @@ const searchAdvisorDetailsById = async (id: string) => {
 const searchAdvisorDetailsByName = async (searchText: string) => {
   if (!searchText.trim()) return [];
 
-  const response = await fetch("/api/searchAdvisor", {
+  const response = await fetch("/api/searchAdvisorByName", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name: searchText }),
+  });
+  const data = await response.json();
+
+  const res = Array.isArray(data) ? data : [];
+  return res;
+};
+
+const fuzzySearchAdvisorDetails = async (searchText: string) => {
+  if (!searchText.trim()) return [];
+
+  const response = await fetch("/api/fuzzySearchAdvisor", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ name: searchText }),
@@ -110,6 +124,7 @@ export {
   searchAdvisorDetailsById,
   searchAdvisorDetailsByName,
   fetchSearchDetailsById,
+  fuzzySearchAdvisorDetails,
   updateAdvisor,
   fetchAdvisorByIdLst,
   fetchAdvisorDetails,

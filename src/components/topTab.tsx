@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import Link from "next/link";
 import { lightBlue } from "@mui/material/colors";
+import { Chip, Stack } from "@mui/material";
 import {
   AppBar,
   Toolbar,
@@ -28,11 +29,15 @@ import {
 import TwitterIcon from "@mui/icons-material/Twitter";
 import LinkIcon from "@mui/icons-material/Link";
 import SvgIcon from "@mui/material/SvgIcon";
-import { searchAdvisorDetailsByName } from "./wrapped_api/fetchAdvisor";
+import {
+  searchAdvisorDetailsByName,
+  fuzzySearchAdvisorDetails,
+} from "./wrapped_api/fetchAdvisor";
 import { useRouter } from "next/router";
 import { AdvisorDetails } from "./interface";
 import Iframe from "react-iframe";
 import AboutPage from "./about";
+import SearchTableView from "./searchTable";
 
 function WeChatIcon(props) {
   return (
@@ -58,14 +63,19 @@ interface SearchResult {
 }
 
 function TopMenu() {
+  const omit_thres = 10;
   const [searchFocused, setSearchFocused] = useState(false);
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<AdvisorDetails[]>([]);
+  const [searchResultsShow, setSearchResultsShow] = useState<AdvisorDetails[]>(
+    []
+  );
   const theme = useTheme();
   const [openShare, setOpenShare] = useState(false);
   const [openFollow, setOpenFollow] = useState(false);
   const [openAbout, setOpenAbout] = useState(false);
+  const [showMore, setShowMore] = useState(false);
 
   // 即时搜索逻辑
   const updateSearchQuery = async (
@@ -79,8 +89,10 @@ function TopMenu() {
       // 可以设置触发搜索的最小字符数限制
       const results = await searchAPI(query);
       setSearchResults(results);
+      setSearchResultsShow(results.slice(0, omit_thres));
     } else {
       setSearchResults([]); // 清空结果
+      setSearchResultsShow([]);
     }
   };
 
@@ -88,7 +100,7 @@ function TopMenu() {
   const searchAPI = async (query: string): Promise<AdvisorDetails[]> => {
     // 这里应该是调用实际的搜索 API
     // 返回模拟的搜索结果
-    const results = await searchAdvisorDetailsByName(query);
+    const results = await fuzzySearchAdvisorDetails(query);
     console.log("from API", results);
     return results;
   };
@@ -103,8 +115,7 @@ function TopMenu() {
   };
 
   const showMoreResults = () => {
-    // 假设有一个特殊的ID或处理逻辑
-    console.log("show");
+    setShowMore(true);
   };
 
   const handleShareClick = () => {
@@ -120,6 +131,17 @@ function TopMenu() {
     setOpenShare(false);
     setOpenFollow(false);
     setOpenAbout(false);
+    setShowMore(false);
+  };
+
+  const handleClickOnAdvisor = (id: string) => {
+    setShowMore(false);
+    setSearchResults([]);
+    setSearchQuery("");
+    setSearchResultsShow([]);
+    router.push(`${id}?view=graph`, undefined, {
+      shallow: false,
+    });
   };
 
   return (
@@ -177,35 +199,57 @@ function TopMenu() {
               }}
             >
               <List>
-                {searchResults.map((result) => (
+                {searchResultsShow.map((result) => (
                   <ListItem
                     key={result._id}
                     sx={{
                       "&:hover": {
-                        backgroundColor: lightBlue[200], // 鼠标悬浮时背景色变蓝
-                        color: "white", // 可选：同时改变文字颜色以提高对比度
+                        backgroundColor: lightBlue[200],
+                        color: "white",
                       },
-                      cursor: "pointer", // 更改鼠标指针为点击手势
+                      cursor: "pointer",
                     }}
-                    onClick={() => handleClick(result._id)} // 点击时触发handleClick函数
+                    onClick={() => handleClick(result._id)}
                   >
-                    <ListItemText
-                      primary={`${result.name}-${result.affiliation}-${result.position}`}
-                    />
+                    <Stack direction="row" spacing={2} alignItems="center">
+                      <Typography variant="subtitle1" component="div">
+                        {result.name}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        color="text.secondary"
+                        component="div"
+                      >
+                        | {result.affiliation} | {result.position}
+                      </Typography>
+                      <Stack direction="row" spacing={1}>
+                        {result.tags.map((tag, index) => (
+                          <Chip
+                            key={index}
+                            label={tag}
+                            size="small"
+                            variant="outlined"
+                          />
+                        ))}
+                      </Stack>
+                    </Stack>
                   </ListItem>
                 ))}
-                <ListItem
-                  sx={{
-                    "&:hover": {
-                      backgroundColor: lightBlue[200],
-                      color: "white",
-                    },
-                    cursor: "pointer",
-                  }}
-                  onClick={() => showMoreResults} // 假设有一个特殊的ID或处理逻辑
-                >
-                  <ListItemText primary="Show more results" />
-                </ListItem>
+                {searchResults.length > omit_thres && (
+                  <ListItem
+                    sx={{
+                      "&:hover": {
+                        backgroundColor: lightBlue[300], // Using a darker shade of blue for hover
+                        color: "white",
+                      },
+                      cursor: "pointer",
+                      color: "red",
+                    }}
+                    onClick={showMoreResults}
+                  >
+                    <ListItemText primary="Show more results" />
+                  </ListItem>
+                )}
               </List>
             </Paper>
           )}
@@ -280,6 +324,26 @@ function TopMenu() {
         </IconButton>
       </Toolbar>
       {/* 弹窗组件 */}
+      <Dialog
+        fullWidth
+        maxWidth="xl"
+        open={showMore}
+        onClose={handleClose}
+        aria-labelledby="share-dialog-title"
+      >
+        <DialogTitle id="share-dialog-title" sx={{ fontSize: "1.5rem" }}>
+          Search Results
+        </DialogTitle>
+        <DialogContent>
+          <SearchTableView
+            advisors={searchResults}
+            handleClickOnAdvisor={handleClickOnAdvisor}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Close</Button>
+        </DialogActions>
+      </Dialog>
       <Dialog
         fullWidth
         maxWidth="md"

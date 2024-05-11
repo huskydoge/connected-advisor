@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/pages/api/fuzzySearchAdvisor.tsxt",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1715427927238,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1715427927238,
+            "name": "Commit-0",
+            "content": "/*\n * @Author: huskydoge hbh001098hbh@sjtu.edu.cn\n * @Date: 2024-02-22 23:30:57\n * @LastEditors: huskydoge hbh001098hbh@sjtu.edu.cn\n * @LastEditTime: 2024-05-11 19:45:27\n * @FilePath: /connected-advisor/src/pages/api/searchAdvisorByName.tsx\n * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE\n */\nimport { MongoClient, ObjectId } from \"mongodb\";\n\n// MongoDB URL and database name\nconst MONGO_URL = process.env.MONGO_URL || \"\";\nconst DB_NAME = \"ConnectedAdvisor\";\nconst COLLECTION_NAME = \"AdvisorTable\";\n\nasync function connectToDatabase() {\n  const client = new MongoClient(MONGO_URL);\n  await client.connect();\n  const db = client.db(DB_NAME);\n  return { db, client };\n}\n\nexport default async function handler(req, res) {\n  res.setHeader(\"Access-Control-Allow-Origin\", \"*\");\n  res.setHeader(\"Access-Control-Allow-Methods\", \"POST, GET, OPTIONS\");\n  res.setHeader(\"Access-Control-Allow-Headers\", \"Content-Type\");\n\n  if (req.method !== \"POST\") {\n    res.setHeader(\"Allow\", [\"POST\"]);\n    res.status(405).end(`Method ${req.method} Not Allowed`);\n    return;\n  }\n\n  const { oid, name } = req.body;\n\n  console.log(\"oid\", oid);\n  console.log(\"name\", name);\n\n  if (!oid && !name) {\n    res.status(400).json({ message: \"Missing query parameters\" });\n    return;\n  }\n\n  try {\n    const { db, client } = await connectToDatabase();\n\n    let result;\n    if (oid) {\n      result = await db\n        .collection(COLLECTION_NAME)\n        .findOne({ _id: new ObjectId(oid) });\n    } else if (name) {\n      let words = name.split(/\\s+/); // 拆分输入的name为单词数组\n      let regexPattern = words.map((word) => `(?=.*${word})`).join(\"\");\n      result = await db\n        .collection(COLLECTION_NAME)\n        .find({\n          name: { $regex: new RegExp(regexPattern, \"i\") },\n        })\n        .toArray();\n    }\n\n    if (result) {\n      res.status(200).json(result);\n    } else {\n      res.status(404).json({ message: \"No matching document found\" });\n    }\n\n    client.close();\n  } catch (error) {\n    console.error(error);\n    res.status(500).json({ message: \"Internal Server Error\" });\n  }\n}\n"
+        }
+    ]
+}

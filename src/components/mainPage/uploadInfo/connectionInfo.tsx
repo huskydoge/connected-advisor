@@ -90,7 +90,7 @@ const ConnectionInfo = () => {
   ) => {
     if (!searchText.trim()) return [];
 
-    const response = await fetch("/api/searchAdvisor", {
+    const response = await fetch("/api/searchAdvisorByName", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name: searchText }),
@@ -278,7 +278,7 @@ const ConnectionInfo = () => {
 
   const fetchAuthors = async (searchText) => {
     if (!searchText.trim()) return;
-    const response = await fetch("/api/searchAdvisor", {
+    const response = await fetch("/api/searchAdvisorByName", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name: searchText }),

@@ -42,7 +42,7 @@ const get_latest_collaboration = (conn: Connection) => {
 const calculate_influence_factor = (advisor: AdvisorDetails, degree = 1) => {
   // TODO, should take the influence of its connected advisors into account, rather than merely count the number of connections
   let influenceFactor = 0;
-  for (let i = 0; i < advisor.connections.length; i++) {
+  for (let i = 0; i < advisor.connections?.length; i++) {
     let conn = advisor.connections[i];
     let paper_score = conn.collaborations.length;
     influenceFactor += 1 + paper_score;

@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/pages/api/openai/createMessage.tsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1715430693025,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1715430693025,
+            "name": "Commit-0",
+            "content": "import { NextApiRequest, NextApiResponse } from 'next'\n\nexport default async function createMessage(\n  req: NextApiRequest,\n  res: NextApiResponse\n) {\n  const { messages } = req.body\n  const apiKey = process.env.OPENAI_API_KEY\n  const url = 'https://api.openai.com/v1/chat/completions'\n\n  const body = JSON.stringify({\n    messages,\n    model: 'gpt-3.5-turbo',\n    stream: false,\n  })\n\n  try {\n    const response = await fetch(url, {\n      method: 'POST',\n      headers: {\n        'Content-Type': 'application/json',\n        Authorization: `Bearer ${apiKey}`,\n      },\n      body,\n    })\n    const data = await response.json()\n    res.status(200).json({ data })\n  } catch (error) {\n    res.status(500).json({ error: error.message })\n  }\n}"
+        }
+    ]
+}
