@@ -70,7 +70,7 @@ export interface AdvisorDetails {
   };
 }
 
-export interface AdvisorDetailsWithRelationFactor {
+export interface AdvisorDetailsWithFactors {
   _id: string;
   name: string;
   position: string;
@@ -88,6 +88,7 @@ export interface AdvisorDetailsWithRelationFactor {
     linkedin: string;
   };
   relationFactor: number;
+  influenceFactor: number;
 }
 
 export interface Connection {

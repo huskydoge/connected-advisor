@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from "react";
 import RelationComponent from "./relation";
-import {
-  Advisor,
-  Connection,
-  AdvisorDetails,
-  AdvisorDetailsWithRelationFactor,
-} from "@/components/interface";
+import { Advisor, Connection, AdvisorDetails } from "@/components/interface";
 import {
   fetchAdvisorByIdLst,
   fetchAdvisorDetails,
 } from "@/components/wrapped_api/fetchAdvisor";
-import SortIcon from "@mui/icons-material/Sort";
+
 import RefreshIcon from "@mui/icons-material/Refresh";
 
 import {
@@ -109,7 +104,19 @@ const calculate_relation_factor = (
   return relationFactor;
 };
 
-const get_advisors_with_relation_factor = (
+const calculate_influence_factor = (advisor: AdvisorDetails, degree = 1) => {
+  // TODO, should take the influence of its connected advisors into account, rather than merely count the number of connections
+  let influenceFactor = 0;
+  console.log(advisor);
+  for (let i = 0; i < advisor.connections.length; i++) {
+    let conn = advisor.connections[i];
+    let paper_score = conn.collaborations?.length;
+    influenceFactor += 1 + paper_score;
+  }
+  return influenceFactor;
+};
+
+const get_advisors_with_factors = (
   mainAdvisor: AdvisorDetails,
   advisors: Array<AdvisorDetails>
 ) => {
@@ -130,6 +137,7 @@ const get_advisors_with_relation_factor = (
     const advisor_ = {
       ...advisor,
       relationFactor: relationFactor,
+      influenceFactor: calculate_influence_factor(advisor),
     };
     finalAdvisors.push(advisor_);
   }
@@ -167,7 +175,7 @@ const ListView = ({
         tags.length === 0 || tags.some((tag) => advisor.tags?.includes(tag));
       return hasAffiliation && hasPosition && hasTag;
     });
-    const withRelationFactorAdvisor = get_advisors_with_relation_factor(
+    const withRelationFactorAdvisor = get_advisors_with_factors(
       mainAdvisor,
       filteredAdvisors
     );

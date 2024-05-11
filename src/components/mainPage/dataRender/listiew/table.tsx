@@ -1,3 +1,4 @@
+import * as React from "react";
 import {
   TableContainer,
   Table,
@@ -9,16 +10,41 @@ import {
   Link,
   Button,
   Tooltip,
+  IconButton,
+  TableSortLabel,
+  Box,
 } from "@mui/material";
+import { visuallyHidden } from "@mui/utils";
+import SortIcon from "@mui/icons-material/Sort";
 
 import { useRouter } from "next/router";
 import {
   AdvisorDetails,
-  AdvisorDetailsWithRelationFactor,
+  AdvisorDetailsWithFactors,
 } from "@/components/interface";
+
+function stableSort<T>(array: any, comparator: (a: T, b: T) => number) {
+  const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
+  stabilizedThis.sort((a, b) => {
+    const order = comparator(a[0], b[0]);
+    if (order !== 0) {
+      return order;
+    }
+    return a[1] - b[1];
+  });
+  return stabilizedThis.map((el) => el[0]);
+}
 
 // @ts-ignore
 const TableView = ({ onClickConnection, advisors }) => {
+  const [order, setOrder] = React.useState<Order>("asc");
+  const [advisorsList, setAdvisorsList] = React.useState<
+    AdvisorDetailsWithFactors[]
+  >([]);
+  React.useEffect(() => {
+    setAdvisorsList(advisors);
+  }, [advisors]);
+  const [orderBy, setOrderBy] = React.useState("IF");
   const router = useRouter();
   const handleClickOnAdvisor = (id: string) => {
     router.push(`${id}?view=graph`, undefined, {
@@ -26,29 +52,97 @@ const TableView = ({ onClickConnection, advisors }) => {
     });
   };
 
-  const calculate_influence_factor = (
-    advisor: AdvisorDetailsWithRelationFactor,
-    degree = 1
+  const handleRequestSort = (
+    event: React.MouseEvent<unknown>,
+    property: keyof AdvisorDetailsWithFactors
   ) => {
-    // TODO, should take the influence of its connected advisors into account, rather than merely count the number of connections
-    let influenceFactor = 0;
-    console.log(advisor);
-    for (let i = 0; i < advisor.connections.length; i++) {
-      let conn = advisor.connections[i];
-      let paper_score = conn.collaborations?.length;
-      influenceFactor += 1 + paper_score;
-    }
-    return influenceFactor;
+    const isAsc = orderBy === property && order === "asc";
+    setOrder(isAsc ? "desc" : "asc");
+    setOrderBy(property);
+    sort_advisors(advisorsList);
   };
 
+  function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
+    if (b[orderBy] < a[orderBy]) {
+      return -1;
+    }
+    if (b[orderBy] > a[orderBy]) {
+      return 1;
+    }
+    return 0;
+  }
+
+  type Order = "asc" | "desc";
+
+  function getComparator<Key extends keyof any>(
+    order: Order,
+    orderBy: Key
+  ): (
+    a: { [key in Key]: number | string },
+    b: { [key in Key]: number | string }
+  ) => number {
+    return order === "desc"
+      ? (a, b) => descendingComparator(a, b, orderBy)
+      : (a, b) => -descendingComparator(a, b, orderBy);
+  }
+
+  function sort_advisors(advisors: AdvisorDetailsWithFactors[]) {
+    let tmp = stableSort(advisors, getComparator(order, orderBy));
+    setAdvisorsList(tmp);
+  }
+
   console.log("table", advisors);
+
+  const createSortHandler =
+    (property: any) => (event: React.MouseEvent<unknown>) => {
+      handleRequestSort(event, property);
+    };
   return (
     <TableContainer component={Paper} sx={{ width: "100%" }}>
       <Table stickyHeader>
         <TableHead>
           <TableRow>
             <TableCell align="center">Advisor Name</TableCell>
-            <TableCell align="center">Influence Factor</TableCell>
+            <TableCell
+              id="influenceFactor"
+              align="center"
+              sortDirection={orderBy === "influenceFactor" ? order : false}
+            >
+              <TableSortLabel
+                active={orderBy === "influenceFactor"}
+                direction={orderBy === "influenceFactor" ? order : "asc"}
+                onClick={createSortHandler("influenceFactor")}
+              >
+                IF
+                {orderBy === "influenceFactor" ? (
+                  <Box component="span" sx={visuallyHidden}>
+                    {order === "desc"
+                      ? "sorted descending"
+                      : "sorted ascending"}
+                  </Box>
+                ) : null}
+              </TableSortLabel>
+            </TableCell>
+            <TableCell
+              id="relationFactor"
+              align="center"
+              sortDirection={orderBy === "relationFactor" ? order : false}
+            >
+              <TableSortLabel
+                active={orderBy === "relationFactor"}
+                direction={orderBy === "relationFactor" ? order : "asc"}
+                onClick={createSortHandler("relationFactor")}
+              >
+                RF
+                {orderBy === "relationFactor" ? (
+                  <Box component="span" sx={visuallyHidden}>
+                    {order === "desc"
+                      ? "sorted descending"
+                      : "sorted ascending"}
+                  </Box>
+                ) : null}
+              </TableSortLabel>
+            </TableCell>
             <TableCell align="center">Position</TableCell>
             <TableCell align="center">Affliation</TableCell>
             <TableCell align="center">HomePage</TableCell>
@@ -56,20 +150,18 @@ const TableView = ({ onClickConnection, advisors }) => {
             <TableCell align="center">Twitter</TableCell>
             <TableCell align="center">GitHub</TableCell>
             <TableCell align="center">Connections</TableCell>
-            <TableCell align="center">Relation Factor</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {advisors?.map((advisor: AdvisorDetailsWithRelationFactor) => (
+          {advisorsList?.map((advisor: AdvisorDetailsWithFactors) => (
             <TableRow sx={{ border: "none" }} key={advisor?._id} hover>
               <TableCell align="center">
                 <Button onClick={() => handleClickOnAdvisor(advisor._id)}>
                   {advisor?.name}
                 </Button>
               </TableCell>
-              <TableCell align="center">
-                {calculate_influence_factor(advisor)}
-              </TableCell>
+              <TableCell align="center">{advisor.influenceFactor}</TableCell>
+              <TableCell align="center">{advisor.relationFactor}</TableCell>
               <TableCell align="center">{advisor?.position}</TableCell>
               <TableCell align="center">{advisor?.affiliation}</TableCell>
               <TableCell align="center">
@@ -128,7 +220,6 @@ const TableView = ({ onClickConnection, advisors }) => {
                   </Button>
                 </Tooltip>
               </TableCell>
-              <TableCell align="center">{advisor.relationFactor}</TableCell>
             </TableRow>
           ))}
         </TableBody>
