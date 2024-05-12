@@ -144,7 +144,7 @@ function TopMenu() {
     setSearchResults([]);
     setSearchQuery("");
     setSearchResultsShow([]);
-    router.push(`${id}?view=graph`, undefined, {
+    router.push(`/main/${id}?view=graph`, undefined, {
       shallow: false,
     });
   };

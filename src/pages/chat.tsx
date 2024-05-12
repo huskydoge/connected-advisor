@@ -37,7 +37,7 @@ const IndexPage: NextPage = () => {
         >
           <Avatar
             sx={{ width: 56, height: 56, marginRight: 2 }}
-            src="path_to_your_logo.png"
+            src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg"
             alt="Logo"
           />
           <Typography variant="h4" align="center" sx={{ flexGrow: 1 }}>

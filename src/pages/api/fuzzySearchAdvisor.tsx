@@ -53,9 +53,10 @@ export default async function handler(req, res) {
     } else if (query_text) {
       let words = query_text.split(/\s+/); // 拆分输入的query_text为单词数组
 
-      let regexPattern = words.map((word) => `(?=.*${word})`).join("");
+      let regexPatterns = words.map((word) => `(?=.*${word})`);
 
-      let regexQuery = new RegExp(regexPattern, "i");
+      let regexQuery = new RegExp(regexPatterns.join("|"), "i");
+
       result = await db
         .collection(COLLECTION_NAME)
         .find({
