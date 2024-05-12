@@ -1,0 +1,45 @@
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+
+.introSection,
+.commentsSection {
+  margin-bottom: 20px;
+}
+
+.imageGallery {
+  margin: 20px 0;
+  overflow: hidden;
+}
+
+.galleryGrid {
+  display: flex;
+  margin-left: -30px; /* gutter size offset */
+  width: auto;
+}
+
+.myMasonryGridColumn {
+  padding-left: 30px; /* gutter size */
+  background-clip: padding-box;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
+}
+
+.myMasonryGridColumn img {
+  animation: scroll 60s linear infinite;
+  animation-play-state: running;
+}
+
+.myMasonryGridColumn img:hover {
+  animation-play-state: paused;
+}

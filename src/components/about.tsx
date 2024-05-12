@@ -19,11 +19,11 @@ const AboutPage = () => {
       bio: "I’m currently an undergraduate student at Shanghai Jiao Tong University, majoring in Computer Science and Technology (IEEE Pilot Class). I’m now a research intern in Machine Vision and Intelligence Group (MVIG), under the supervision of Prof. Cewu Lu and Prof. Lixin Yang.",
     },
     {
-      name: "Carol",
-      avatar: "/path/to/carol.jpg",
+      name: "YiZhou Liu",
+      avatar: "/zhouzhoucat.jpeg",
       github: "https://github.com/carol",
       email: "carol@example.com",
-      bio: "Creative graphic designer with extensive experience in multimedia and print design.",
+      bio: "I’m currently an undergraduate student at Shanghai Jiao Tong University, majoring in Computer Science and Applied Mathematics. I love sports and playing bridge.",
     },
   ];
 

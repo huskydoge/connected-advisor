@@ -3,11 +3,15 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 1,
             "patches": [
                 {
                     "date": 1708490206016,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1715506417765,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,40 @@\n+.container {\n+    width: 100%;\n+    max-width: 1200px;\n+    margin: auto;\n+    padding: 20px;\n+  }\n+  \n+  .introSection, .commentsSection {\n+    margin-bottom: 20px;\n+  }\n+  \n+  .imageGallery {\n+    margin: 20px 0;\n+    overflow: hidden;\n+  }\n+  \n+  .galleryGrid {\n+    display: flex;\n+    margin-left: -30px; /* gutter size offset */\n+    width: auto;\n+  }\n+  \n+  .myMasonryGridColumn {\n+    padding-left: 30px; /* gutter size */\n+    background-clip: padding-box;\n+  }\n+  \n+  @keyframes scroll {\n+    0% { transform: translateY(0); }\n+    100% { transform: translateY(-100%); }\n+  }\n+  \n+  .myMasonryGridColumn img {\n+    animation: scroll 60s linear infinite;\n+    animation-play-state: running;\n+  }\n+  \n+  .myMasonryGridColumn img:hover {\n+    animation-play-state: paused;\n+  }\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1708490206016,

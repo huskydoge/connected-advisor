@@ -57,3 +57,23 @@
 .enterButton button:hover {
   background-color: #0056b3;
 }
+
+.scrollBox {
+  overflow: hidden; /* 隐藏滚动条 */
+}
+
+.myMasonryGrid {
+  display: flex;
+  margin-left: 1rem; /* 减小整体左边距来减小列间距 */
+  width: auto;
+  justify-content: center;
+}
+
+.myMasonryGridColumn {
+  padding-left: 1rem; /* 对应减小每列的左填充 */
+  background-clip: padding-box;
+}
+
+.enterButton {
+  margin-top: 20px;
+}
