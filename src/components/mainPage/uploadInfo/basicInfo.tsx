@@ -117,7 +117,7 @@ const BasicInfo = ({ formData, setFormData }) => {
       };
 
       try {
-        const response = await fetch("/api/addAdvisor", {
+        const response = await fetch("/api/advisors/addAdvisor", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

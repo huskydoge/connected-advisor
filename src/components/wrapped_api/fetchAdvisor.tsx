@@ -106,7 +106,7 @@ const searchAdvisorDetailsByName = async (searchText: string) => {
   return res;
 };
 
-const fuzzySearchAdvisorDetails = async (searchText: string) => {
+const fuzzySearchAdvisor = async (searchText: string) => {
   if (!searchText.trim()) return [];
 
   const response = await fetch("/api/fuzzySearchAdvisor", {
@@ -120,11 +120,26 @@ const fuzzySearchAdvisorDetails = async (searchText: string) => {
   return res;
 };
 
+const fuzzySearchAdvisorDetails = async (searchText: string) => {
+  if (!searchText.trim()) return [];
+
+  const response = await fetch("/api/fuzzySearchAdvisorDetails", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name: searchText }),
+  });
+  const data = await response.json();
+
+  const res = Array.isArray(data) ? data : [];
+  return res;
+};
+
 export {
   searchAdvisorDetailsById,
+  fuzzySearchAdvisorDetails,
   searchAdvisorDetailsByName,
   fetchSearchDetailsById,
-  fuzzySearchAdvisorDetails,
+  fuzzySearchAdvisor,
   updateAdvisor,
   fetchAdvisorByIdLst,
   fetchAdvisorDetails,

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 2,
+            "activePatchIndex": 6,
             "patches": [
                 {
                     "date": 1715436777502,
@@ -16,6 +16,22 @@
                 {
                     "date": 1715447097787,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,8 +7,9 @@\n   useEffect,\n   useState,\n } from \"react\";\n import { sendMessage } from \"./sendMessage\";\n+import { Height } from \"@mui/icons-material\";\n \n interface ContextProps {\n   messages: ChatCompletionRequestMessage[];\n   addMessage: (content: string) => Promise<void>;\n@@ -67,9 +68,9 @@\n     }\n   };\n \n   return (\n-    <ChatsContext.Provider value={{ messages, addMessage, isLoadingAnswer }}>\n+    <ChatsContext.Provider value={{ messages, addMessage, isLoadingAnswer }} sx={{Height:\"100%\"}}>\n       {children}\n     </ChatsContext.Provider>\n   );\n }\n"
+                },
+                {
+                    "date": 1715477998753,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -68,9 +68,9 @@\n     }\n   };\n \n   return (\n-    <ChatsContext.Provider value={{ messages, addMessage, isLoadingAnswer }} sx={{Height:\"100%\"}}>\n+    <ChatsContext.Provider value={{ messages, addMessage, isLoadingAnswer }}>\n       {children}\n     </ChatsContext.Provider>\n   );\n }\n"
+                },
+                {
+                    "date": 1715478629763,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,8 +15,10 @@\n   addMessage: (content: string) => Promise<void>;\n   isLoadingAnswer: boolean;\n }\n \n+\n+\n const ChatsContext = createContext<Partial<ContextProps>>({});\n \n export function MessagesProvider({ children }: { children: ReactNode }) {\n   const { addToast } = useToast();\n"
+                },
+                {
+                    "date": 1715478658304,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,8 +15,16 @@\n   addMessage: (content: string) => Promise<void>;\n   isLoadingAnswer: boolean;\n }\n \n+const searchAPI = async (query: string): Promise<AdvisorDetails[]> => {\n+  // 这里应该是调用实际的搜索 API\n+  // 返回模拟的搜索结果\n+  const results = await fuzzySearchAdvisorDetails(query);\n+  console.log(\"from API\", results);\n+  return results;\n+};\n+\n const ChatsContext = createContext<Partial<ContextProps>>({});\n \n export function MessagesProvider({ children }: { children: ReactNode }) {\n   const { addToast } = useToast();\n"
+                },
+                {
+                    "date": 1715478667279,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,8 +8,9 @@\n   useState,\n } from \"react\";\n import { sendMessage } from \"./sendMessage\";\n import { Height } from \"@mui/icons-material\";\n+import { AdvisorDetails } from \"../interface\";\n \n interface ContextProps {\n   messages: ChatCompletionRequestMessage[];\n   addMessage: (content: string) => Promise<void>;\n"
                 }
             ],
             "date": 1715436777502,

@@ -409,8 +409,8 @@ const GraphRender = ({
       // 构造用于缓存的键
       const cacheKey = `graphData-${advisor?._id}-${graphDegree}`;
       // 尝试从 localStorage 获取缓存的图表配置
-      const cachedData = localStorage.getItem(cacheKey);
-      // const cachedData = null; // 数据可能会更新
+      // const cachedData = localStorage.getItem(cacheKey);
+      const cachedData = null; // 数据可能会更新
 
       let data;
       if (cachedData) {
@@ -420,7 +420,7 @@ const GraphRender = ({
         console.log("get data");
         data = await advisorsReader(advisor?._id, graphDegree, advisor);
         // 将获取的数据存储到 localStorage
-        localStorage.setItem(cacheKey, JSON.stringify(data));
+        // localStorage.setItem(cacheKey, JSON.stringify(data));
       }
 
       const { nodes, links, minYear, maxYear } = data;

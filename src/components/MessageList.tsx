@@ -1,10 +1,17 @@
 import React from "react";
 import { useMessages } from "./utils/useMessages";
-import { Avatar, TextField, IconButton, Box } from "@mui/material";
-import SendIcon from "@mui/icons-material/Send";
+import { Avatar, Box, Typography } from "@mui/material";
+import ReactMarkdown from "react-markdown";
 
 const MessagesList = () => {
   const { messages, isLoadingAnswer } = useMessages();
+
+  // 自定义链接行为，使链接在新标签页中打开
+  const markdownComponents = {
+    a: ({ node, ...props }) => (
+      <a target="_blank" rel="noopener noreferrer" {...props} />
+    ),
+  };
 
   return (
     <Box
@@ -18,7 +25,12 @@ const MessagesList = () => {
     >
       {messages?.map((message, i) => {
         const isUser = message.role === "user";
-        if (message.role === "system") return null;
+        if (
+          message.role === "system" ||
+          message.role === "tool" ||
+          message?.content == null
+        )
+          return null;
         return (
           <Box
             sx={{
@@ -41,9 +53,13 @@ const MessagesList = () => {
                 borderRadius: ".5rem",
                 backgroundColor: isUser ? "#1976d2" : "#f0f0f0",
                 color: isUser ? "white" : "black",
+                fontFamily: "monospace",
+                fontSize: "1.1rem",
               }}
             >
-              {message.content.trim()}
+              <ReactMarkdown components={markdownComponents}>
+                {message?.content?.trim()}
+              </ReactMarkdown>
             </Box>
             {isUser && (
               <Avatar

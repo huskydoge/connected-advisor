@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 7,
+            "activePatchIndex": 10,
             "patches": [
                 {
                     "date": 1713951753367,
@@ -36,6 +36,18 @@
                 {
                     "date": 1715429712058,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -123,9 +123,9 @@\n export {\n   searchAdvisorDetailsById,\n   searchAdvisorDetailsByName,\n   fetchSearchDetailsById,\n-  fuzzySearchAdvisorDetails\n+  fuzzySearchAdvisorDetails,\n   updateAdvisor,\n   fetchAdvisorByIdLst,\n   fetchAdvisorDetails,\n };\n"
+                },
+                {
+                    "date": 1715485453495,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -105,9 +105,9 @@\n   const res = Array.isArray(data) ? data : [];\n   return res;\n };\n \n-const fuzzySearchAdvisorDetails = async (searchText: string) => {\n+const fuzzySearchAdvisor = async (searchText: string) => {\n   if (!searchText.trim()) return [];\n \n   const response = await fetch(\"/api/fuzzySearchAdvisor\", {\n     method: \"POST\",\n@@ -119,13 +119,15 @@\n   const res = Array.isArray(data) ? data : [];\n   return res;\n };\n \n+\n+\n export {\n   searchAdvisorDetailsById,\n   searchAdvisorDetailsByName,\n   fetchSearchDetailsById,\n-  fuzzySearchAdvisorDetails,\n+  fuzzySearchAdvisor,\n   updateAdvisor,\n   fetchAdvisorByIdLst,\n   fetchAdvisorDetails,\n };\n"
+                },
+                {
+                    "date": 1715485474431,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -119,8 +119,22 @@\n   const res = Array.isArray(data) ? data : [];\n   return res;\n };\n \n+const fuzzySearchAdvisorDetails = async (searchText: string) => {\n+  if (!searchText.trim()) return [];\n+\n+  const response = await fetch(\"/api/fuzzySearchAdvisor\", {\n+    method: \"POST\",\n+    headers: { \"Content-Type\": \"application/json\" },\n+    body: JSON.stringify({ name: searchText }),\n+  });\n+  const data = await response.json();\n+\n+  const res = Array.isArray(data) ? data : [];\n+  return res;\n+};\n+\n export {\n   searchAdvisorDetailsById,\n   searchAdvisorDetailsByName,\n   fetchSearchDetailsById,\n"
+                },
+                {
+                    "date": 1715485484322,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -135,8 +135,9 @@\n };\n \n export {\n   searchAdvisorDetailsById,\n+  fuzzySearchAdvisorDetails,\n   searchAdvisorDetailsByName,\n   fetchSearchDetailsById,\n   fuzzySearchAdvisor,\n   updateAdvisor,\n"
                 }
             ],
             "date": 1713951753367,

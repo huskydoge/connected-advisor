@@ -31,7 +31,7 @@ import LinkIcon from "@mui/icons-material/Link";
 import SvgIcon from "@mui/material/SvgIcon";
 import {
   searchAdvisorDetailsByName,
-  fuzzySearchAdvisorDetails,
+  fuzzySearchAdvisor,
 } from "./wrapped_api/fetchAdvisor";
 import { useRouter } from "next/router";
 import { AdvisorDetails } from "./interface";
@@ -100,7 +100,7 @@ function TopMenu() {
   const searchAPI = async (query: string): Promise<AdvisorDetails[]> => {
     // 这里应该是调用实际的搜索 API
     // 返回模拟的搜索结果
-    const results = await fuzzySearchAdvisorDetails(query);
+    const results = await fuzzySearchAdvisor(query);
     console.log("from API", results);
     return results;
   };

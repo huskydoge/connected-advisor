@@ -4,7 +4,8 @@ export default async function createMessage(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { messages } = req.body;
+  const { messages, tools } = req.body;
+  console.log("createMessage", messages, tools);
   const apiKey = process.env.OPENAI_API_KEY;
   const url = "https://api.openai.com/v1/chat/completions";
 
@@ -12,6 +13,8 @@ export default async function createMessage(
     messages,
     model: "gpt-3.5-turbo",
     stream: false,
+    tool_choice: "auto",
+    tools,
   });
 
   try {

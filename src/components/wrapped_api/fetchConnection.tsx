@@ -57,6 +57,21 @@ const fetchConnectionByIdLst = async (connection_id_lst) => {
   return connection_lst;
 };
 
+const fetchConnectionByName = async (name1: string, name2: string) => {
+  // console.log("input connection_id_lst", connection_id_lst);
+  const response = await fetch("/api/searchConnectionByName", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name1: name1, name2: name2 }),
+  });
+  if (!response.ok) {
+    console.error("Failed to fetch connection by id");
+    return null;
+  }
+  const connection = await response.json();
+  return connection;
+};
+
 const addOrUpdateConnection = async (connectionData) => {
   // TODO make sure it return correct id. If existing, then return existing id
   const response = await fetch("/api/addConnection", {
@@ -76,6 +91,7 @@ const addOrUpdateConnection = async (connectionData) => {
 
 export {
   fetchConnection,
+  fetchConnectionByName,
   addOrUpdateConnection,
   fetchConnectionById,
   fetchConnectionByIdLst,

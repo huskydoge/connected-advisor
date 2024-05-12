@@ -3,11 +3,23 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 3,
             "patches": [
                 {
                     "date": 1713924868485,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1715488100233,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -56,8 +56,25 @@\n   // console.log(\"Successfully fetched connection by id\", connection_lst);\n   return connection_lst;\n };\n \n+\n+const fetchConnectionByName = async (connection_id_lst) => {\n+  // console.log(\"input connection_id_lst\", connection_id_lst);\n+  const response = await fetch(\"/api/searchConnection\", {\n+    method: \"POST\",\n+    headers: { \"Content-Type\": \"application/json\" },\n+    body: JSON.stringify({ ids: connection_id_lst }),\n+  });\n+  if (!response.ok) {\n+    console.error(\"Failed to fetch connection by id\");\n+    return null;\n+  }\n+  const connection_lst = await response.json();\n+  // console.log(\"Successfully fetched connection by id\", connection_lst);\n+  return connection_lst;\n+};\n+\n const addOrUpdateConnection = async (connectionData) => {\n   // TODO make sure it return correct id. If existing, then return existing id\n   const response = await fetch(\"/api/addConnection\", {\n     method: \"POST\",\n"
+                },
+                {
+                    "date": 1715488125988,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -56,14 +56,14 @@\n   // console.log(\"Successfully fetched connection by id\", connection_lst);\n   return connection_lst;\n };\n \n-const fetchConnectionByName = async (connection_id_lst) => {\n+const fetchConnectionByName = async (name1: string, name2: string) => {\n   // console.log(\"input connection_id_lst\", connection_id_lst);\n-  const response = await fetch(\"/api/searchConnection\", {\n+  const response = await fetch(\"/api/searchConnectionByName\", {\n     method: \"POST\",\n     headers: { \"Content-Type\": \"application/json\" },\n-    body: JSON.stringify({ ids: connection_id_lst }),\n+    body: JSON.stringify({ name1: name1, name2: name2}),\n   });\n   if (!response.ok) {\n     console.error(\"Failed to fetch connection by id\");\n     return null;\n"
+                },
+                {
+                    "date": 1715488137235,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -67,10 +67,10 @@\n   if (!response.ok) {\n     console.error(\"Failed to fetch connection by id\");\n     return null;\n   }\n-  const connection_lst = await response.json();\n-  return connection_lst;\n+  const connection = await response.json();\n+  return connection;\n };\n \n const addOrUpdateConnection = async (connectionData) => {\n   // TODO make sure it return correct id. If existing, then return existing id\n"
                 }
             ],
             "date": 1713924868485,

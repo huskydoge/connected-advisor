@@ -22,11 +22,11 @@ const IndexPage: NextPage = () => {
   }, [headerRef, footerRef]);
 
   return (
-    <Box sx={{ height: "100%" }}>
+    <Box sx={{ height: "100%", width: "100%" }}>
       <div ref={headerRef}>
         <TopMenu />
       </div>
-      <Container maxWidth="md" sx={{ height: `${availableHeight}vh` }}>
+      <Container maxWidth="xl" sx={{ height: `${availableHeight}vh` }}>
         <Box
           sx={{
             marginTop: 4,
@@ -50,6 +50,7 @@ const IndexPage: NextPage = () => {
               display: "flex",
               flexDirection: "column",
               height: "100%",
+              width: "100%",
             }}
           >
             <Box
