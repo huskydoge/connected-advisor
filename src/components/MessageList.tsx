@@ -50,9 +50,9 @@ const MessagesList = () => {
           >
             {!isUser && (
               <Avatar
-                src="https://www.teamsmart.ai/next-assets/team/ai.jpg"
+                src="/female-lawyer-upper-body-svgrepo-com.svg"
                 alt="Bot"
-                sx={{ marginRight: "8px" }}
+                sx={{ marginRight: "1.2rem" }}
               />
             )}
             <Box
@@ -74,9 +74,9 @@ const MessagesList = () => {
             </Box>
             {isUser && (
               <Avatar
-                src="https://www.teamsmart.ai/next-assets/profile-image.png"
+                src="/lawyer-explaining-svgrepo-com.svg"
                 alt="User"
-                sx={{ marginLeft: "8px" }}
+                sx={{ marginLeft: "1.2rem" }}
               />
             )}
           </Box>
@@ -84,10 +84,7 @@ const MessagesList = () => {
       })}
       {isLoadingAnswer && (
         <Box sx={{ display: "flex", alignItems: "center", marginTop: "16px" }}>
-          <Avatar
-            src="https://www.teamsmart.ai/next-assets/team/ai.jpg"
-            alt="Bot"
-          />
+          <Avatar src="/thinking-woman-svgrepo-com.svg" alt="Bot" />
           <Box sx={{ marginLeft: "8px", display: "flex", gap: "4px" }}>
             <div className="loader-dot" />
             <div className="loader-dot" />
