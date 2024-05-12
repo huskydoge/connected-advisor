@@ -66,6 +66,7 @@
   display: flex;
   margin-left: 1rem; /* 减小整体左边距来减小列间距 */
   width: auto;
+  padding-top: 1rem;
   justify-content: center;
 }
 
@@ -76,4 +77,12 @@
 
 .enterButton {
   margin-top: 20px;
+}
+
+.imageStyle {
+  margin-top: 1rem;
+  width: 300px; /* Set width to 300 pixels */
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 15px; /* Rounded corners with 15px radius */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: adds shadow for better depth */
 }

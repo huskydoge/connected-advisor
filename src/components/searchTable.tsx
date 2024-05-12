@@ -7,12 +7,12 @@ import {
   TableBody,
   Paper,
   Button,
+  Chip, // Make sure Chip is imported
 } from "@mui/material";
 
 import { useRouter } from "next/router";
 import { AdvisorDetails } from "@/components/interface";
 
-// @ts-ignore
 const SearchTableView = ({ advisors, handleClickOnAdvisor }) => {
   const router = useRouter();
 
@@ -38,7 +38,11 @@ const SearchTableView = ({ advisors, handleClickOnAdvisor }) => {
               </TableCell>
               <TableCell align="center">{advisor?.affiliation}</TableCell>
               <TableCell align="center">{advisor?.position}</TableCell>
-              <TableCell align="center">{advisor?.tags}</TableCell>
+              <TableCell align="center">
+                {advisor?.tags?.map((tag, index) => (
+                  <Chip key={index} label={tag} style={{ margin: 2 }} />
+                ))}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
