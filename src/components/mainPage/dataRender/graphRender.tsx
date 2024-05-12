@@ -18,6 +18,7 @@ import { Connection, AdvisorDetails } from "@/components/interface";
 import CircularProgress from "@mui/material/CircularProgress";
 
 import { scholarImg } from "@/components/const";
+import { title } from "process";
 
 // 注册必要的组件
 echarts.use([
@@ -113,258 +114,6 @@ const fetchAdvisorDetailsBatch = async (connectionIds) => {
   return Promise.all(fetchPromises);
 };
 
-const advisorsReader = async (
-  _id: string,
-  graphDegree: number,
-  advisor: any
-) => {
-  let nodes: any[] = [];
-  let links: any[] = [];
-  let nodeQueue: AdvisorDetails[] = [];
-  let nodeQueueBackUp: AdvisorDetails[] = [];
-  let nodesSet = new Set<string>();
-  let linkSet = new Set<string>(); // 其实是冗余的，暂时先不管
-  currentMain = _id; // 更新主要advisor的ID
-  let minYear = new Date().getFullYear(); // 初始化为当前年份
-  let maxYear = 0;
-  if (!graphDegree || graphDegree < 1) {
-    graphDegree = 1;
-  }
-  const currentYear = new Date().getFullYear();
-
-  const maxRelationFactor = 100;
-
-  const minRelationFactor = 0;
-
-  const mainAdvisor = advisor;
-
-  // @ts-ignore
-  nodeQueue.push(mainAdvisor);
-
-  const addNode = (
-    nodes: any[],
-    advisor: AdvisorDetails,
-    symbolSize: number,
-    latestCollaboration: number,
-    influenceFactor: number
-  ) => {
-    // if exists, return
-    if (nodesSet.has(advisor._id)) {
-      return nodes;
-    }
-
-    if (advisor._id === mainAdvisor?._id) {
-      nodes.push({
-        id: String(mainAdvisor._id),
-        symbolSize: 200, // main节点的大小
-        itemStyle: { color: "red" }, // main节点为红色
-        latestCollaboration: new Date().getFullYear(), // 假设主节点的最近合作时间为当前年
-        influenceFactor: influenceFactor,
-        ...mainAdvisor,
-        // symbol: "image://" + getImgData(mainAdvisor.picture, mainAdvisor), // Add this line
-        draggable: true,
-      });
-    } else {
-      nodes.push({
-        id: String(advisor?._id),
-        symbolSize: symbolSize,
-        latestCollaboration: latestCollaboration,
-        symbol: "circle", //`image://${advisor.picture}`, // Add this line
-        influenceFactor: influenceFactor,
-        ...advisor,
-        draggable: true,
-      });
-    }
-    nodesSet.add(advisor._id);
-    return nodes;
-  };
-
-  function addLink(
-    links: any[],
-    sourceId: string,
-    targetId: string,
-    connection: any,
-    relationFactor: number
-  ) {
-    const width =
-      1 +
-      (4 * (relationFactor - minRelationFactor)) /
-        (maxRelationFactor - minRelationFactor);
-
-    const formatter = `Relation factor: ${relationFactor}<br/>${connection.relations
-      ?.map(
-        (rel: any) =>
-          `${rel.role} in ${rel.type}, from ${rel.duration.start} to ${rel.duration.end}`
-      )
-      .join("; ")}<br/>Collaborations: ${connection.collaborations
-      ?.map(
-        (collab: any) =>
-          `<a href="${collab.url}" target="_blank">${collab.papername} (${collab.year})</a>`
-      )
-      .join(", ")}`;
-
-    if (linkSet.has([sourceId, targetId].sort().join("-"))) {
-      return links;
-    }
-
-    links.push({
-      source: String(sourceId),
-      target: String(targetId),
-      value: relationFactor,
-      lineStyle: {
-        width: width,
-        curveness: 0.1,
-      },
-      tooltip: {
-        show: true,
-        formatter: formatter,
-      },
-    });
-    // undirected edge, denote it using a set
-
-    const edgeKey = [sourceId, targetId].sort().join("-");
-    linkSet.add(edgeKey);
-
-    // console.log(links);
-    // console.log(linkSet);
-
-    return links;
-  }
-
-  // MAIN LOOP
-
-  while (
-    (nodeQueue.length > 0 || nodeQueueBackUp.length > 0) &&
-    graphDegree > 0
-  ) {
-    const currentAdvisor = nodeQueue.shift();
-
-    // get all connected id of currentAdvisor
-    if (currentAdvisor) {
-      const curr_influence_factor = calculate_influence_factor(currentAdvisor);
-      nodes = addNode(
-        nodes,
-        currentAdvisor,
-        200,
-        currentAdvisor?.connections?.reduce(
-          (max, conn) => Math.max(max, get_latest_collaboration(conn)),
-          0
-        )
-          ? currentAdvisor?.connections.reduce(
-              (max, conn) => Math.max(max, get_latest_collaboration(conn)),
-              0
-            )
-          : currentYear,
-        curr_influence_factor
-      );
-
-      // get all connected advisors using fetchAdvisorDetails into a list
-
-      if (currentAdvisor.connections?.length) {
-        const connectionIds = currentAdvisor.connections.map(
-          (conn) => conn._id
-        );
-        const connectedAdvisors = await fetchAdvisorDetailsBatch(connectionIds);
-
-        connectedAdvisors.forEach((connectedAdvisor, index) => {
-          if (connectedAdvisor) {
-            const connection = currentAdvisor.connections[index];
-            const latestYear = connectedAdvisor.connections?.reduce(
-              (max, conn) => {
-                const year = conn.collaborations.reduce(
-                  (maxYear, collab) => Math.max(maxYear, collab.year),
-                  0
-                );
-                return Math.max(max, year);
-              },
-              0
-            );
-
-            const relationFactor = calculate_relation_factor(
-              currentAdvisor,
-              connectedAdvisor,
-              connection
-            );
-            minYear = Math.min(minYear, latestYear);
-            maxYear = Math.max(maxYear, latestYear);
-
-            const influenceFactor =
-              calculate_influence_factor(connectedAdvisor);
-            const symbolSize = 20 + influenceFactor * 10;
-            nodes = addNode(
-              nodes,
-              connectedAdvisor,
-              symbolSize,
-              latestYear,
-              influenceFactor
-            );
-            links = addLink(
-              links,
-              currentAdvisor._id,
-              connectedAdvisor._id,
-              connection,
-              relationFactor
-            );
-            nodeQueueBackUp.push(connectedAdvisor);
-          }
-        });
-      }
-
-      if (nodeQueue.length === 0) {
-        nodeQueue = nodeQueueBackUp;
-        nodeQueueBackUp = [];
-        graphDegree--;
-      }
-    }
-  }
-
-  return { nodes, links, minYear, maxYear, _id };
-};
-
-const getCircularImage = async (imageUrl: string, diameter: number) => {
-  return new Promise<string>((resolve, reject) => {
-    const img = new Image();
-    img.crossOrigin = "Anonymous";
-    img.onload = () => {
-      const canvas = document.createElement("canvas");
-      canvas.width = diameter;
-      canvas.height = diameter;
-      const ctx = canvas.getContext("2d");
-      if (ctx) {
-        ctx.beginPath();
-        ctx.arc(diameter / 2, diameter / 2, diameter / 2, 0, Math.PI * 2, true);
-        ctx.closePath();
-        ctx.clip();
-        ctx.drawImage(img, 0, 0, diameter, diameter);
-        resolve(canvas.toDataURL());
-      }
-    };
-    img.onerror = reject;
-    // 更新 imageUrl 为 API 代理的 URL
-    // img.src = `/api/image?imageUrl=${imageUrl}`;
-    img.src = `/api/image?imageUrl=${encodeURIComponent(imageUrl)}`;
-  });
-};
-
-const prepareNodes = async (nodesData) => {
-  const processedNodes = await Promise.all(
-    nodesData.map(async (node) => {
-      if (node.picture) {
-        const circularImage = await getCircularImage(node.picture, 100); // 假设节点图像直径为100px
-        node.symbol = `image://${circularImage}`;
-      } else {
-        const circularImage = await getCircularImage(scholarImg, 100);
-        // node.symbol = "circle";
-        node.symbol = `image://${circularImage}`;
-      }
-
-      return node;
-    })
-  );
-
-  return processedNodes;
-};
-
 // @ts-ignore
 const GraphRender = ({
   onNodeHover,
@@ -373,14 +122,54 @@ const GraphRender = ({
   graphType,
   showAvatar,
   split, // 屏幕占比
+  pattern_id,
 }: {
   onNodeHover: Function;
-  advisor: Advisor;
+  advisor: AdvisorDetails;
   graphDegree: number;
   graphType: string;
   showAvatar: boolean;
   split: integer;
+  pattern_id: integer;
 }) => {
+  const pattern_dict = [
+    {
+      // 温暖与和煦
+      main_node_color: "#FF6347", // 番茄红
+      other_node_color: "#FFDAB9", // 淡桃色
+      edgeColor: "#CC5533", // 番茄红的暗化版本
+      inRange: {
+        color: ["#FFDAB9", "#FF6347"], // 从淡桃色到番茄红的颜色渐变
+      },
+      textStyle: {
+        color: "#333", // 深灰色
+      },
+    },
+    {
+      // 冷静与专业
+      main_node_color: "#4682B4", // 钢青
+      other_node_color: "#B0C4DE", // 亮钢蓝
+      edgeColor: "#336699", // 钢青的暗化版本
+      inRange: {
+        color: ["#B0C4DE", "#4682B4"], // 从亮钢蓝到钢青的颜色渐变
+      },
+      textStyle: {
+        color: "#333", // 深灰色
+      },
+    },
+    {
+      // 简洁与现代
+      main_node_color: "#000000", // 纯黑
+      other_node_color: "#808080", // 中灰色
+      edgeColor: "#505050", // 中灰色的暗化版本
+      inRange: {
+        color: ["#C0C0C0", "#000000"], // 从银灰色到纯黑的颜色渐变
+      },
+      textStyle: {
+        color: "#333", // 深灰色
+      },
+    },
+  ];
   const chartRef = useRef(null);
   const [option, setOption] = useState({}); // 用于存储图表配置
   const [zoomFactor, setZoomFactor] = useState(1); // 存储当前的缩放因子
@@ -391,6 +180,276 @@ const GraphRender = ({
   const [loading, setLoading] = useState(true);
   const [nodesWOImg, setNodesWOImg] = useState([]);
   const [nodesWithImg, setNodesWithImg] = useState([]);
+  const [pattern, setPattern] = useState(pattern_dict[pattern_id]);
+
+  const advisorsReader = async (
+    _id: string,
+    graphDegree: number,
+    advisor: any
+  ) => {
+    let nodes: any[] = [];
+    let links: any[] = [];
+    let nodeQueue: AdvisorDetails[] = [];
+    let nodeQueueBackUp: AdvisorDetails[] = [];
+    let nodesSet = new Set<string>();
+    let linkSet = new Set<string>(); // 其实是冗余的，暂时先不管
+    currentMain = _id; // 更新主要advisor的ID
+    let minYear = new Date().getFullYear(); // 初始化为当前年份
+    let maxYear = 0;
+    if (!graphDegree || graphDegree < 1) {
+      graphDegree = 1;
+    }
+
+    const currentYear = new Date().getFullYear();
+
+    const maxRelationFactor = 100;
+
+    const minRelationFactor = 0;
+
+    const mainAdvisor = advisor;
+
+    // @ts-ignore
+    nodeQueue.push(mainAdvisor);
+
+    const addNode = (
+      nodes: any[],
+      advisor: AdvisorDetails,
+      symbolSize: number,
+      latestCollaboration: number,
+      influenceFactor: number
+    ) => {
+      // if exists, return
+      if (nodesSet.has(advisor._id)) {
+        return nodes;
+      }
+
+      if (advisor._id === mainAdvisor?._id) {
+        nodes.push({
+          id: String(mainAdvisor._id),
+          symbolSize: 200, // main节点的大小
+          itemStyle: { color: pattern.main_node_color }, // main节点为红色
+          latestCollaboration: new Date().getFullYear(), // 假设主节点的最近合作时间为当前年
+          influenceFactor: influenceFactor,
+          ...mainAdvisor,
+          // symbol: "image://" + getImgData(mainAdvisor.picture, mainAdvisor), // Add this line
+          draggable: true,
+        });
+      } else {
+        nodes.push({
+          id: String(advisor?._id),
+          symbolSize: symbolSize,
+          latestCollaboration: latestCollaboration,
+          itemStyle: { color: pattern.other_node_color }, // main节点为红色
+          symbol: "circle", //`image://${advisor.picture}`, // Add this line
+          influenceFactor: influenceFactor,
+          ...advisor,
+          draggable: true,
+        });
+      }
+      nodesSet.add(advisor._id);
+      return nodes;
+    };
+
+    function addLink(
+      links: any[],
+      sourceId: string,
+      targetId: string,
+      connection: any,
+      relationFactor: number
+    ) {
+      const width =
+        1 +
+        (4 * (relationFactor - minRelationFactor)) /
+          (maxRelationFactor - minRelationFactor);
+
+      const formatter = `Relation factor: ${relationFactor}<br/>${connection.relations
+        ?.map(
+          (rel: any) =>
+            `${rel.role} in ${rel.type}, from ${rel.duration.start} to ${rel.duration.end}`
+        )
+        .join("; ")}<br/>Collaborations: ${connection.collaborations
+        ?.map(
+          (collab: any) =>
+            `<a href="${collab.url}" target="_blank">${collab.papername} (${collab.year})</a>`
+        )
+        .join(", ")}`;
+
+      if (linkSet.has([sourceId, targetId].sort().join("-"))) {
+        return links;
+      }
+
+      links.push({
+        source: String(sourceId),
+        target: String(targetId),
+        value: relationFactor,
+        lineStyle: {
+          width: width,
+          curveness: 0.1,
+          color: pattern.edgeColor,
+        },
+        tooltip: {
+          show: true,
+          formatter: formatter,
+        },
+      });
+      // undirected edge, denote it using a set
+
+      const edgeKey = [sourceId, targetId].sort().join("-");
+      linkSet.add(edgeKey);
+
+      // console.log(links);
+      // console.log(linkSet);
+
+      return links;
+    }
+
+    // MAIN LOOP
+
+    while (
+      (nodeQueue.length > 0 || nodeQueueBackUp.length > 0) &&
+      graphDegree > 0
+    ) {
+      const currentAdvisor = nodeQueue.shift();
+
+      // get all connected id of currentAdvisor
+      if (currentAdvisor) {
+        const curr_influence_factor =
+          calculate_influence_factor(currentAdvisor);
+        nodes = addNode(
+          nodes,
+          currentAdvisor,
+          200,
+          currentAdvisor?.connections?.reduce(
+            (max, conn) => Math.max(max, get_latest_collaboration(conn)),
+            0
+          )
+            ? currentAdvisor?.connections.reduce(
+                (max, conn) => Math.max(max, get_latest_collaboration(conn)),
+                0
+              )
+            : currentYear,
+          curr_influence_factor
+        );
+
+        // get all connected advisors using fetchAdvisorDetails into a list
+
+        if (currentAdvisor.connections?.length) {
+          const connectionIds = currentAdvisor.connections.map(
+            (conn) => conn._id
+          );
+          const connectedAdvisors = await fetchAdvisorDetailsBatch(
+            connectionIds
+          );
+
+          connectedAdvisors.forEach((connectedAdvisor, index) => {
+            if (connectedAdvisor) {
+              const connection = currentAdvisor.connections[index];
+              const latestYear = connectedAdvisor.connections?.reduce(
+                (max, conn) => {
+                  const year = conn.collaborations.reduce(
+                    (maxYear, collab) => Math.max(maxYear, collab.year),
+                    0
+                  );
+                  return Math.max(max, year);
+                },
+                0
+              );
+
+              const relationFactor = calculate_relation_factor(
+                currentAdvisor,
+                connectedAdvisor,
+                connection
+              );
+              minYear = Math.min(minYear, latestYear);
+              maxYear = Math.max(maxYear, latestYear);
+
+              const influenceFactor =
+                calculate_influence_factor(connectedAdvisor);
+              const symbolSize = 20 + influenceFactor * 10;
+              nodes = addNode(
+                nodes,
+                connectedAdvisor,
+                symbolSize,
+                latestYear,
+                influenceFactor
+              );
+              links = addLink(
+                links,
+                currentAdvisor._id,
+                connectedAdvisor._id,
+                connection,
+                relationFactor
+              );
+              nodeQueueBackUp.push(connectedAdvisor);
+            }
+          });
+        }
+
+        if (nodeQueue.length === 0) {
+          nodeQueue = nodeQueueBackUp;
+          nodeQueueBackUp = [];
+          graphDegree--;
+        }
+      }
+    }
+
+    return { nodes, links, minYear, maxYear, _id };
+  };
+
+  const getCircularImage = async (imageUrl: string, diameter: number) => {
+    return new Promise<string>((resolve, reject) => {
+      const img = new Image();
+      img.crossOrigin = "Anonymous";
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        canvas.width = diameter;
+        canvas.height = diameter;
+        const ctx = canvas.getContext("2d");
+        if (ctx) {
+          ctx.beginPath();
+          ctx.arc(
+            diameter / 2,
+            diameter / 2,
+            diameter / 2,
+            0,
+            Math.PI * 2,
+            true
+          );
+          ctx.closePath();
+          ctx.clip();
+          ctx.drawImage(img, 0, 0, diameter, diameter);
+          resolve(canvas.toDataURL());
+        }
+      };
+      img.onerror = reject;
+      // 更新 imageUrl 为 API 代理的 URL
+      // img.src = `/api/image?imageUrl=${imageUrl}`;
+      img.src = `/api/image?imageUrl=${encodeURIComponent(imageUrl)}`;
+    });
+  };
+
+  const prepareNodes = async (nodesData) => {
+    const processedNodes = await Promise.all(
+      nodesData.map(async (node) => {
+        if (node.picture) {
+          const circularImage = await getCircularImage(node.picture, 100); // 假设节点图像直径为100px
+          node.symbol = `image://${circularImage}`;
+        } else {
+          const circularImage = await getCircularImage(scholarImg, 100);
+          // node.symbol = "circle";
+          node.symbol = `image://${circularImage}`;
+        }
+
+        return node;
+      })
+    );
+
+    return processedNodes;
+  };
+
+  useEffect(() => {
+    setPattern(pattern_dict[pattern_id]);
+  }, [pattern_id]);
 
   useEffect(() => {
     if (chartRef.current && !myChart) {
@@ -475,9 +534,9 @@ const GraphRender = ({
 
       const initialOption = {
         title: {
-          text: "科研合作网络图",
-          top: "bottom",
-          left: "right",
+          top: "20",
+          text: "Connected Graph",
+          left: "center",
         },
         visualMap: {
           show: true,
@@ -487,12 +546,11 @@ const GraphRender = ({
           orient: "horizontal",
           left: "3%",
           bottom: "10%",
-
           inRange: {
-            color: ["#eee", "#abc"], // 从浅灰到深灰的颜色渐变
+            color: [pattern.inRange.color[0], pattern.inRange.color[1]], // 从浅灰到深灰的颜色渐变
           },
           textStyle: {
-            color: "#333",
+            color: pattern.textStyle.color,
           },
           // 显示两端的数值
           text: [maxYear.toString(), minYear.toString()], // visualMap 两端显示的文本，分别对应最大值和最小值
@@ -507,9 +565,6 @@ const GraphRender = ({
             return `${params.data.name} <br/> influence factor: ${params.data.influenceFactor}`;
           },
         },
-        legend: {
-          data: ["Main Node", "Other"],
-        },
         focusNodeAdjacency: true, //是否在鼠标移到节点上的时候突出显示节点以及节点的边和邻接节点。
         series: [
           {
@@ -519,8 +574,6 @@ const GraphRender = ({
             layoutAnimation: false,
             data: final_nodes,
             links: links,
-
-            categories: [{ name: "Main Node" }, { name: "Other" }],
             roam: false,
             edgeSymbol: ["none", "none"],
             edgeSymbolSize: [10, 20],
@@ -689,6 +742,54 @@ const GraphRender = ({
       }
     }
   }, [showAvatar, nodesWithImg]);
+
+  useEffect(() => {
+    if (myChart) {
+      // 首先，更新视觉映射
+      myChart.setOption({
+        visualMap: {
+          inRange: {
+            color: [pattern.inRange.color[0], pattern.inRange.color[1]], // 从浅灰到深灰的颜色渐变
+          },
+          textStyle: {
+            color: pattern.textStyle.color,
+          },
+        },
+      });
+
+      // 获取当前图表的配置
+      const options = myChart.getOption();
+
+      // 检查series和data是否存在
+      console.log(options);
+      options.series.forEach((series) => {
+        if (series.data) {
+          series.data.forEach((dataItem) => {
+            // 找到匹配的数据节点
+            if (dataItem.id === advisor?._id) {
+              // 设置该节点的itemStyle
+              dataItem.itemStyle = { color: pattern.main_node_color };
+            } else {
+              dataItem.itemStyle = { color: pattern.other_node_color };
+            }
+          });
+        }
+      });
+
+      options.series.forEach((series) => {
+        if (series.links) {
+          series.links.forEach((linkItem) => {
+            // 找到匹配的数据节点
+
+            linkItem.lineStyle.color = pattern.edgeColor;
+          });
+        }
+      });
+
+      // 将更新后的配置重新设置到图表
+      myChart.setOption(options, false, true); // 使用非立即更新和合并配置的方式
+    }
+  }, [pattern]);
 
   return (
     <div

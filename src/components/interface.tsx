@@ -10,6 +10,8 @@
 //   connections: {
 //     _id: string;
 
+import { integer } from "@elastic/elasticsearch/lib/api/types";
+
 //     relation: Array<{
 //       type: string;
 //       role: string;
@@ -46,7 +48,7 @@ export interface Advisor {
 
 export interface Config {
   graphDegree: number;
-  colorPattern: string;
+  pattern_id: integer;
   graphType: string;
   showAvatars: boolean;
 }

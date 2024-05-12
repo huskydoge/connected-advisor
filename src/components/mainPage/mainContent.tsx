@@ -25,6 +25,7 @@ const GraphRender = dynamic(() => import("./dataRender/graphRender"), {
 import { fetchAdvisorDetails } from "../wrapped_api/fetchAdvisor";
 
 import { useRouter } from "next/router";
+import { integer } from "@elastic/elasticsearch/lib/api/types";
 
 function MainContent({ id }: { id: string }) {
   const _id = String(id);
@@ -40,7 +41,7 @@ function MainContent({ id }: { id: string }) {
   const [config, setConfig] = useState({
     graphDegree: 1,
     graphType: "undirected",
-    colorPattern: "pattern1",
+    pattern_id: 0,
     showAvatars: false,
   });
   // 初始左侧面板flex值为3，右侧面板flex值为1，总flex值为4
@@ -121,6 +122,11 @@ function MainContent({ id }: { id: string }) {
     setConfig({ ...config, showAvatars: show });
   };
 
+  const handleGraphPatternChange = (id: integer) => {
+    console.log(id);
+    setConfig({ ...config, pattern_id: id });
+  };
+
   const handleListView = () => {
     // 显示ListView
 
@@ -170,6 +176,7 @@ function MainContent({ id }: { id: string }) {
             onGraphAvatarDisplayChange={handleGraphAvatarDisplayChange}
             onGraphDegreeChange={handleGraphDegreeChange}
             onGraphTypeChange={handleGraphTypeChange}
+            onGraphPatternChange={handleGraphPatternChange}
             config={config}
           />
         ); // 假设GraphCard接受data作为prop
@@ -253,6 +260,7 @@ function MainContent({ id }: { id: string }) {
               }}
               split={splitPercentage}
               showAvatar={config.showAvatars}
+              pattern_id={config.pattern_id}
             />
           )}
         </Paper>

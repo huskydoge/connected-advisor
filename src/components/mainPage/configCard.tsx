@@ -17,21 +17,24 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 
 import { Config } from "../interface";
+import { integer } from "@elastic/elasticsearch/lib/api/types";
 
 const ConfigCard = ({
   onClose,
   onGraphDegreeChange,
   onGraphTypeChange,
   onGraphAvatarDisplayChange,
+  onGraphPatternChange,
   config,
 }: {
   onClose: () => void;
   onGraphDegreeChange: (degree: number) => void;
   onGraphTypeChange: (type: string) => void;
   onGraphAvatarDisplayChange: (show: boolean) => void;
+  onGraphPatternChange: (id: integer) => void;
   config: Config;
 }) => {
-  const [colorPattern, setColorPattern] = React.useState(config.colorPattern);
+  const [patternId, setPatternId] = React.useState(config.pattern_id);
   const [graphType, setGraphType] = React.useState(config.graphType);
   const [graphDegree, setGraphDegree] = React.useState(config.graphDegree);
   const [showAvatars, setShowAvatars] = React.useState(config.showAvatars);
@@ -41,9 +44,10 @@ const ConfigCard = ({
     setGraphDegree(event.target.value);
   };
   // @ts-ignore
-  const handleColorChange = (event, newColor) => {
+  const handlePatternChange = (event, newColor) => {
     if (newColor !== null) {
-      setColorPattern(newColor);
+      onGraphPatternChange(event.target.value);
+      setPatternId(event.target.value);
     }
   };
   // @ts-ignore
@@ -95,16 +99,14 @@ const ConfigCard = ({
             </FormLabel>
             <ToggleButtonGroup
               color="primary"
-              value={colorPattern}
+              value={patternId}
               exclusive
-              onChange={(e, newColor) =>
-                newColor !== null && setColorPattern(newColor)
-              }
+              onChange={handlePatternChange}
               fullWidth
             >
-              <ToggleButton value="pattern1">Pattern 1</ToggleButton>
-              <ToggleButton value="pattern2">Pattern 2</ToggleButton>
-              <ToggleButton value="pattern3">Pattern 3</ToggleButton>
+              <ToggleButton value="0">Pattern 1</ToggleButton>
+              <ToggleButton value="1">Pattern 2</ToggleButton>
+              <ToggleButton value="2">Pattern 3</ToggleButton>
             </ToggleButtonGroup>
           </FormControl>
 

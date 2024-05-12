@@ -28,19 +28,15 @@ const IndexPage: NextPage = () => {
       </div>
       <Container maxWidth="xl" sx={{ height: `${availableHeight}vh` }}>
         <Box
-          sx={{
-            marginTop: 4,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          sx={{ marginTop: "2rem" }}
         >
-          <Avatar
-            sx={{ width: 56, height: 56, marginRight: 2 }}
-            src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg"
-            alt="Logo"
-          />
-          <Typography variant="h4" align="center" sx={{ flexGrow: 1 }}>
+          <Avatar src="teamwork-svgrepo-com.svg" alt="Logo" />
+          <Typography variant="h4" align="center" sx={{ ml: 2 }}>
+            {" "}
+            {/* ml: 2 为左边距提供一些空间 */}
             Chat with Our Assistant
           </Typography>
         </Box>

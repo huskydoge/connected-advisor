@@ -1,5 +1,7 @@
 Chat的切换还不够，应该保存状态
 
+Chat没有对错误进行处理，比如连接错误的时候没有输出错误信息。
+
 加入更多的datapoints
 
 每次submit了connection之后要刷新
