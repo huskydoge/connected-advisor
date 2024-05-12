@@ -6,7 +6,7 @@ const AboutPage = () => {
     {
       name: "Benhao Huang",
       avatar:
-        "https://media.licdn.com/dms/image/D5603AQGfjU-JQgGc2Q/profile-displayphoto-shrink_200_200/0/1706193347767?e=1720656000&v=beta&t=tUgl1yKE0Dbqqz6HVZ1L3TGHLGdbOI87DLSjD-fhEmE", // 头像图片路径
+        "https://media.licdn.com/dms/image/D5603AQGfjU-JQgGc2Q/profile-displayphoto-shrink_200_200/0/1706193347767?e=1720656000&v=beta&t=tUgl1yKE0Dbqqz6HVZ1L3TGHLGdbOI87DLSjD-fhEmE",
       github: "https://huskydoge.github.io/",
       email: "hbh001098hbh@sjtu.edu.cn",
       bio: "Hello! Husky Here! I’m a junior student at Shanghai Jiao Tong University(SJTU), majored in Computer Science.",
@@ -23,25 +23,22 @@ const AboutPage = () => {
       avatar: "/zhouzhoucat.jpeg",
       github: "https://github.com/carol",
       email: "carol@example.com",
-      bio: "I’m currently an undergraduate student at Shanghai Jiao Tong University, majoring in Computer Science and Applied Mathematics. I love sports and playing bridge.",
+      bio: "Currently an undergraduate student at Shanghai Jiao Tong University, majoring in Computer Science and Mathematics, striving to be a human, a bridge player, a thinker and a feeler, a dreamer, and a world healer.",
     },
   ];
 
   return (
     <Box sx={{ flexGrow: 1, padding: 4 }}>
-      <Grid container spacing={2} justifyContent="center">
-        {profiles.map((profile, index) => (
+      <Grid container direction="column" spacing={2} justifyContent="center">
+        {profiles.map((profile) => (
           <Grid
             item
             xs={12}
-            sm={4}
             key={profile.name}
             sx={{
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              borderRight:
-                index !== profiles.length - 1 ? "1px solid #e0e0e0" : "none", // 最后一列不添加边框
               paddingBottom: 2,
             }}
           >
@@ -67,7 +64,17 @@ const AboutPage = () => {
                 Email
               </Button>
             </Stack>
-            <Typography variant="body1" color="text.secondary">
+            <Typography
+              variant="body1"
+              color="text.secondary"
+              sx={{
+                fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+                fontSize: "1rem",
+                lineHeight: 2,
+                wordBreak: "break-word",
+                textAlign: "justify",
+              }}
+            >
               {profile.bio}
             </Typography>
           </Grid>
