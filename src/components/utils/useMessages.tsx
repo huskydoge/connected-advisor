@@ -61,7 +61,8 @@ export function MessagesProvider({ children }: { children: ReactNode }) {
       };
       const welcomeMessage: ChatCompletionRequestMessage = {
         role: "assistant",
-        content: "Hi, How can I help you today?",
+        content:
+          "Hi, I'm your assistant at Connected Advisors. How can I help you today?",
       };
       setMessages([systemMessage, welcomeMessage]);
     };

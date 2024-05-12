@@ -3,8 +3,12 @@ import Link from "next/link";
 import Image from "next/image";
 import styles from "../styles/home.module.css";
 import ImageGallery from "@/components/ImageGallery";
+import router from "next/router";
 
 export default function Home() {
+  const handleEnter = () => {
+    router.replace("/main/6607bc09eb00fa31e8d30829?graph");
+  };
   return (
     <div className={styles.container}>
       <main className={styles.main}>
@@ -15,9 +19,9 @@ export default function Home() {
         </div>
         {/* 添加导航入口 */}
         <div className={styles.enterButton}>
-          <Link href="/main/6607bc09eb00fa31e8d30829" passHref>
-            <button type="button">Enter Main Page</button>
-          </Link>
+          <button type="button" onClick={handleEnter}>
+            Enter Main Page
+          </button>
         </div>
       </main>
     </div>

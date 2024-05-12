@@ -41,7 +41,7 @@ const IndexPage: NextPage = () => {
             alt="Logo"
           />
           <Typography variant="h4" align="center" sx={{ flexGrow: 1 }}>
-            Chat with the bot
+            Chat with Our Assistant
           </Typography>
         </Box>
         <MessagesProvider>

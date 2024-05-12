@@ -1,16 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useMessages } from "./utils/useMessages";
 import { IconButton, TextField } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 
 const MessageForm = () => {
   const [content, setContent] = useState("");
-  const { addMessage } = useMessages();
+  const { addMessage, isLoadingAnswer } = useMessages();
+  const [activate, setActivate] = useState(true);
+
+  useEffect(() => {
+    if (isLoadingAnswer) {
+      setActivate(false);
+    } else {
+      setActivate(true);
+    }
+  }, [isLoadingAnswer]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    addMessage(content);
-    setContent("");
+    if (activate) {
+      addMessage(content);
+      setContent("");
+    }
   };
 
   return (
@@ -25,7 +36,7 @@ const MessageForm = () => {
         maxWidth: "768px",
         borderRadius: "8px",
         border: "1px solid #ccc",
-        position: "relative", // For absolute positioning of the button
+        position: "relative",
       }}
     >
       <TextField
@@ -33,17 +44,27 @@ const MessageForm = () => {
         label="Type your message"
         variant="outlined"
         multiline
-        maxRows={4} // Adjust maxRows as needed for better control over scrolling
+        maxRows={4}
         value={content}
         onChange={(e) => setContent(e.target.value)}
+        onKeyPress={(e) => {
+          if (e.key === "Enter" && !e.shiftKey && activate) {
+            e.preventDefault();
+            if (content.trim()) {
+              handleSubmit(e);
+            }
+          }
+        }}
         autoFocus
         fullWidth
-        style={{ marginRight: "48px" }} // Make space for the button
+        disabled={!activate} // Disable input when activate is false
+        style={{ marginRight: "48px" }}
       />
       <IconButton
         type="submit"
-        color="primary"
+        color={activate ? "primary" : "default"} // Change color based on activate
         aria-label="send"
+        disabled={!activate} // Disable button when activate is false
         style={{
           position: "absolute",
           right: "8px",

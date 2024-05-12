@@ -172,3 +172,33 @@ a {
 a {
   color: #4183c4;
 }
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.loader-dot {
+  height: 10px;
+  width: 10px;
+  background-color: black;
+  border-radius: 50%;
+  display: inline-block;
+  animation: pulse 1s infinite ease-in-out;
+}
+
+/* Slightly delay the animation on every dot to make it look better */
+.loader-dot:nth-child(1) {
+  animation-delay: 0s;
+}
+.loader-dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.loader-dot:nth-child(3) {
+  animation-delay: 0.4s;
+}

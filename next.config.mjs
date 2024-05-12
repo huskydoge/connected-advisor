@@ -25,7 +25,7 @@ export default {
     return [
       {
         source: "/main",
-        destination: "/main/6605727083d53b77ef56b2ba",
+        destination: "/main/6605727083d53b77ef56b2ba?graph",
         permanent: true,
       },
     ];

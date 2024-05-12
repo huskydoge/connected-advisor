@@ -11,6 +11,15 @@ const MessagesList = () => {
     a: ({ node, ...props }) => (
       <a target="_blank" rel="noopener noreferrer" {...props} />
     ),
+    ul: ({ node, ...props }) => (
+      <ul
+        style={{ paddingTop: "1rem", paddingLeft: "2rem", margin: "0" }}
+        {...props}
+      />
+    ),
+    li: ({ node, ...props }) => (
+      <li style={{ marginBottom: "0.5rem" }} {...props} />
+    ),
   };
 
   return (
@@ -49,12 +58,14 @@ const MessagesList = () => {
             <Box
               sx={{
                 maxWidth: "calc(100% - .2rem)",
-                padding: "1rem",
-                borderRadius: ".5rem",
+                padding: "1.2rem",
+                borderRadius: ".4rem",
                 backgroundColor: isUser ? "#1976d2" : "#f0f0f0",
                 color: isUser ? "white" : "black",
-                fontFamily: "monospace",
+                // fontFamily: "monospace",
                 fontSize: "1.1rem",
+                wordBreak: "break-word", // Ensures text wraps to avoid horizontal overflow
+                boxSizing: "border-box", // Makes sure padding does not add to width
               }}
             >
               <ReactMarkdown components={markdownComponents}>

@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import IconButton from "@mui/material/IconButton";
-
+import { useLocation } from "react-router-dom"; // Make sure to install react-router-dom if not already installed
 import SearchIcon from "@mui/icons-material/Search";
 import Button from "@mui/material/Button";
 import AccountCircle from "@mui/icons-material/AccountCircle";
@@ -77,6 +77,23 @@ function TopMenu() {
   const [openAbout, setOpenAbout] = useState(false);
   const [showMore, setShowMore] = useState(false);
 
+  const [showChat, setShowChat] = useState(false);
+  const [chatBtnText, setChatBtnText] = useState("Chat");
+
+  const location = useRouter();
+  const [previouseRoute, setPreviouseRoute] = useState("");
+
+  useEffect(() => {
+    const path = location.pathname; // This gives you the current path in the URL
+    if (path.endsWith("chat")) {
+      setShowChat(true);
+      setChatBtnText("Back");
+    } else {
+      setShowChat(false);
+      setChatBtnText("Chat");
+    }
+  }, [location]); // Dependency array includes location to rerun effect when location changes
+
   // 即时搜索逻辑
   const updateSearchQuery = async (
     event: React.ChangeEvent<HTMLInputElement>
@@ -119,10 +136,15 @@ function TopMenu() {
   };
 
   const handleChatClick = () => {
-    router.replace(`/chat`, undefined, {
-      shallow: true,
-    });
+    if (!showChat) {
+      router.replace(`/chat`, undefined, {
+        shallow: false,
+      });
+    } else {
+      router.back();
+    }
   };
+
   const handleShareClick = () => {
     setOpenShare(true);
   };
@@ -272,7 +294,7 @@ function TopMenu() {
             }}
             onClick={handleChatClick}
           >
-            Chat
+            {chatBtnText}
           </Button>
 
           <Button
@@ -319,14 +341,14 @@ function TopMenu() {
         </Box>
 
         {/* 用户图标 */}
-        <IconButton
+        {/* <IconButton
           edge="end"
           aria-label="account of current user"
           aria-haspopup="true"
           sx={{ color: "blue" }}
         >
           <AccountCircle />
-        </IconButton>
+        </IconButton> */}
       </Toolbar>
       {/* 弹窗组件 */}
       <Dialog
