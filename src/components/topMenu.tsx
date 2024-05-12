@@ -118,6 +118,11 @@ function TopMenu() {
     setShowMore(true);
   };
 
+  const handleChatClick = () => {
+    router.replace(`/chat`, undefined, {
+      shallow: true,
+    });
+  };
   const handleShareClick = () => {
     setOpenShare(true);
   };
@@ -265,7 +270,7 @@ function TopMenu() {
               fontFamily: theme.typography.fontFamily,
               fontWeight: theme.typography.fontWeightRegular,
             }}
-            onClick={handleShareClick}
+            onClick={handleChatClick}
           >
             Chat
           </Button>
