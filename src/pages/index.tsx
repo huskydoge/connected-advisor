@@ -7,7 +7,7 @@ import router from "next/router";
 
 export default function Home() {
   const handleEnter = () => {
-    router.replace("/main/6607bc09eb00fa31e8d30829?graph");
+    router.push("/main/6607bc09eb00fa31e8d30829?graph");
   };
   return (
     <div className={styles.container}>

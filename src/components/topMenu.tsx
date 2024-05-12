@@ -123,7 +123,7 @@ function TopMenu() {
   };
 
   const handleClick = (id: string) => {
-    router.replace(`/main/${id}?view=graph`, undefined, {
+    router.push(`/main/${id}?view=graph`, undefined, {
       shallow: true,
     });
     // clear query and results
@@ -137,7 +137,7 @@ function TopMenu() {
 
   const handleChatClick = () => {
     if (!showChat) {
-      router.replace(`/chat`, undefined, {
+      router.push(`/chat`, undefined, {
         shallow: false,
       });
     } else {
