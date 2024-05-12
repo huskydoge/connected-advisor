@@ -201,7 +201,7 @@ function MainContent({ id }: { id: string }) {
     // 计算新的分割位置百分比
     const newSplitPercentage = (e.clientX / window.innerWidth) * 100;
     // 设置状态以更新UI
-    if (newSplitPercentage <= 30 || newSplitPercentage >= 70) {
+    if (newSplitPercentage <= 40 || newSplitPercentage >= 55) {
       e.preventDefault();
     } else {
       setSplitPercentage(newSplitPercentage);

@@ -108,29 +108,23 @@ const StatisticCard = ({ onClose, split }) => {
   };
 
   useEffect(() => {
-    if (chartRefAff.current && !myChartAff) {
-      const initializedChart = echarts.init(chartRefAff.current, null, {
-        renderer: "svg",
-      });
-      // @ts-ignore
-      setMyChartAff(initializedChart); // 保存 echarts 实例
-    }
+    const initializedChart1 = echarts.init(chartRefAff.current, null, {
+      renderer: "svg",
+    });
+    // @ts-ignore
+    setMyChartAff(initializedChart1); // 保存 echarts 实例
 
-    if (chartRefTag.current && !myChartTag) {
-      const initializedChart = echarts.init(chartRefTag.current, null, {
-        renderer: "svg",
-      });
-      // @ts-ignore
-      setMyChartTag(initializedChart); // 保存 echarts 实例
-    }
+    const initializedChart2 = echarts.init(chartRefTag.current, null, {
+      renderer: "svg",
+    });
+    // @ts-ignore
+    setMyChartTag(initializedChart2); // 保存 echarts 实例
 
-    if (chartRefPos.current && !myChartPos) {
-      const initializedChart = echarts.init(chartRefPos.current, null, {
-        renderer: "svg",
-      });
-      // @ts-ignore
-      setMyChartPos(initializedChart); // 保存 echarts 实例
-    }
+    const initializedChart3 = echarts.init(chartRefPos.current, null, {
+      renderer: "svg",
+    });
+    // @ts-ignore
+    setMyChartPos(initializedChart3); // 保存 echarts 实例
   }, [split]);
 
   useEffect(() => {
@@ -153,7 +147,7 @@ const StatisticCard = ({ onClose, split }) => {
         console.log("get data");
         data = await fetchStatistics();
         // 将获取的数据存储到 localStorage
-        localStorage.setItem(cacheKey, JSON.stringify(data));
+        // localStorage.setItem(cacheKey, JSON.stringify(data));
       }
 
       console.log(data);
@@ -338,66 +332,59 @@ const StatisticCard = ({ onClose, split }) => {
   return (
     <Box
       sx={{
-        position: "relative",
+        position: "relative", // 主要用于定位关闭按钮
         display: "flex",
         flexDirection: "column",
         height: "100%",
+        width: "100%", // 确保Box填满其父容器
       }}
     >
       <IconButton
         onClick={onClose}
-        sx={{ position: "absolute", right: 8, top: 8 }}
+        sx={{ position: "absolute", right: 8, top: 8, zIndex: 1 }} // 确保按钮在顶层
       >
         <CloseIcon />
       </IconButton>
       <CardContent>
         <Typography variant="h6">Statistics</Typography>
       </CardContent>
-      <Box sx={{ flex: 1, position: "relative", minHeight: 100 }}>
-        <div ref={chartRefAff} style={{ width: "100%", height: "50%" }}>
+      <Box
+        sx={{ flex: 1, display: "flex", flexDirection: "column", padding: 2 }}
+      >
+        <div ref={chartRefAff} style={{ width: "100%", height: "33%" }}>
           {loadingAff && (
-            <div
-              style={{
+            <CircularProgress
+              sx={{
                 position: "absolute",
                 top: "50%",
                 left: "50%",
                 transform: "translate(-50%, -50%)",
               }}
-            >
-              <CircularProgress />
-            </div>
+            />
           )}
         </div>
-      </Box>
-      <Box sx={{ flex: 1, position: "relative", minHeight: 100 }}>
-        <div ref={chartRefTag} style={{ width: "100%", height: "50%" }}>
+        <div ref={chartRefTag} style={{ width: "100%", height: "33%" }}>
           {loadingTag && (
-            <div
-              style={{
+            <CircularProgress
+              sx={{
                 position: "absolute",
                 top: "50%",
                 left: "50%",
                 transform: "translate(-50%, -50%)",
               }}
-            >
-              <CircularProgress />
-            </div>
+            />
           )}
         </div>
-      </Box>
-      <Box sx={{ flex: 1, position: "relative", minHeight: 100 }}>
-        <div ref={chartRefPos} style={{ width: "100%", height: "50%" }}>
+        <div ref={chartRefPos} style={{ width: "100%", height: "33%" }}>
           {loadingPos && (
-            <div
-              style={{
+            <CircularProgress
+              sx={{
                 position: "absolute",
                 top: "50%",
                 left: "50%",
                 transform: "translate(-50%, -50%)",
               }}
-            >
-              <CircularProgress />
-            </div>
+            />
           )}
         </div>
       </Box>
