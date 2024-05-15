@@ -25,6 +25,7 @@ const ConfigCard = ({
   onGraphTypeChange,
   onGraphAvatarDisplayChange,
   onGraphPatternChange,
+  onGraphLayoutChange,
   config,
 }: {
   onClose: () => void;
@@ -32,12 +33,14 @@ const ConfigCard = ({
   onGraphTypeChange: (type: string) => void;
   onGraphAvatarDisplayChange: (show: boolean) => void;
   onGraphPatternChange: (id: integer) => void;
+  onGraphLayoutChange: (ly: string) => void;
   config: Config;
 }) => {
   const [patternId, setPatternId] = React.useState(config.pattern_id);
   const [graphType, setGraphType] = React.useState(config.graphType);
   const [graphDegree, setGraphDegree] = React.useState(config.graphDegree);
   const [showAvatars, setShowAvatars] = React.useState(config.showAvatars);
+  const [layout, setLayout] = React.useState(config.layout);
 
   const handleDegreeChange = (event: any) => {
     onGraphDegreeChange(event.target.value);
@@ -54,6 +57,12 @@ const ConfigCard = ({
   const handleGraphTypeChange = (event) => {
     onGraphTypeChange(event.target.value);
     setGraphType(event.target.value);
+  };
+
+  // @ts-ignore
+  const handleLayoutChange = (event) => {
+    onGraphLayoutChange(event.target.value);
+    setLayout(event.target.value);
   };
 
   const handleAvatarDisplayChange = (
@@ -93,6 +102,29 @@ const ConfigCard = ({
             </RadioGroup>
           </FormControl>
 
+          <FormControl component="fieldset" sx={{ mb: 3, width: "100%" }}>
+            <FormLabel component="legend" sx={{ mb: 1 }}>
+              Graph Layout
+            </FormLabel>
+
+            <RadioGroup
+              value={layout}
+              row
+              name="graph-layout"
+              onChange={handleLayoutChange}
+            >
+              <FormControlLabel
+                value="force"
+                control={<Radio />}
+                label="force"
+              />
+              <FormControlLabel
+                value="circular"
+                control={<Radio />}
+                label="circular"
+              />
+            </RadioGroup>
+          </FormControl>
           <FormControl component="fieldset" sx={{ mb: 2, width: "100%" }}>
             <FormLabel component="legend" sx={{ mb: 2 }}>
               Graph Color

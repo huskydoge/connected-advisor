@@ -51,6 +51,7 @@ export interface Config {
   pattern_id: integer;
   graphType: string;
   showAvatars: boolean;
+  layout: string;
 }
 
 export interface AdvisorDetails {

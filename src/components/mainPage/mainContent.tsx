@@ -43,6 +43,7 @@ function MainContent({ id }: { id: string }) {
     graphType: "undirected",
     pattern_id: 0,
     showAvatars: false,
+    layout: "force",
   });
   // 初始左侧面板flex值为3，右侧面板flex值为1，总flex值为4
   const [splitPercentage, setSplitPercentage] = useState(60);
@@ -127,6 +128,11 @@ function MainContent({ id }: { id: string }) {
     setConfig({ ...config, pattern_id: id });
   };
 
+  const handleLayoutChange = (ly: string) => {
+    console.log(id);
+    setConfig({ ...config, layout: ly });
+  };
+
   const handleListView = () => {
     // 显示ListView
 
@@ -177,6 +183,7 @@ function MainContent({ id }: { id: string }) {
             onGraphDegreeChange={handleGraphDegreeChange}
             onGraphTypeChange={handleGraphTypeChange}
             onGraphPatternChange={handleGraphPatternChange}
+            onGraphLayoutChange={handleLayoutChange}
             config={config}
           />
         ); // 假设GraphCard接受data作为prop
@@ -261,6 +268,7 @@ function MainContent({ id }: { id: string }) {
               split={splitPercentage}
               showAvatar={config.showAvatars}
               pattern_id={config.pattern_id}
+              layout={config.layout}
             />
           )}
         </Paper>

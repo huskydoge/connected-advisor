@@ -73,7 +73,7 @@ const calculate_relation_factor = (
   let paper_score = conn.collaborations.length;
   const relation_type_score_map = {
     PhD: 5,
-    Master: 3,
+    MS: 3,
     Undergrad: 1,
     Postdoc: 4,
     Working: 2,
@@ -123,6 +123,7 @@ const GraphRender = ({
   showAvatar,
   split, // 屏幕占比
   pattern_id,
+  layout,
 }: {
   onNodeHover: Function;
   advisor: AdvisorDetails;
@@ -131,6 +132,7 @@ const GraphRender = ({
   showAvatar: boolean;
   split: integer;
   pattern_id: integer;
+  layout: string;
 }) => {
   const pattern_dict = [
     {
@@ -232,7 +234,7 @@ const GraphRender = ({
           influenceFactor: influenceFactor,
           ...mainAdvisor,
           // symbol: "image://" + getImgData(mainAdvisor.picture, mainAdvisor), // Add this line
-          draggable: true,
+          draggable: false,
         });
       } else {
         nodes.push({
@@ -570,11 +572,11 @@ const GraphRender = ({
           {
             name: "科研合作",
             type: "graph",
-            layout: "force",
-            layoutAnimation: false,
+            layout: layout, // force
+            layoutAnimation: true,
             data: final_nodes,
             links: links,
-            roam: false,
+            roam: true,
             edgeSymbol: ["none", "none"],
             edgeSymbolSize: [10, 20],
             label: {
@@ -712,6 +714,26 @@ const GraphRender = ({
   }, [graphType]);
 
   useEffect(() => {
+    if (myChart) {
+      setOption((prevOption) => ({
+        ...prevOption,
+        series: [
+          {
+            layout: layout,
+          },
+        ],
+      }));
+      myChart.setOption({
+        series: [
+          {
+            layout: layout,
+          },
+        ],
+      });
+    }
+  }, [layout]);
+
+  useEffect(() => {
     if (showAvatar) {
       if (nodesWithImg.length !== 0) {
         setOption((prevOption) => ({
@@ -785,6 +807,8 @@ const GraphRender = ({
           });
         }
       });
+
+      setOption(options);
 
       // 将更新后的配置重新设置到图表
       myChart.setOption(options, false, true); // 使用非立即更新和合并配置的方式
