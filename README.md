@@ -1,6 +1,6 @@
 # Connected Advisor | SJTU-CS3321-Group-Project
 
-![](public/intro.png)
+![](public/image.png)
 
 ## 设计灵感
 
