@@ -33,7 +33,7 @@ export default async function handler(
     try {
       const db = await connectToDatabase();
       console.log("Database connected");
-      const collection = db.collection("AdvisorTable");
+      const collection = db.collection("advisors");
       const result = await collection.insertOne(req.body);
       console.log("Document inserted", result);
       res.status(200).json(result);

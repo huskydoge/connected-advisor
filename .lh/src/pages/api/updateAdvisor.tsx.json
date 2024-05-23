@@ -3,11 +3,15 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 1,
             "patches": [
                 {
                     "date": 1711814650399,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1716435580377,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n \n // MongoDB URL and database name\n const MONGO_URL = process.env.MONGO_URL;\n const DB_NAME = \"ConnectedAdvisor\";\n-const COLLECTION_NAME = \"AdvisorTable\";\n+const COLLECTION_NAME = \"advisors\";\n \n // Function to connect to the database\n async function connectToDatabase() {\n   const client = new MongoClient(MONGO_URL);\n"
                 }
             ],
             "date": 1711814650399,

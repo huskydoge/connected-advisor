@@ -19,7 +19,7 @@ async function getAdvisorDetails(advisorId: string) {
 
   try {
     const advisor = await db
-      .collection("AdvisorTable")
+      .collection("advisors")
       .find({ _id: new ObjectId(advisorId) })
       .toArray();
     if (!advisor) {

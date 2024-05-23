@@ -26,7 +26,7 @@ async function getStatistics() {
   const { db, client } = await connectToDatabase();
 
   try {
-    const advisors = await db.collection("AdvisorTable").find().toArray();
+    const advisors = await db.collection("advisors").find().toArray();
 
     const affiliationCounts = {};
     const positionCounts = {};

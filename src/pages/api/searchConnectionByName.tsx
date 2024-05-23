@@ -4,7 +4,7 @@ import { MongoClient, ObjectId } from "mongodb";
 const MONGO_URL = process.env.MONGO_URL;
 const DB_NAME = "ConnectedAdvisor";
 const COLLECTION_NAME = "connections";
-const ADVISOR_COLLECTION = "AdvisorTable"; // The collection name where advisors are stored
+const ADVISOR_COLLECTION = "advisors"; // The collection name where advisors are stored
 
 async function connectToDatabase() {
   const client = new MongoClient(MONGO_URL);

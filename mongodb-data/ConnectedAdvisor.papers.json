@@ -1,0 +1,71 @@
+[{
+  "_id": {
+    "$oid": "6625f4ddc0592c273211ee28"
+  },
+  "authors": [
+    "6605877983d53b77ef56b2be",
+    "6605727083d53b77ef56b2ba",
+    "6607bc09eb00fa31e8d30829",
+    "6607be2deb00fa31e8d3082a"
+  ],
+  "year": 2024,
+  "url": "https://arxiv.org/pdf/2312.00362.pdf",
+  "name": "Dancing with Still Images: Video Distillation via Static-Dynamic Disentanglement",
+  "abstract": "Recently, dataset distillation has paved the way towards efficient machine learning, especially for image datasets. However, the distillation for videos, characterized by an exclusive temporal dimension, remains an underexplored domain. In this work, we provide the first systematic study of video distillation and introduce a taxonomy to categorize temporal compression. Our investigation reveals that the temporal information is usually not well learned during distillation, and the temporal dimension of synthetic data contributes little. The observations motivate our unified framework of disentangling the dynamic and static information in the videos. It first distills the videos into still images as static memory and then compensates the dynamic and motion information with a learnable dynamic memory block. Our method achieves state-of-the-art on video datasets at different scales, with a notably smaller memory storage budget. Our code is available at this https URL."
+},
+{
+  "_id": {
+    "$oid": "66268fc0c1bd1f5332107d24"
+  },
+  "name": "Defining and Extracting generalizable interaction primitives from DNNs",
+  "year": "2024",
+  "url": "https://arxiv.org/abs/2401.16318",
+  "abstract": "Faithfully summarizing the knowledge encoded by a deep neural network (DNN) into a few symbolic primitive patterns without losing much information represents a core challenge in explainable AI. To this end, Ren et al. (2023c) have derived a series of theorems to prove that the inference score of a DNN can be explained as a small set of interactions between input variables. However, the lack of generalization power makes it still hard to consider such interactions as faithful primitive patterns encoded by the DNN. Therefore, given different DNNs trained for the same task, we develop a new method to extract interactions that are shared by these DNNs. Experiments show that the extracted interactions can better reflect common knowledge shared by different DNNs.",
+  "authors": [
+    "66268a22c1bd1f5332107d22",
+    "66268917c1bd1f5332107d21",
+    "66268299c1bd1f5332107d20"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6627ec0ea1b791a68e5249e3"
+  },
+  "name": "Mining Cross-Person Cues for Body-Part Interactiveness Learning in HOI Detection",
+  "year": "2022",
+  "url": "https://arxiv.org/abs/2207.14192",
+  "abstract": "Human-Object Interaction (HOI) detection plays a crucial role in activity understanding. Though significant progress has been made, interactiveness learning remains a challenging problem in HOI detection: existing methods usually generate redundant negative H-O pair proposals and fail to effectively extract interactive pairs. Though interactiveness has been studied in both whole body- and part- level and facilitates the H-O pairing, previous works only focus on the target person once (i.e., in a local perspective) and overlook the information of the other persons. In this paper, we argue that comparing body-parts of multi-person simultaneously can afford us more useful and supplementary interactiveness cues. That said, to learn body-part interactiveness from a global perspective: when classifying a target person's body-part interactiveness, visual cues are explored not only from herself/himself but also from other persons in the image. We construct body-part saliency maps based on self-attention to mine cross-person informative cues and learn the holistic relationships between all the body-parts. We evaluate the proposed method on widely-used benchmarks HICO-DET and V-COCO. With our new perspective, the holistic global-local body-part interactiveness learning achieves significant improvements over state-of-the-art. Our code is available at [this https URL](https://github.com/enlighten0707/Body-Part-Map-for-Interactiveness).",
+  "authors": [
+    "6627e633a1b791a68e5249e0",
+    "6605877983d53b77ef56b2be",
+    "6627e9cda1b791a68e5249e2",
+    "6627e7b1a1b791a68e5249e1",
+    "6605727083d53b77ef56b2ba"
+  ]
+},
+{
+  "_id": {
+    "$oid": "662a666e18cc98253614cc64"
+  },
+  "name": "Geometric Knowledge Distillation: Topology Compression for Graph Neural Networks",
+  "year": "2022",
+  "url": "https://arxiv.org/abs/2210.13014",
+  "abstract": "We study a new paradigm of knowledge transfer that aims at encoding graph topological information into graph neural networks (GNNs) by distilling knowledge from a teacher GNN model trained on a complete graph to a student GNN model operating on a smaller or sparser graph. To this end, we revisit the connection between thermodynamics and the behavior of GNN, based on which we propose Neural Heat Kernel (NHK) to encapsulate the geometric property of the underlying manifold concerning the architecture of GNNs. A fundamental and principled solution is derived by aligning NHKs on teacher and student models, dubbed as Geometric Knowledge Distillation. We develop non- and parametric instantiations and demonstrate their efficacy in various experimental settings for knowledge distillation regarding different types of privileged topological information and teacher-student schemes.",
+  "authors": [
+    "662a60abc40bc6b9624c07e1",
+    "662a65f918cc98253614cc63"
+  ]
+},
+{
+  "_id": {
+    "$oid": "664ebc5b7a698a24058a1ec7"
+  },
+  "name": "DC-Bench: Data Curation Benchmark",
+  "year": "2024",
+  "url": "https://arxiv.org/",
+  "abstract": "\nThe quality of datasets is crucial for advancing machine learning research. Despite the proliferation of open dataset platforms nowadays, data quality issues such as poor documentation, mislabeled data, ethical concerns, and inconsistencies remain common. These issues are hard to detect by rule-based scripts due to their subtlety. Therefore, they are typically identified and verified by dataset users or administrators, a process that is both time-consuming and error-prone due to human limitations. In response to these challenges, we introduce the Dataset Curation Benchmark (DC-Bench). DC-Bench is designed to test the ability of large language models (LLMs) to autonomously identify and locate data issues across various online dataset platforms. We collect 91 representative test cases from eight different platforms, with multiple levels of hints to assess the LLM agents' performance. Additionally, we implement an accurate automatic evaluation scheme using GPT-4. Our preliminary experiments demonstrate the complexity of the task, indicating that applying LLMs to real-world dataset curation still requires further in-depth exploration and innovation.",
+  "authors": [
+    "664ebc037a698a24058a1ec6",
+    "66268299c1bd1f5332107d20"
+  ]
+}]

@@ -11,7 +11,7 @@ import { MongoClient, ObjectId } from "mongodb";
 // MongoDB URL and database name
 const MONGO_URL = process.env.MONGO_URL || "";
 const DB_NAME = "ConnectedAdvisor";
-const COLLECTION_NAME = "AdvisorTable";
+const COLLECTION_NAME = "advisors";
 
 async function connectToDatabase() {
   const client = new MongoClient(MONGO_URL);

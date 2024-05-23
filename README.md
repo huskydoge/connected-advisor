@@ -49,6 +49,18 @@
         - styles/ : 定义css styles
 ```
 
+## 数据库结构
+
+```
+- ConnectedAdvisor
+    - advisors
+    - connections
+    - relations
+    - papers
+```
+
+根据这个结构，将`mongodb-data`下的`.json` 文件 [import](https://www.mongodb.com/zh-cn/docs/compass/beta/import-export/) 进 MongoDB 数据库中。
+
 ## 项目启动流程
 
 在开始之前，请确保你的系统已经安装了以下软件：

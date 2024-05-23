@@ -1,0 +1,1214 @@
+[{
+  "_id": {
+    "$oid": "6605727083d53b77ef56b2ba"
+  },
+  "name": "Cewu Lu",
+  "picture": "https://i1.wp.com/ww1.sinaimg.cn/large/006y8lVajw1f92jdiu2udj308c08cgme.jpg?zoom=2",
+  "descriptions": "Cewu Lu is a Professor at Shanghai Jiao Tong University (SJTU). Before he joined SJTU, he was a research fellow at Stanford University working under Prof. Fei-Fei Li and Prof. Leonidas J. Guibas. He was a Research Assistant Professor at Hong Kong University of Science and Technology with Prof. Chi Keung Tang . He got the his PhD degree from The Chinese Univeristy of Hong Kong, supervised by Prof. Jiaya Jia. He is one of core technique member in Stanford-Toyota autonomous car project (斯坦福-丰田，无人车项目). Some of his proposed algorithms have been used as a basic tool function in OpenCV(such as decolor.cpp). He has one Best Paper Award at the Non-Photorealistic Animation and Rendering (NPAR) 2012 and one most cited paper among all papers in SIGGRAPH recent 5 years .He serves as an associate editor for [Journal gtCVPR]and reviewer for Journal TPAMI and IJCV. His research interests fall mainly in Computer Vision, deep learning, deep reinforcement learning and robotics vision.",
+  "position": "Professor",
+  "affiliation": "Shanghai Jiao Tong University",
+  "homepage": "https://www.mvig.org/",
+  "tags": [
+    "CV",
+    "Robotics"
+  ],
+  "github": "",
+  "connections": [
+    "66058af983d53b77ef56b2c2",
+    "660838bdaba7a8a000c25daa",
+    "66095c3b2d3eae4b729b0c21",
+    "66266058c4470c5f55f2eb16",
+    "6627eddda1b791a68e5249e7"
+  ],
+  "contacts": {
+    "email": "lucewu@sjtu.edu.cn",
+    "twitter": "",
+    "linkedin": ""
+  },
+  "publications": {
+    "google-scholar": "https://scholar.google.de/citations?user=QZVQEWAAAAAJ&hl=zh-CN&oi=ao",
+    "dblp": "",
+    "research-gate": "",
+    "semantic-scholar": ""
+  },
+  "department": "Department of Computer Science"
+},
+{
+  "_id": {
+    "$oid": "6605877983d53b77ef56b2be"
+  },
+  "name": "Yonglu Li",
+  "picture": "https://dirtyharrylyl.github.io/images/profile-image.jpg",
+  "position": "Tenure-Track Assistant Professor",
+  "affiliation": "Shanghai Jiao Tong University",
+  "homepage": "https://dirtyharrylyl.github.io/",
+  "tags": [
+    "CV",
+    "Robotics"
+  ],
+  "github": "https://github.com/DirtyHarryLYL",
+  "connections": [
+    "66058af983d53b77ef56b2c2",
+    "66083947aba7a8a000c25dac",
+    "6627ecafa1b791a68e5249e5",
+    "664ec1e57a698a24058a1ed3"
+  ],
+  "contacts": {
+    "email": "yonglu_li@sjtu.edu.cn",
+    "twitter": "https://twitter.com/DirtyHa96142091",
+    "linkedin": ""
+  },
+  "descriptions": "I'm a tenure-track assistant professor at Shanghai Jiao Tong University (SJTU), affiliated with the Qing Yuan Research Institute. I am a member of the Machine Vision and Intelligence Group (MVIG), working closely with Prof. Cewu Lu. I study Human Activity Understanding, Visual Reasoning, and Embodied AI. We are building HAKE, a knowledge-driven system that enables intelligent agents to perceive human activities, reason human behavior logics, learn skills from human activities, and interact with environment. Check out the HAKE site for more information.Before joining SJTU, I worked closely with IEEE Fellow Prof. Chi Keung Tang and Yu-Wing Tai at the Hong Kong University of Science and Technology (HKUST) (2021-2022). I received a Ph.D. degree (2017-2021) in Computer Science from Shanghai Jiao Tong University (SJTU), under the supervision of Prof. Cewu Lu. Prior to that, I worked and studied at the Institute of Automation, Chinese Academy of Sciences (CASIA) (2014-2017) under the supervision of Prof. Yiping Yang and A/Prof. Yinghao Cai.",
+  "publications": {
+    "google-scholar": "https://scholar.google.com.hk/citations?user=UExAaVgAAAAJ&hl=en",
+    "dblp": "",
+    "research-gate": "",
+    "semantic-scholar": ""
+  },
+  "department": "Zhiyuan Honors Program"
+},
+{
+  "_id": {
+    "$oid": "6607bc09eb00fa31e8d30829"
+  },
+  "name": "Yue Xu",
+  "picture": "",
+  "position": "phD Student",
+  "affiliation": "Shanghai Jiao Tong University",
+  "homepage": "https://silicx.github.io/",
+  "tags": [
+    "CV",
+    "Robotics"
+  ],
+  "github": "https://github.com/silicx",
+  "connections": [
+    "660838bdaba7a8a000c25daa",
+    "66083947aba7a8a000c25dac"
+  ],
+  "contacts": {
+    "email": "silicxuyue@sjtu.edu.cn",
+    "twitter": "",
+    "linkin": ""
+  },
+  "descriptions": "I’m a second year Ph.D. student in Shanghai Jiao Tong University under the supervision of Prof. Cewu Lu and Yong-Lu Li, where I also received B.S. in computer science. My research interests are machine learning and computer vision, especially object concept reasoning and multimodality understanding.",
+  "publications": {
+    "google-scholar": "https://scholar.google.com/citations?user=N03Uc1oAAAAJ",
+    "dblp": "",
+    "research-gate": "",
+    "semantic-scholar": ""
+  },
+  "department": ""
+},
+{
+  "_id": {
+    "$oid": "6607be2deb00fa31e8d3082a"
+  },
+  "name": "Ziyu Wang",
+  "picture": "",
+  "position": "Undergraduate Student",
+  "affiliation": "Shanghai Jiao Tong University",
+  "homepage": "",
+  "tags": [
+    "CV",
+    "Robotics"
+  ],
+  "github": "",
+  "connections": [
+    "66266058c4470c5f55f2eb16",
+    "662883c2a1b791a68e5249e9"
+  ],
+  "contacts": {
+    "email": "yonglu_li@sjtu.edu.cn",
+    "twitter": "https://twitter.com/DirtyHa96142091",
+    "linkedin": ""
+  },
+  "descriptions": "",
+  "publications": {
+    "google-scholar": "https://scholar.google.com/citations?user=N03Uc1oAAAAJ",
+    "dblp": "",
+    "research-gate": "",
+    "semantic-scholar": ""
+  },
+  "department": ""
+},
+{
+  "_id": {
+    "$oid": "66083b28aba7a8a000c25dad"
+  },
+  "name": "Pengxiang Zhu",
+  "tags": [
+    "CV",
+    "Robotics"
+  ],
+  "picture": "https://jubsteven.github.io/images/intro_img.jpg",
+  "github": "https://github.com/JubSteven",
+  "homepage": "https://jubsteven.github.io/",
+  "position": "Undergraduate Student",
+  "affiliation": "Shanghai Jiao Tong University",
+  "descriptions": "\nI’m currently an undergraduate student at Shanghai Jiao Tong University, majoring in Computer Science and Technology (IEEE Pilot Class). I’m now a research intern in Machine Vision and Intelligence Group (MVIG), under the supervision of Prof. Cewu Lu and Prof. Lixin Yang. My research interests revolve around the intersection between Computer Vision and Robotics, and I welcome any invitation for collaboration or discussion.\n\nI am now preparing my MS/PhD applications for Fall 2025, so if interested, please drop me an email!\n\n",
+  "publications": {
+    "google-scholar": "",
+    "dblp": "",
+    "research-gate": "",
+    "semantic-scholar": ""
+  },
+  "contacts": {
+    "email": "zhu_peng_xiang@sjtu.edu.cn",
+    "linkedin": "",
+    "twitter": ""
+  },
+  "connections": [
+    "66095c3b2d3eae4b729b0c21"
+  ],
+  "department": ""
+},
+{
+  "_id": {
+    "$oid": "66268299c1bd1f5332107d20"
+  },
+  "name": "Benhao Huang",
+  "tags": [
+    "NLP",
+    "LLM"
+  ],
+  "picture": "https://media.licdn.com/dms/image/D5603AQGfjU-JQgGc2Q/profile-displayphoto-shrink_200_200/0/1706193347767?e=1719446400&v=beta&t=KnPTZlervHu43EwAGU9ReIf8PoGfgBr9906wUlvvCX8",
+  "github": "https://github.com/huskydoge",
+  "homepage": "https://huskydoge.github.io/",
+  "position": "Undergrad",
+  "affiliation": "Shanghai Jiao Tong University",
+  "descriptions": "Hello! Husky Here! I’m a junior student at Shanghai Jiao Tong University(SJTU), majored in Computer Science. I’m currently collaborating with Professor Jiaqi Ma at UIUC; prior to this, I had a wonderful research experience at Professor Quanshi Zhang’s XAI Lab.\n\nMy research interests involve AI explainability and interesting applications of LLMs, and I warmly welcome any invitations for further discussions!\n\nI am now preparing my MS/PhD applications for Fall 2025, so if interested, please drop me an email!\n\n",
+  "publications": {
+    "google-scholar": "https://scholar.google.com/citations?user=SiAFHb8AAAAJ&hl=zh-CN",
+    "dblp": "",
+    "research-gate": "",
+    "semantic-scholar": ""
+  },
+  "contacts": {
+    "email": "hbh001098hbh@sjtu.edu.cn",
+    "linkedin": "",
+    "twitter": "",
+    "linkedIn": "https://www.linkedin.com/in/benhao-huang-6534b629a/"
+  },
+  "connections": [
+    "66268febc1bd1f5332107d26",
+    "662a716d18cc98253614cc6e",
+    "664ebc767a698a24058a1ec9",
+    "664ec1e57a698a24058a1ed3"
+  ]
+},
+{
+  "_id": {
+    "$oid": "66268917c1bd1f5332107d21"
+  },
+  "name": "Quanshi Zhang",
+  "tags": [
+    "CV",
+    "NLP",
+    "Theory",
+    "Explainable AI"
+  ],
+  "picture": "https://scholar.googleusercontent.com/citations?view_op=view_photo&user=YvN-H_0AAAAJ&citpid=1",
+  "github": "",
+  "homepage": "https://sjtu-xai-lab.github.io/",
+  "position": "Associate Professor",
+  "affiliation": "Shanghai Jiao Tong University",
+  "descriptions": "My research mainly focuses on explainable AI, including XAI theories, designing interpretable neural networks, and explaining the representation power (e.g., the adversarial robustness and generalization power) of neural networks. In particular, I aim to build up a theoretic system based on game-theoretic interactions, which provides a new perspective to theoretically connect symbolic concepts encoded by a DNN with the DNN’s generalization power and robustness. I also use the game-theoretic interaction to prove the common mechanism shared by many recent heuristic deep-learning methods.",
+  "publications": {
+    "google-scholar": "https://scholar.google.com/citations?user=YvN-H_0AAAAJ",
+    "dblp": "",
+    "research-gate": "",
+    "semantic-scholar": ""
+  },
+  "contacts": {
+    "email": "zqs1022@sjtu.edu.cn",
+    "linkedin": "",
+    "twitter": ""
+  },
+  "connections": [
+    "662a716d18cc98253614cc6e"
+  ],
+  "department": "John Hopcroft Center for Computer Science"
+},
+{
+  "_id": {
+    "$oid": "66268a22c1bd1f5332107d22"
+  },
+  "name": "Lu Chen",
+  "tags": [
+    "Explainable AI",
+    "Theory",
+    "ML"
+  ],
+  "picture": "",
+  "github": "https://github.com/sjtu-xai-lab/generalizable-interaction",
+  "homepage": "",
+  "position": "PhD Student",
+  "affiliation": "Shanghai Jiao Tong University",
+  "department": "",
+  "descriptions": "Empty",
+  "publications": {
+    "google-scholar": "https://scholar.google.com.hk/citations?view_op=list_works&hl=zh-CN&user=tJagwdcAAAAJ&gmla=AJsN-F4O9W_AR6xNMwKOPChXPGRIOSqv-UP6EYexSK0mndWf7cYCm6DqW6ajqTGi57GkGT2K44Jr8S2EWdAbCv6CHW89mqbW5bD3zUxZArsI61mEWtE52_TYbrsJ-tW-STZfN7kekwAv",
+    "dblp": "",
+    "research-gate": "",
+    "semantic-scholar": ""
+  },
+  "contacts": {
+    "email": "lu.chen@sjtu.edu.cn",
+    "linkedin": "",
+    "twitter": ""
+  },
+  "connections": [
+    "66268febc1bd1f5332107d26"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6627e633a1b791a68e5249e0"
+  },
+  "name": "Junyi Zhang",
+  "tags": [
+    "CV"
+  ],
+  "picture": "https://www.junyi42.com/figs/profile_new.jpg",
+  "github": "https://github.com/Junyi42",
+  "homepage": "https://www.junyi42.com/",
+  "position": "PhD Student",
+  "affiliation": "UC Berkeley",
+  "descriptions": "Hi! I am a senior student from Shanghai Jiao Tong University (SJTU). Currently, I'm working with Dr. Deqing Sun and Dr. Varun Jampani as a visiting student at UC Merced, supervised by Prof. Ming-Hsuan Yang. I also worked with Prof. Yong-Lu Li as an undergraduate researcher at SJTU, supervised by Prof. Cewu Lu. Previously, I was a research intern at Microsoft Research Asia (MSRA), mentored by Dr. Shizhao Sun and Dr. Jian-Guang Lou. My research interests mainly lie in computer vision, deep generative models, and representation learning.\n\n",
+  "publications": {
+    "google-scholar": "https://scholar.google.com/citations?user=LTi1tYsAAAAJ",
+    "dblp": "",
+    "research-gate": "",
+    "semantic-scholar": ""
+  },
+  "contacts": {
+    "email": "junyi42zhang@gmail.com",
+    "linkedin": "",
+    "twitter": "https://twitter.com/junyi42",
+    "linkedIn": ""
+  },
+  "connections": [
+    "6627ecafa1b791a68e5249e5",
+    "6627eddda1b791a68e5249e7",
+    "662883c2a1b791a68e5249e9"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6627e7b1a1b791a68e5249e1"
+  },
+  "name": "Xiaoqian Wu",
+  "tags": [
+    "CV",
+    "Explainable AI",
+    "Embodied AI"
+  ],
+  "picture": "https://scholar.google.com/citations?user=-PHR96oAAAAJ",
+  "github": "https://github.com/enlighten0707",
+  "homepage": "",
+  "position": "PhD Student",
+  "affiliation": "Shanghai Jiao Tong University",
+  "descriptions": "PhD Student@CS Dept., SJTU. Research Interest: Computer Vision, Embodied-AI.",
+  "publications": {
+    "google-scholar": "https://scholar.google.com/citations?user=-PHR96oAAAAJ",
+    "dblp": "",
+    "research-gate": "",
+    "semantic-scholar": ""
+  },
+  "contacts": {
+    "email": "",
+    "linkedin": "",
+    "twitter": ""
+  },
+  "connections": []
+},
+{
+  "_id": {
+    "$oid": "6627e9cda1b791a68e5249e2"
+  },
+  "name": "Xinpeng Liu",
+  "tags": [],
+  "picture": "",
+  "github": "https://github.com/Foruck",
+  "homepage": "https://foruck.github.io/",
+  "position": "PhD Student",
+  "affiliation": "Shanghai Jiao Tong University",
+  "department": "",
+  "descriptions": "I’m a second-year Ph.D student under the supervision of [Prof. Cewu Lu](http://mvig.sjtu.edu.cn/). Currently I am a member of Machine Vision and Intelligence Group (MVIG). Prior to that, I received my Bachelor’s and Master’s degrees (Computer Science) from Shanghai Jiao Tong University. My research interests include human motion understanding and activity understanding.",
+  "publications": {
+    "google-scholar": "https://scholar.google.com/citations?user=DBE-ju8AAAAJ",
+    "dblp": "",
+    "research-gate": "",
+    "semantic-scholar": ""
+  },
+  "contacts": {
+    "email": "xinpengliu0907@gmail.com",
+    "linkedin": "",
+    "twitter": ""
+  },
+  "connections": []
+},
+{
+  "_id": {
+    "$oid": "6629b945344a4bf4297afffd"
+  },
+  "name": "Lixin YANG",
+  "tags": [
+    "CV",
+    "Robotics",
+    "Graphics"
+  ],
+  "picture": "https://lixiny.github.io/images/head.jpg",
+  "github": "https://github.com/lixiny",
+  "homepage": "https://lixiny.github.io/#",
+  "position": "Assistant Professor",
+  "affiliation": "Shanghai Jiao Tong University",
+  "descriptions": "Research Assistant Professor at [Shanghai Jiao Tong University](http://en.sjtu.edu.cn/) (Fall 2023)  \nMember of **Machine Vision and Intelligence Group ([MVIG](https://www.mvig.org/))**  \n助理研究员，上海交通大学电子信息与电气工程学院，计算机系  \n**Email:** siriusyang at sjtu dot edu dot cn  \n\n**Bio.**  I’m a Research Assistant in [Shanghai Jiao Tong University](http://en.sjtu.edu.cn/) (SJTU). Starting from 2019, I have been in [Machine Vision and Intelligence Group](http://mvig.org/) under the supervision of Prof. **Cewu Lu**. Prior to that, I received my M.S degree at the [Intelligent Robot Lab](https://robolab.sjtu.edu.cn/) in SJTU. My research interests include **_Computer Vision_**, **_Robotic Vision_**, **_3D Vision_** and **_Graphics_**. Currently, I am focusing on modeling and imitating the hand manipulating objects, including **_3D hand pose and shape estimation_**, **_(hand-held) object reconstruction, and grasp synthesis_**. I am also interested in **_NERF_** and **_motion synthesis_**.\n\n**Join Us.**  I am looking for cooperation and self-motivated interns. Contact me if you are interested in the above topics",
+  "publications": {
+    "google-scholar": "https://scholar.google.com/citations?hl=en&user=&user=Bm8p4JsAAAAJ&hl=en",
+    "dblp": "",
+    "research-gate": "",
+    "semantic-scholar": ""
+  },
+  "contacts": {
+    "email": "siriusyang@sjtu.edu.cn",
+    "linkedin": "",
+    "twitter": "https://twitter.com/lixinyang__",
+    "linkedIn": "https://www.linkedin.com/in/lixin-yang-3223a5128/"
+  },
+  "connections": []
+},
+{
+  "_id": {
+    "$oid": "6629bf7c344a4bf4297afffe"
+  },
+  "name": "Kailin Li",
+  "tags": [
+    "CV",
+    "Embodied AI",
+    "3DV"
+  ],
+  "picture": "https://kailinli.top/images/kailin-circle.png",
+  "github": "https://github.com/KailinLi",
+  "homepage": "https://kailinli.top/",
+  "position": "PhD Student",
+  "affiliation": "Shanghai Jiao Tong University",
+  "descriptions": "I am presently a fifth-year Ph.D. student in the Department of [Computer Science](http://www.cs.sjtu.edu.cn/en/) at [Shanghai Jiao Tong University](http://en.sjtu.edu.cn/). As an active member of the esteemed SJTU [MVIG](https://www.mvig.org/) lab, I work closely under the expert guidance of Prof. **Cewu Lu**. Before that, I acquired my Bachelor's degree ([Computer Science](http://www.cs.hust.edu.cn/index.htm)) in 2019 from [Huazhong University of Science and Technology](http://english.hust.edu.cn/). My research pursuits predominantly revolve around **_Computer Vision_**, **_3D Vision_**, and **_Embodied AI_**.",
+  "publications": {
+    "google-scholar": "https://scholar.google.com/citations?user=zEDPB2MAAAAJ",
+    "dblp": "",
+    "research-gate": "",
+    "semantic-scholar": ""
+  },
+  "contacts": {
+    "email": "kailinli@sjtu.edu.cn",
+    "linkedin": "",
+    "twitter": ""
+  },
+  "connections": [],
+  "department": "MVIG, Computer Science"
+},
+{
+  "_id": {
+    "$oid": "662a60abc40bc6b9624c07e1"
+  },
+  "name": "Junchi Yan",
+  "tags": [
+    "CV",
+    "NLP",
+    "AI4Science",
+    "Graph Learning"
+  ],
+  "picture": "https://scholar.googleusercontent.com/citations?view_op=view_photo&user=ga230VoAAAAJ&citpid=24",
+  "github": "",
+  "homepage": "https://thinklab.sjtu.edu.cn",
+  "position": "Professor",
+  "affiliation": "Shanghai Jiao Tong University",
+  "descriptions": "Founded in April 2018 by Dr. Junchi Yan, the vision of SJTU-ReThinkLab (上海交通大学交想实验室) is to develop cutting-edge technolgies for solving the real-world problems whereby data-driven approach interleaved with domain knowledge can be well explored and applied. In particular, the recent years' research is focused on combinatorial optimization, PDE, quantum computing, and AI4Science..Looking for full-time assistant researcher, post-doc, phd candidates, initiative (high GPA/proved research capability) undergraduates, who are interested in machine learning especially for autnnomous driving, quantum machine learning, learning combinatorial solvers, PDE solvers, and AI4Science. Please send me resume via yanjunchi AT sjtu.edu.cn.",
+  "publications": {
+    "google-scholar": "",
+    "dblp": "",
+    "research-gate": "",
+    "semantic-scholar": ""
+  },
+  "contacts": {
+    "email": "yanjunchi@sjtu.edu.cn",
+    "linkedin": "",
+    "twitter": ""
+  },
+  "connections": [
+    "662a66ca18cc98253614cc66",
+    "662a6efa18cc98253614cc6c",
+    "662f5b93f413bae8a36f7e97",
+    "662f63c8f413bae8a36f7e9a",
+    "662f6f80f413bae8a36f7ea0",
+    "663054b5a00e4359940ac5dc",
+    "66305b57a00e4359940ac5df",
+    "66306246a00e4359940ac5e2",
+    "663062c5a00e4359940ac5e5",
+    "663072c8a00e4359940ac5e8",
+    "6634dd926c8aa50a327b0ed7",
+    "6634deaa6c8aa50a327b0eda",
+    "6634df1e6c8aa50a327b0edd",
+    "6634e11e6c8aa50a327b0ee0",
+    "6634e1d26c8aa50a327b0ee3",
+    "6634e908f28334c5d25504b5"
+  ],
+  "department": "Department of Computer Science & Engineering"
+},
+{
+  "_id": {
+    "$oid": "662a65f918cc98253614cc63"
+  },
+  "name": "Qitian Wu",
+  "tags": [
+    "ML",
+    "Graph Learning",
+    "AI4Science"
+  ],
+  "picture": "https://qitianwu.github.io/assets/pics/head.jpeg",
+  "github": "https://github.com/qitianwu",
+  "homepage": "https://qitianwu.github.io/",
+  "position": "PhD Student",
+  "affiliation": "Shanghai Jiao Tong University",
+  "descriptions": "I am a final-year PhD student at the Department of Computer Science and Engineering from Shanghai Jiao Tong University (SJTU), advised by [Junchi Yan](https://thinklab.sjtu.edu.cn/). I also extensively collaborated with [David Wipf](http://www.davidwipf.com/) and [Hongyuan Zha](https://sds.cuhk.edu.cn/en/teacher/65). I achieved the Bachelor (Microelectronics, Mathematics) and Master (Computer Science) degrees from SJTU, and worked as research intern at Tencent WeChat, Amazon AI Lab and BioMap.\n\nMy research interest predominantly revolves around machine learning foundations and applications. On the foundation side, I build theoretically principled and practically useful methodology, particularly for learning with complex structures and distribution shifts. I also explore the intersection with interdisciplinary areas such as life sciences (e.g., drug discovery and healthcare) and recommender systems, and sought inspirations from physics. My research is supported by [Microsoft PhD Fellowship](https://www.microsoft.com/en-us/research/academic-program/fellowships-microsoft-research-asia/#!fellows) and [Baidu PhD Fellowship](http://scholarship.baidu.com/).",
+  "publications": {
+    "google-scholar": "https://scholar.google.com/citations?user=m01-2qUAAAAJ&hl=zh-CN",
+    "dblp": "https://dblp.org/pid/224/2507.html",
+    "research-gate": "https://www.researchgate.net/profile/Qitian-Wu",
+    "semantic-scholar": ""
+  },
+  "contacts": {
+    "email": "echo740@sjtu.edu.cn",
+    "linkedin": "",
+    "twitter": "https://twitter.com/qitianwu_"
+  },
+  "connections": [
+    "662a66ca18cc98253614cc66"
+  ],
+  "department": "Department of Computer Science and Engineering"
+},
+{
+  "_id": {
+    "$oid": "662a6ede18cc98253614cc6a"
+  },
+  "name": "Yizhou Liu",
+  "tags": [
+    "AI4Science"
+  ],
+  "picture": "https://th.bing.com/th/id/R.c3df0e0d10ac01d6da1ba9e16e2c76a1?rik=3yWpDJe57PaURA&riu=http%3a%2f%2fyouth.worldbridge.org%2fwp-content%2fuploads%2f2019%2f04%2fLiu-Yizhou.png&ehk=1Yt99HGMTvOkdZveQQo00qFoYNdtC9pcnIcvgUYxdcA%3d&risl=&pid=ImgRaw&r=0",
+  "github": "https://github.com/yizhou0409",
+  "homepage": "",
+  "position": "Undergrad",
+  "affiliation": "Shanghai Jiao Tong University",
+  "descriptions": "World Bridge champion + math genius + sports genius",
+  "publications": {
+    "google-scholar": "",
+    "dblp": "",
+    "research-gate": "",
+    "semantic-scholar": ""
+  },
+  "contacts": {
+    "email": "",
+    "linkedin": "",
+    "twitter": ""
+  },
+  "connections": [
+    "662a6efa18cc98253614cc6c",
+    "6634e946f28334c5d25504b7",
+    "6634e974f28334c5d25504bb"
+  ],
+  "department": "IEEE Honor Class"
+},
+{
+  "_id": {
+    "$oid": "662f5b27f413bae8a36f7e95"
+  },
+  "name": "Chang Liu",
+  "tags": [
+    "ML"
+  ],
+  "picture": "https://only-changer.github.io/assets/images/j.jpg",
+  "github": "https://only-changer.github.io",
+  "homepage": "https://only-changer.github.io",
+  "position": "PhD Student",
+  "affiliation": "Shanghai Jiao Tong University",
+  "descriptions": "I am a Ph.D. student majoring in Computer Science at Shanghai Jiao Tong University, a member of the Wen-Tsun Wu AI honorary doctoral class. I obtained my B.Eng. majoring in CS at SJTU as a member of the ACM Honors Class, an elite CS program for the top 5% of talented students.",
+  "publications": {
+    "google-scholar": "",
+    "dblp": "",
+    "research-gate": "",
+    "semantic-scholar": ""
+  },
+  "contacts": {
+    "email": "only-changer@sjtu.edu.cn",
+    "linkedin": "",
+    "twitter": "only-changer",
+    "linkedIn": "only-changer"
+  },
+  "connections": [
+    "662f5b93f413bae8a36f7e97",
+    "6634ede131fdfbeb19893860",
+    "6634ee2631fdfbeb19893862",
+    "6634ee5031fdfbeb19893864"
+  ],
+  "department": "SJTU ACM CLASS"
+},
+{
+  "_id": {
+    "$oid": "662f63a4f413bae8a36f7e98"
+  },
+  "name": "Runzhong Wang",
+  "tags": [
+    "ML"
+  ],
+  "picture": "http://runzhong.wang/img/profile.png",
+  "github": "",
+  "homepage": "http://runzhong.wang",
+  "position": "Postdoc",
+  "affiliation": "MIT",
+  "descriptions": "I am a Postdoc working with [Prof. Connor Coley](https://coley.mit.edu/people/) at MIT. Prior to that, I graduate as a PhD from [Department of CSE](http://cs.sjtu.edu.cn/en/), Shanghai Jiao Tong University (SJTU), supervised by [Prof. Xiaokang Yang](https://scholar.google.com/citations?user=yDEavdMAAAAJ&hl=en) and [Prof. Junchi Yan](http://thinklab.sjtu.edu.cn/).\nI do research at the intersection of machine learning, optimization, and computational metabolomics. More specifically, I develop computational methods on solving combinatorial optimization problems, and their applications in computational metabolomics, and other general science topics.\nI serve as the reviewer for conferences (NeurIPS, ICML, ICLR, CVPR, ICCV, ECCV, AAAI, IJCAI, MM) and journals (IJCV, TPAMI, TNNLS, PR, TMM, TCSVT).",
+  "publications": {
+    "google-scholar": "",
+    "dblp": "",
+    "research-gate": "",
+    "semantic-scholar": ""
+  },
+  "contacts": {
+    "email": "",
+    "linkedin": "",
+    "twitter": ""
+  },
+  "connections": [
+    "662f63c8f413bae8a36f7e9a",
+    "662f6677f413bae8a36f7e9d",
+    "6634ede131fdfbeb19893860",
+    "6634ee6c31fdfbeb19893866",
+    "6634ee8531fdfbeb19893868"
+  ]
+},
+{
+  "_id": {
+    "$oid": "662f663af413bae8a36f7e9b"
+  },
+  "name": "XiaoKang Yang",
+  "tags": [
+    "CV"
+  ],
+  "picture": "https://scholar.googleusercontent.com/citations?view_op=medium_photo&user=yDEavdMAAAAJ&citpid=2",
+  "github": "",
+  "homepage": "https://scholar.google.com/citations?user=yDEavdMAAAAJ&hl=en",
+  "position": "Professor",
+  "affiliation": "Shanghai Jiao Tong University",
+  "department": "",
+  "descriptions": "FIEEE, Shanghai Jiao Tong University",
+  "publications": {
+    "google-scholar": "",
+    "dblp": "",
+    "research-gate": "",
+    "semantic-scholar": ""
+  },
+  "contacts": {
+    "email": "",
+    "linkedin": "",
+    "twitter": ""
+  },
+  "connections": [
+    "662f6677f413bae8a36f7e9d"
+  ]
+},
+{
+  "_id": {
+    "$oid": "662f6f56f413bae8a36f7e9e"
+  },
+  "name": "Xue Yang",
+  "tags": [
+    "CV",
+    "ML"
+  ],
+  "picture": "https://yangxue0827.github.io/images/yangxue.jpg",
+  "github": "https://yangxue0827.github.io",
+  "homepage": "https://yangxue0827.github.io",
+  "position": "Research Scientist",
+  "affiliation": "Shanghai AI Laboratory",
+  "department": "OpenGVLab",
+  "descriptions": "Xue Yang is now a Researcher at [OpenGVLab](https://opengvlab.shlab.org.cn/), [Shanghai AI Laboratory](https://www.shlab.org.cn/), collaborated with [Prof. Jifeng Dai](https://scholar.google.com.hk/citations?user=SH_-B_AAAAAJ) and [Dr. Xizhou Zhu](https://scholar.google.com/citations?hl=zh-CN&user=02RXI00AAAAJ). Xue Yang's research interests include Deep Learning and Computer Vision, with a focus on Generic/Oriented Object Detection/Instance Segmentation, AI Agent, Vision-Language Models.\n\nXue Yang received the B. E. degree from School of Information Science and Engineering, [Central South University](http://www.csu.edu.cn/), Hunan, China, in 2016. He received the M. S. degree from [School of Electronic, Electrical and Communication Engineering](https://eece.ucas.ac.cn/index.php/zh-cn/), [University of Chinese Academy of Sciences](https://www.ucas.ac.cn/), Beijing, China, in 2019. Xue Yang obtained the Ph.D. degree from [Wu Honor Class](https://news.sjtu.edu.cn/jdyw/20190930/111855.html) ([吴文俊人工智能博士班](https://xsb.seiee.sjtu.edu.cn/xsb/info/35105.htm)), [Department of Computer Science and Engineering](http://www.cs.sjtu.edu.cn/), [Shanghai Jiao Tong University](http://en.sjtu.edu.cn/), Shanghai, China, in 2023. His research advisor is [Prof. Junchi Yan](http://thinklab.sjtu.edu.cn/).\n\nXue Yang has published about 40 papers [![](https://img.shields.io/endpoint?logo=Google%20Scholar&url=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fyangxue0827%2Fyangxue0827.github.io@google-scholar-stats%2Fgs_data_shieldsio.json&labelColor=f6f6f6&color=9cf&style=flat&label=citations)](https://scholar.google.com/citations?user=2xTlvV0AAAAJ&hl=en) at the top-tier international CV/ML/AI conferences and journals, such as TPAMI, IJCV, CVPR, ECCV, ICCV, ICML, NeurIPS, ICLR, AAAI and ACM MM. He is also the leading contributor to the [MMRotate](https://github.com/open-mmlab/mmrotate) ![](https://img.shields.io/github/stars/open-mmlab/mmrotate?style=social) and [AlphaRotate](https://github.com/yangxue0827/RotationDetection) ![](https://img.shields.io/github/stars/yangxue0827/RotationDetection?style=social) open-source projects for oriented object detection, and with 8000+ stars in Github. Xue Yang won [SJTU Outstanding Doctoral Dissertation](https://www.gs.sjtu.edu.cn/yxbslw) (2023), [CCF Outstanding Doctoral Dissertation Award](https://www.ccf.org.cn/Membership/Individual_member/Honor/yxbsxwlwjljh/2024-01-05/811519.shtml) (2023), [CCF-CV Academic Emerging Scholar](https://mp.weixin.qq.com/s/mUgpVmyvCHdo5-T6-u8Yxg) (2022), [Shanghai Outstanding Graduates](https://www.seiee.sjtu.edu.cn/xsgz_tzgg_zyfz/7915.html) (2023), [Doctoral National Scholarship](https://mp.weixin.qq.com/s/liVosHsotD2zDMyfmTIQJg) (2021/2022), [SJTU Scholar Star Nomination Award](https://mp.weixin.qq.com/s/hr7qtx3OUffSGS9qUhqc9w) (2021), and also selected into the [World's Top 2% Scientists 2022/2023 List](https://elsevier.digitalcommonsdata.com/datasets/btchxktzyw/6).\n\n***Looking for self-motivated collaborators with the goal of publishing Top-Tier papers on the topic of Remote Sensing Image Interpretation, including but not limited to Multi-modal Foundation Model, Weakly-/Semi-supervised Oriented Object Detection, etc. Please do not hesitate to contact me via email or WeChat.***\n",
+  "publications": {
+    "google-scholar": "",
+    "dblp": "",
+    "research-gate": "",
+    "semantic-scholar": ""
+  },
+  "contacts": {
+    "email": "yangxue@pjlab.org.cn",
+    "linkedin": "",
+    "twitter": ""
+  },
+  "connections": [
+    "662f6f80f413bae8a36f7ea0",
+    "6634eba1f28334c5d25504be",
+    "6634ec9ff28334c5d25504c1"
+  ]
+},
+{
+  "_id": {
+    "$oid": "66305497a00e4359940ac5da"
+  },
+  "name": "Liangliang Shi",
+  "tags": [
+    "combinotorial optimization"
+  ],
+  "picture": "",
+  "github": "",
+  "homepage": "",
+  "position": "PhD Student",
+  "affiliation": "Shanghai Jiao Tong University",
+  "descriptions": "phd at SJTU, supervised by prof. Junchi Yan",
+  "publications": {
+    "google-scholar": "",
+    "dblp": "",
+    "research-gate": "",
+    "semantic-scholar": ""
+  },
+  "contacts": {
+    "email": "",
+    "linkedin": "",
+    "twitter": ""
+  },
+  "connections": [
+    "663054b5a00e4359940ac5dc",
+    "6634eea931fdfbeb1989386c"
+  ],
+  "department": "Thinklab"
+},
+{
+  "_id": {
+    "$oid": "66305b43a00e4359940ac5dd"
+  },
+  "name": "Zetian Jiang",
+  "tags": [
+    "CV"
+  ],
+  "picture": "",
+  "github": "",
+  "homepage": "",
+  "position": "PhD Student",
+  "affiliation": "Shanghai Jiao Tong University",
+  "department": "Thinklab",
+  "descriptions": "phd at SJTU, supervised by prof. Junchi Yan",
+  "publications": {
+    "google-scholar": "",
+    "dblp": "",
+    "research-gate": "",
+    "semantic-scholar": ""
+  },
+  "contacts": {
+    "email": "",
+    "linkedin": "",
+    "twitter": ""
+  },
+  "connections": [
+    "66305b57a00e4359940ac5df"
+  ]
+},
+{
+  "_id": {
+    "$oid": "66306230a00e4359940ac5e0"
+  },
+  "name": "Mingquan Feng",
+  "tags": [
+    "AI4Science"
+  ],
+  "picture": "",
+  "github": "https://github.com/FengMingquan-sjtu",
+  "homepage": "",
+  "position": "PhD Student",
+  "affiliation": "Shanghai Jiao Tong University",
+  "department": "Thinklab",
+  "descriptions": "phd at SJTU, supervised by prof. Junchi Yan",
+  "publications": {
+    "google-scholar": "",
+    "dblp": "",
+    "research-gate": "",
+    "semantic-scholar": ""
+  },
+  "contacts": {
+    "email": "",
+    "linkedin": "",
+    "twitter": ""
+  },
+  "connections": [
+    "66306246a00e4359940ac5e2",
+    "6634e946f28334c5d25504b7",
+    "6634e95ff28334c5d25504b9"
+  ]
+},
+{
+  "_id": {
+    "$oid": "663062a7a00e4359940ac5e3"
+  },
+  "name": "Shaofeng Zhang",
+  "tags": [
+    "CV"
+  ],
+  "picture": "",
+  "github": "https://github.com/Sherrylone",
+  "homepage": "",
+  "position": "PhD Student",
+  "affiliation": "Shanghai Jiao Tong University",
+  "department": "Thinklab",
+  "descriptions": "phd at SJTU, supervised by prof. Junchi Yan",
+  "publications": {
+    "google-scholar": "",
+    "dblp": "",
+    "research-gate": "",
+    "semantic-scholar": ""
+  },
+  "contacts": {
+    "email": "",
+    "linkedin": "",
+    "twitter": ""
+  },
+  "connections": [
+    "663062c5a00e4359940ac5e5"
+  ]
+},
+{
+  "_id": {
+    "$oid": "663064c0a00e4359940ac5e6"
+  },
+  "name": "Xiaoxin Wang",
+  "tags": [
+    "CV"
+  ],
+  "picture": "",
+  "github": "",
+  "homepage": "",
+  "position": "PhD Student",
+  "affiliation": "Shanghai Jiao Tong University",
+  "department": "Thinklab",
+  "descriptions": "phd at SJTU, supervised by prof. Junchi Yan",
+  "publications": {
+    "google-scholar": "",
+    "dblp": "",
+    "research-gate": "",
+    "semantic-scholar": ""
+  },
+  "contacts": {
+    "email": "",
+    "linkedin": "",
+    "twitter": ""
+  },
+  "connections": [
+    "663072c8a00e4359940ac5e8"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6634dd7f6c8aa50a327b0ed5"
+  },
+  "name": "Xiaosong Jia",
+  "tags": [
+    "CV"
+  ],
+  "picture": "",
+  "github": "",
+  "homepage": "",
+  "position": "PhD Student",
+  "affiliation": "Shanghai Jiao Tong University",
+  "descriptions": "phd at SJTU, supervised by prof. Junchi Yan",
+  "publications": {
+    "google-scholar": "",
+    "dblp": "",
+    "research-gate": "",
+    "semantic-scholar": ""
+  },
+  "contacts": {
+    "email": "",
+    "linkedin": "",
+    "twitter": ""
+  },
+  "connections": [
+    "6634dd926c8aa50a327b0ed7"
+  ],
+  "department": "Thinklab"
+},
+{
+  "_id": {
+    "$oid": "6634de936c8aa50a327b0ed8"
+  },
+  "name": "Hao Xiong",
+  "tags": [
+    "ML"
+  ],
+  "picture": "https://avatars.githubusercontent.com/u/25664578?v=4",
+  "github": "https://github.com/ShawXh",
+  "homepage": "",
+  "position": "PhD Student",
+  "affiliation": "Shanghai Jiao Tong University",
+  "department": "Thinklab",
+  "descriptions": "phd at SJTU, supervised by prof. Junchi Yan",
+  "publications": {
+    "google-scholar": "",
+    "dblp": "",
+    "research-gate": "",
+    "semantic-scholar": ""
+  },
+  "contacts": {
+    "email": "",
+    "linkedin": "",
+    "twitter": ""
+  },
+  "connections": [
+    "6634deaa6c8aa50a327b0eda"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6634df036c8aa50a327b0edb"
+  },
+  "name": "Nianzu Yang",
+  "tags": [
+    "combinotorial optimization"
+  ],
+  "picture": "",
+  "github": "",
+  "homepage": "",
+  "position": "PhD Student",
+  "affiliation": "Shanghai Jiao Tong University",
+  "department": "Thinklab",
+  "descriptions": "phd at SJTU, supervised by prof. Junchi Yan",
+  "publications": {
+    "google-scholar": "",
+    "dblp": "",
+    "research-gate": "",
+    "semantic-scholar": ""
+  },
+  "contacts": {
+    "email": "",
+    "linkedin": "",
+    "twitter": ""
+  },
+  "connections": [
+    "6634df1e6c8aa50a327b0edd",
+    "6634ee2631fdfbeb19893862",
+    "6634ee6c31fdfbeb19893866",
+    "6634ee9731fdfbeb1989386a"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6634e1026c8aa50a327b0ede"
+  },
+  "name": "Ge Yan",
+  "tags": [
+    "ML"
+  ],
+  "picture": "",
+  "github": "",
+  "homepage": "",
+  "position": "PhD Student",
+  "affiliation": "Shanghai Jiao Tong University",
+  "department": "Thinklab",
+  "descriptions": "phd at SJTU, supervised by prof. Junchi Yan",
+  "publications": {
+    "google-scholar": "",
+    "dblp": "",
+    "research-gate": "",
+    "semantic-scholar": ""
+  },
+  "contacts": {
+    "email": "",
+    "linkedin": "",
+    "twitter": ""
+  },
+  "connections": [
+    "6634e11e6c8aa50a327b0ee0"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6634e1af6c8aa50a327b0ee1"
+  },
+  "name": "Yang Li",
+  "tags": [
+    "combinotorial optimization"
+  ],
+  "picture": "",
+  "github": "",
+  "homepage": "",
+  "position": "Master Student",
+  "affiliation": "Shanghai Jiao Tong University",
+  "department": "Thinklab",
+  "descriptions": "master at SJTU, supervised by prof. Junchi Yan",
+  "publications": {
+    "google-scholar": "",
+    "dblp": "",
+    "research-gate": "",
+    "semantic-scholar": ""
+  },
+  "contacts": {
+    "email": "",
+    "linkedin": "",
+    "twitter": ""
+  },
+  "connections": [
+    "6634e1d26c8aa50a327b0ee3",
+    "6634ee5031fdfbeb19893864",
+    "6634ee8531fdfbeb19893868",
+    "6634ee9731fdfbeb1989386a"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6634e8e1f28334c5d25504b3"
+  },
+  "name": "Yixin Huang",
+  "tags": [
+    "AI4Science"
+  ],
+  "picture": "",
+  "github": "",
+  "homepage": "",
+  "position": "Undergrad",
+  "affiliation": "Shanghai Jiao Tong University",
+  "descriptions": "Undergraduate at SJTU, supervised by prof. Junchi Yan",
+  "publications": {
+    "google-scholar": "",
+    "dblp": "",
+    "research-gate": "",
+    "semantic-scholar": ""
+  },
+  "contacts": {
+    "email": "",
+    "linkedin": "",
+    "twitter": ""
+  },
+  "connections": [
+    "6634e908f28334c5d25504b5",
+    "6634e95ff28334c5d25504b9",
+    "6634e974f28334c5d25504bb",
+    "6634eea931fdfbeb1989386c"
+  ],
+  "department": "Thinklab"
+},
+{
+  "_id": {
+    "$oid": "6634eb62f28334c5d25504bc"
+  },
+  "name": "Jifeng Dai",
+  "tags": [
+    "CV"
+  ],
+  "picture": "https://jifengdai.org/images/me.jpg",
+  "github": "https://github.com/daijifeng001",
+  "homepage": "https://jifengdai.org",
+  "position": "Associate Professor",
+  "affiliation": "Tsinghua University",
+  "department": "",
+  "descriptions": "Currently, I am an Associate Professor at Department of Electronic Engineering of Tsinghua University. My current research focus is on learning intelligent models from visual data for understanding the complex world.\n\nPrior to that, I was an Executive Research Director at SenseTime Research, headed by Professor [Xiaogang Wang](http://www.ee.cuhk.edu.hk/%7Exgwang/), between 2019 and 2022. I was a Principal Research Manager in Visual Computing Group at Microsoft Research Asia (MSRA) between 2014 and 2019, headed by Dr. [Jian Sun](http://www.jiansun.org/).\n\nI got my Ph.D. degree from the Department of Automation, Tsinghua University in 2014, under the supervison of Professor [Jie Zhou](https://www.tsinghua.edu.cn/publish/auen/1713/2011/20110506105532098625469/20110506105532098625469_.html). During my Ph.D. study, I visited the VCLA lab of University of California, Los Angeles (UCLA) between 2012 and 2013, where I worked with Professor [Song-Chun Zhu](http://www.stat.ucla.edu/%7Esczhu/) and Professor [Ying-Nian Wu](http://www.stat.ucla.edu/%7Eywu/). Before that, I got my B.S. degree from the Department of Automation, Tsinghua University in 2009, GPA ranking 2/160+.",
+  "publications": {
+    "google-scholar": "",
+    "dblp": "",
+    "research-gate": "",
+    "semantic-scholar": ""
+  },
+  "contacts": {
+    "email": "daijifeng@tsinghua.edu.cn",
+    "linkedin": "",
+    "twitter": ""
+  },
+  "connections": [
+    "6634eba1f28334c5d25504be",
+    "6634ed5431fdfbeb1989385e"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6634ec38f28334c5d25504bf"
+  },
+  "name": "Xizhou Zhu",
+  "tags": [
+    "CV"
+  ],
+  "picture": "",
+  "github": "",
+  "homepage": "https://scholar.google.com/citations?hl=zh-CN&user=02RXI00AAAAJ",
+  "position": "Professor",
+  "affiliation": "Tsinghua University",
+  "department": "",
+  "descriptions": "Prof at Tsinghua Univerity, also working at OpenGVLab, Shanghai AI Laboratory",
+  "publications": {
+    "google-scholar": "",
+    "dblp": "",
+    "research-gate": "",
+    "semantic-scholar": ""
+  },
+  "contacts": {
+    "email": "",
+    "linkedin": "",
+    "twitter": ""
+  },
+  "connections": [
+    "6634ec9ff28334c5d25504c1",
+    "6634ed5431fdfbeb1989385e"
+  ]
+},
+{
+  "_id": {
+    "$oid": "664ebc037a698a24058a1ec6"
+  },
+  "name": "Jiaqi Ma",
+  "tags": [
+    "Explainable AI",
+    "Graph Learning",
+    "ML"
+  ],
+  "picture": "https://jiaqima.github.io/portrait.jpg",
+  "github": "https://github.com/jiaqima",
+  "homepage": "https://jiaqima.github.io/",
+  "position": "Assistant Professor",
+  "affiliation": "University of Illinois Urbana-Champaign",
+  "descriptions": "I am an Assistant Professor in the School of Information Sciences, University of Illinois Urbana-Champaign. Prior to UIUC, I was a Postdoctoral Researcher at Harvard University. I received my Ph.D. from University of Michigan and a B.Eng. from Tsinghua University.\n\nI’m interested in the broad area of trustworthy artificial intelligence (AI). We recognize that AI models often live in complex ecosystems, where ensuring trustworthiness involves dealing with challenges from heterogeneous data and intricate human interactions, and adhering to a variety of public policies. My research blends observations and insights of these ecosystem dynamics into innovative technical solutions, aiming to develop trustworthy AI systems that reliably operate within their specific ecosystems. Specifically, my work addresses the following major questions with some detailed examples:\n\n1. How to effectively operationalize regulatory principles such as explainability, fairness, privacy, and address legal considerations such as copyright?\n    - Are there [inherent technical conflicts or trade-offs involved in simultaneously enforcing multiple regulatory principles](https://openreview.net/forum?id=SCtMSXVSmI)?\n    - How can we provide [technical solutions to assist policymakers in addressing copyright issues of generative AI](https://arxiv.org/pdf/2312.06646.pdf)?\n2. How to leverage the knowledge about human interactions with the AI systems to better design the system?\n    - How can we [effectively leverage multiple user signals to improve user satisfactory in recommender systems](https://www.kdd.org/kdd2018/accepted-papers/view/modeling-task-relationships-in-multi-task-learning-with-multi-gate-mixture-)?\n    - How can we [better accommodate downstream needs of domain scientists in drug discovery](https://openreview.net/forum?id=Yo06F8kfMa1)?\n3. How to deal with challenges for learning from complex real-world data?\n    - How to characterize and improve [fairness](https://arxiv.org/pdf/2106.15535.pdf) and [robustness](https://arxiv.org/pdf/2106.10785.pdf) for learning from graph-structured data?\n    - How to learn from partially observed data, such as [partial rankings](https://arxiv.org/pdf/2006.05067.pdf) or [censored survial data](https://arxiv.org/abs/2008.08637)?\n\nSome “buzzwords” relevant to my existing research include _trustworthy machine learning_, _explainable machine learning_, _machine unlearning_, _data attribution_, _graph machine learning_, _recommender systems_, and _large language models_.\n\nFor students who want to work with me, please see [here for more details](https://jiaqima.github.io/opening).",
+  "publications": {
+    "google-scholar": "https://scholar.google.com/citations?hl=en&user=Z9X2A1MAAAAJ&view_op=list_works&sortby=pubdate",
+    "dblp": "",
+    "research-gate": "",
+    "semantic-scholar": ""
+  },
+  "contacts": {
+    "email": "jiaqima@illinois.edu",
+    "linkedin": "",
+    "twitter": "https://x.com/Jiaqi_Ma_"
+  },
+  "connections": [
+    "664ebc767a698a24058a1ec9",
+    "664ebef07a698a24058a1ecc",
+    "664ebfc67a698a24058a1ecf"
+  ],
+  "department": "School of Information Sciences"
+},
+{
+  "_id": {
+    "$oid": "664ebed67a698a24058a1eca"
+  },
+  "name": "Xingjian Zhang",
+  "tags": [
+    "Graph Learning",
+    "Explainable AI"
+  ],
+  "picture": "https://lh3.googleusercontent.com/x3oeVjiEeYjaJb60fbB_8a6BpHwPzmQQXaDYYJbdciKiIbAsPaxUjjYI7x-vu3YgjZhsLtxqUsH7HFflAip40OPe91mcFHn5D1Hx2Vo633O_zbYzy3bJwmaYAvuQQZh5CA=w1280",
+  "github": "https://github.com/xingjian-zhang",
+  "homepage": "https://sites.google.com/umich.edu/xingjian-zhang",
+  "position": "PhD Student",
+  "affiliation": "University of Michigan",
+  "descriptions": "I am a Ph.D. student at the University of Michigan, advised by [Prof. Qiaozhu Mei](http://www-personal.umich.edu/~qmei/). My research interests lie in graph learning and causal inference. I recently had an internship at Google DeepMind, working on efficient training of Transformers.\n\nPrior to my Ph.D., I had my dual bachelor's degree at the University of Michigan (Computer Science) and Shanghai Jiao Tong University (Electrical and Computer Engineering).",
+  "publications": {
+    "google-scholar": "https://scholar.google.com/citations?user=9oE_hEsAAAAJ&hl=en",
+    "dblp": "",
+    "research-gate": "",
+    "semantic-scholar": ""
+  },
+  "contacts": {
+    "email": "jimmyzxj@umich.edu",
+    "linkedin": "",
+    "twitter": "https://x.com/_Jimmy_Zhang_",
+    "linkedIn": "https://www.linkedin.com/in/xingjian-jimmy-zhang/"
+  },
+  "connections": [
+    "664ebef07a698a24058a1ecc"
+  ],
+  "department": "School of Information"
+},
+{
+  "_id": {
+    "$oid": "664ebfa17a698a24058a1ecd"
+  },
+  "name": "Jin Huang",
+  "tags": [
+    "Graph Learning",
+    "LLM",
+    "ML"
+  ],
+  "picture": "https://media.licdn.com/dms/image/D4E03AQEMa6Wmlf0UAA/profile-displayphoto-shrink_200_200/0/1702574107527?e=1721865600&v=beta&t=-U0zLxQrLkXjTwJo535-rCSlnRHiOatIzH-xVBHm_78",
+  "github": "",
+  "homepage": "https://jn-huang.github.io/",
+  "position": "PhD Student",
+  "affiliation": "University of Michigan",
+  "department": "School of Information",
+  "descriptions": "Hi! I am Jin Huang, a senior student majoring in Computer Science at University of Michigan, Ann Arbor. I am interested in conducting research on various topics related to deep learning for graphs, interpretable artificial intelligence (XAI), and the integration of Large Language Model (LLM) in these areas. **I am looking for PhD positions for Fall 2024.**\n\nI am a research intern at [Foreseer Group](http://foreseer.si.umich.edu/), advised by [Qiaozhu Mei](http://www-personal.umich.edu/~qmei/) and [Jiaqi Ma](https://www.jiaqima.com/). I am currently working on evaluating and improving LLM’s ability on solving graph-related problems, such as node classification.\n\nDuring 2023 summer, I work with [Danai Koutra](https://web.eecs.umich.edu/~dkoutra/) on OOD problems in link prediciton.\n\nI also hold a dual degree of Electronic and Computer Engineering from Shanghai Jiao Tong University, where I worked with [Quanshi Zhang](http://qszhang.com/).",
+  "publications": {
+    "google-scholar": "",
+    "dblp": "",
+    "research-gate": "",
+    "semantic-scholar": ""
+  },
+  "contacts": {
+    "email": "huangjin@umich.edu",
+    "linkedin": "",
+    "twitter": "",
+    "linkedIn": "https://www.linkedin.com/in/jin-huang-04220224b/"
+  },
+  "connections": [
+    "664ebfc67a698a24058a1ecf"
+  ]
+},
+{
+  "_id": {
+    "$oid": "664ec0f47a698a24058a1ed0"
+  },
+  "name": "Zhiting Hu",
+  "tags": [
+    "LLM",
+    "NLP",
+    "ML"
+  ],
+  "picture": "http://zhiting.ucsd.edu/images/Hu.jpg",
+  "github": "",
+  "homepage": "http://zhiting.ucsd.edu/",
+  "position": "Assistant Professor",
+  "affiliation": "UC San Diego",
+  "descriptions": "<table style=\"width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;\"><tbody><tr><td style=\"padding:20px;width:100%;vertical-align:middle\">I am taking on <strong>new students and postdocs</strong> from HDSI, CSE, and related departments. We also have research positions for MS/undergrad students (UCSD or external). See more details <a href=\"http://zhiting.ucsd.edu/prospective.html\">here</a>.</td></tr></tbody></table>\n\n<table style=\"width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;\"><tbody><tr><td style=\"padding:20px;width:100%;vertical-align:middle\"><heading>Research</heading><p>My primary research interests lie in the general areas of Machine Learning, Artificial Intelligence, Natural Language Processing, as well as ML systems, computer vision, healthcare, and other application domains.</p><p>In particular, I'm interested in principles and methodologies of <span class=\"highlight\">Panoramic Learning</span> (<a href=\"https://doi.org/10.1162/99608f92.1d34757b\">HDSR</a>)—building AI agents with ALL types of experience, ranging from data instances (<a href=\"https://arxiv.org/abs/1910.12795\">NeurIPS</a>), embodied experiences (<a href=\"https://arxiv.org/abs/2305.10626\">NeurIPS</a>), structured knowledge (<a href=\"https://arxiv.org/abs/1603.06318\">ACL</a>, <a href=\"https://arxiv.org/abs/1806.09764\">NeurIPS</a>), constraints, to rewards (<a href=\"https://arxiv.org/abs/2205.12548\">EMNLP</a>), adversaries (<a href=\"https://arxiv.org/abs/2006.06900\">NeurIPS</a>), lifelong interplay, etc. To this end, we've been studying a standardized ML formalism (<span class=\"highlight\">\"Standard Model\"</span> of ML) for systematic understanding, unifying, and generalizing a wide range of ML paradigms (e.g., supervised, unsupervised, active, reinforcement, adversarial, meta, lifelong learning). We're also building <span class=\"highlight\">World Models</span> (<a href=\"https://arxiv.org/abs/2312.05230\">LAW</a>, <a href=\"https://arxiv.org/abs/2305.14992\">EMNLP</a>, <a href=\"https://arxiv.org/abs/2305.10626\">NeurIPS</a>) to enable next-generation machine reasoning beyond large language models.</p><p>On this basis, I develop methods and tools for Composable ML that enable easy composition of ML solutions (<a href=\"https://github.com/Ber666/llm-reasoners\">LLM Reasoners</a>, and <a href=\"https://github.com/asyml\">Texar, ASYML</a> as part of the open-source consortium <a href=\"http://casl-project.ai/\">CASL</a>); and rich applications for <span class=\"highlight\">controllable text generation</span> (<a href=\"https://arxiv.org/abs/1703.00955\">ICML</a>) and others.</p></td></tr></tbody></table>",
+  "publications": {
+    "google-scholar": "https://scholar.google.com/citations?user=N7_xhHoAAAAJ&hl=en&oi=ao",
+    "dblp": "",
+    "research-gate": "",
+    "semantic-scholar": ""
+  },
+  "contacts": {
+    "email": "",
+    "linkedin": "",
+    "twitter": ""
+  },
+  "connections": [],
+  "department": "HDSI"
+},
+{
+  "_id": {
+    "$oid": "664ec1a77a698a24058a1ed1"
+  },
+  "name": "Shibo Hao",
+  "tags": [
+    "LLM",
+    "Explainable AI"
+  ],
+  "picture": "https://ber666.github.io/assets/img/square-1400.webp",
+  "github": "https://github.com/Ber666",
+  "homepage": "https://ber666.github.io/",
+  "position": "PhD Student",
+  "affiliation": "UC San Diego",
+  "department": "HDSI",
+  "descriptions": "Hi, I am Shibo Hao, a Ph.D. student at [UC San Diego](https://ucsd.edu/), [Halıcıoğlu Data Science Institute (HDSI)](https://datascience.ucsd.edu/). My advisor is Professor [Zhiting Hu](http://zhiting.ucsd.edu/). Previously, I obtained my B.S. degree in Computer Science from [Peking University](https://english.pku.edu.cn/).\n\nMy research interest lies in large language models (LLMs). Specifically, I aim to design principled methods to enhance the reasoning ability of LLMs ([Reasoning-via-planning](https://arxiv.org/abs/2305.14992), [LLM Reasoners](https://github.com/ber666/llm-reasoners/)), augment LLMs with external tools ([ToolkenGPT](https://arxiv.org/abs/2305.11554)), and interpret the knowledge of language models ([BertNet](https://arxiv.org/abs/2206.14268)). My goal is to create general autonomous agents based on foundation models, which will possess the ability to perceive, take actions, and learn from their embodied environments.",
+  "publications": {
+    "google-scholar": "https://scholar.google.com/citations?user=xwbHbUQAAAAJ",
+    "dblp": "",
+    "research-gate": "",
+    "semantic-scholar": ""
+  },
+  "contacts": {
+    "email": "s5hao@ucsd.edu",
+    "linkedin": "",
+    "twitter": ""
+  },
+  "connections": []
+}]

@@ -3,11 +3,15 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 1,
             "patches": [
                 {
                     "date": 1715486438861,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1716435580377,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,9 +32,9 @@\n   if (req.method === \"POST\") {\n     try {\n       const db = await connectToDatabase();\n       console.log(\"Database connected\");\n-      const collection = db.collection(\"AdvisorTable\");\n+      const collection = db.collection(\"advisors\");\n       const result = await collection.insertOne(req.body);\n       console.log(\"Document inserted\", result);\n       res.status(200).json(result);\n     } catch (error) {\n"
                 }
             ],
             "date": 1715486438861,
