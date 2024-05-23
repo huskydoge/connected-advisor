@@ -59,7 +59,7 @@ async function getAdvisorDetails(advisorId: string) {
 
     // 使用 $in 操作符一次性查询所有papers
     const papers = await db
-      .collection("tmp-papers")
+      .collection("papers")
       .find({
         _id: { $in: paperIds },
       })

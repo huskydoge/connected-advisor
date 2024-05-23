@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 4,
+            "activePatchIndex": 5,
             "patches": [
                 {
                     "date": 1713802335689,
@@ -24,6 +24,10 @@
                 {
                     "date": 1713802860817,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n   if (req.method === \"POST\") {\n     try {\n       const db = await connectToDatabase();\n       console.log(\"Database connected\");\n-      const collection = db.collection(\"connections\");\n+      const collection = db.collection(COLLECTION);\n       const result = await collection.insertOne(req.body);\n       console.log(\"Document inserted\", result);\n       res.status(200).json({ ...result, _id: result.insertedId });\n     } catch (error) {\n"
+                },
+                {
+                    "date": 1716434384854,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n \n // MongoDB URL and database name\n const MONGO_URL = process.env.MONGO_URL || \"\"; // Use the environment variable\n const DB_NAME = \"ConnectedAdvisor\";\n-const COLLECTION = \"tmp-papers\";\n+const COLLECTION = \"papers\";\n \n // Function to connect to the database\n async function connectToDatabase() {\n   const client = new MongoClient(MONGO_URL);\n"
                 }
             ],
             "date": 1713802335689,

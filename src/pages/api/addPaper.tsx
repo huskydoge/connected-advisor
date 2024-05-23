@@ -4,7 +4,7 @@ import { MongoClient } from "mongodb";
 // MongoDB URL and database name
 const MONGO_URL = process.env.MONGO_URL || ""; // Use the environment variable
 const DB_NAME = "ConnectedAdvisor";
-const COLLECTION = "tmp-papers";
+const COLLECTION = "papers";
 
 // Function to connect to the database
 async function connectToDatabase() {

@@ -32,19 +32,13 @@ export default async function handler(req, res) {
   }
 
   const { oid, name } = req.body;
-
   let query_text = name;
-  // console.log("oid", oid);
-  // console.log("query_text", query_text);
-
   if (!oid && !query_text) {
     res.status(400).json({ message: "Missing query parameters" });
     return;
   }
-
   try {
     const { db, client } = await connectToDatabase();
-
     let result;
     if (oid) {
       result = await db
@@ -52,9 +46,7 @@ export default async function handler(req, res) {
         .findOne({ _id: new ObjectId(oid) });
     } else if (query_text) {
       let words = query_text.split(/\s+/); // 拆分输入的query_text为单词数组
-
       let regexPatterns = words.map((word) => `(?=.*${word})`);
-
       let regexQuery = new RegExp(regexPatterns.join("|"), "i");
 
       result = await db
@@ -69,7 +61,6 @@ export default async function handler(req, res) {
         })
         .toArray();
     }
-
     if (result) {
       res.status(200).json(result);
     } else {

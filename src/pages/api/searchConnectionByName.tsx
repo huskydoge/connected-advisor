@@ -83,7 +83,7 @@ export default async function handler(req, res) {
         .find({ _id: { $in: relationIds } })
         .toArray(),
       db
-        .collection("tmp-papers")
+        .collection("papers")
         .find({ _id: { $in: paperIds } })
         .toArray(),
     ]);

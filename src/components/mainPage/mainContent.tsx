@@ -4,7 +4,6 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import CircularProgress from "@mui/material/CircularProgress";
 
-import advisorsData from "../../data/advisors.json"; // 假设你的数据文件路径
 // 动态导入组件，实现懒加载
 const StatisticsCard = dynamic(() => import("./statisticCard"), {
   ssr: false,
@@ -208,7 +207,7 @@ function MainContent({ id }: { id: string }) {
     // 计算新的分割位置百分比
     const newSplitPercentage = (e.clientX / window.innerWidth) * 100;
     // 设置状态以更新UI
-    if (newSplitPercentage <= 40 || newSplitPercentage >= 55) {
+    if (newSplitPercentage <= 30 || newSplitPercentage >= 65) {
       e.preventDefault();
     } else {
       setSplitPercentage(newSplitPercentage);
