@@ -359,7 +359,7 @@ const BasicInfo = ({ formData, setFormData }) => {
               rows={15}
             />
           </Grid>
-          <Grid item xs={12} className="markdown-preview">
+          <Grid item xs={12} sx={{ margin: 3 }} className="markdown-preview">
             Preview in Markdown:
             <ReactMarkdown
               children={formData.descriptions}
