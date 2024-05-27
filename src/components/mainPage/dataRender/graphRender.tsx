@@ -398,8 +398,8 @@ const GraphRender = ({
     return { nodes, links, minYear, maxYear, _id };
   };
 
-  const getCircularImage = async (imageUrl: string, diameter: number) => {
-    return new Promise<string>((resolve, reject) => {
+  const getCircularImage = async (imageUrl, diameter) => {
+    return new Promise((resolve, reject) => {
       const img = new Image();
       img.crossOrigin = "Anonymous";
       img.onload = () => {
@@ -423,9 +423,7 @@ const GraphRender = ({
           resolve(canvas.toDataURL());
         }
       };
-      img.onerror = reject;
-      // 更新 imageUrl 为 API 代理的 URL
-      // img.src = `/api/image?imageUrl=${imageUrl}`;
+      img.onerror = () => reject(new Error("Image loading error"));
       img.src = `/api/image?imageUrl=${encodeURIComponent(imageUrl)}`;
     });
   };
@@ -433,15 +431,16 @@ const GraphRender = ({
   const prepareNodes = async (nodesData) => {
     const processedNodes = await Promise.all(
       nodesData.map(async (node) => {
-        if (node.picture) {
-          const circularImage = await getCircularImage(node.picture, 100); // 假设节点图像直径为100px
+        try {
+          const circularImage = await getCircularImage(
+            node.picture || scholarImg,
+            100
+          ); // Assuming a default image named 'scholarImg' for missing pictures
           node.symbol = `image://${circularImage}`;
-        } else {
-          const circularImage = await getCircularImage(scholarImg, 100);
-          // node.symbol = "circle";
-          node.symbol = `image://${circularImage}`;
+        } catch (error) {
+          // If there is an error loading the image, use a default error image
+          node.symbol = "image://errorloading.png";
         }
-
         return node;
       })
     );
