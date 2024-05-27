@@ -469,8 +469,8 @@ const GraphRender = ({
       // 构造用于缓存的键
       const cacheKey = `graphData-${advisor?._id}-${graphDegree}`;
       // 尝试从 localStorage 获取缓存的图表配置
-      // const cachedData = localStorage.getItem(cacheKey);
-      const cachedData = null; // 数据可能会更新
+      const cachedData = localStorage.getItem(cacheKey);
+      // const cachedData = null; // 数据可能会更新
 
       let data;
       if (cachedData) {
